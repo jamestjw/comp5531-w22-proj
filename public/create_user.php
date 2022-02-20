@@ -7,6 +7,7 @@ if (isset($_POST['submit'])) {
     $user->first_name = $_POST['first_name'];
     $user->last_name = $_POST['last_name'];
     $user->email = $_POST['email'];
+    $user->student_id = $_POST['student_id'];
     $user->is_admin = 0;
     $user->password_digest = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
@@ -36,6 +37,8 @@ if (isset($_POST['submit'])) {
     <input type="password" name="password" id="password">
     <label for="email">Email Address</label>
     <input type="text" name="email" id="email">
+    <label for="student_id">Student ID</label>
+    <input type="text" name="student_id" id="student_id">
     <input type="submit" name="submit" value="Submit">
 </form>
 

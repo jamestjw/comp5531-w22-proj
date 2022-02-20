@@ -5,27 +5,29 @@ function getConnection() {
     return new PDO($dsn, $username, $password, $options);
 }
 
-function getUsers() {
-    $sql = "SELECT * 
-            FROM users";
-
-    $statement = getConnection()->prepare($sql);
-    $statement->execute();
-    $res = $statement->fetchAll();
-
-    $load_user = function($data) {
-        $u = new User();
-        foreach (array_keys($data) as $attr) {
-            $u->$attr = $data[$attr];
-        }
-        return $u;
-    };
-
-    return array_map($load_user, $res);
-}
-
 class Record {
-    protected $table_name = "default_table_name";
+    static protected $table_name = "default_table_name";
+
+    public static function getAll() {
+        $class_name = get_called_class().$str;
+        $table_name = $class_name::$table_name;
+        $sql = "SELECT * FROM $table_name;";
+
+        $statement = getConnection()->prepare($sql);
+        $statement->execute();
+        $res = $statement->fetchAll();
+
+        $load_user = function($data) {
+            $class = get_called_class().$str;
+            $obj = new $class();
+            foreach (array_keys($data) as $attr) {
+                $obj->$attr = $data[$attr];
+            }
+            return $obj;
+        };
+
+        return array_map($load_user, $res);
+    }
 
     public static function getAttrs() {
         $class = get_called_class().$str;
@@ -57,7 +59,7 @@ class Record {
 
         $sql = sprintf(
             "INSERT INTO %s (%s) values (%s)",
-            $this->table_name,
+            $this::$table_name,
             implode(", ", array_keys($new_obj)),
             ":" . implode(", :", array_keys($new_obj))
         );
@@ -68,9 +70,10 @@ class Record {
 }
 
 class User extends Record {
-    protected $table_name = "users";
+    static protected $table_name = "users";
 
     public $id;
+    public $student_id;
     public $first_name;
 	public $last_name;
 	public $email;

@@ -4,7 +4,7 @@ require "../modules/models/user.php";
 require "../common.php";
 
 try  {
-    $result = getUsers();
+    $result = User::getAll();
 } catch(PDOException $error) {
     echo $sql . "<br>" . $error->getMessage();
 }
@@ -25,6 +25,7 @@ if ($result && count($result)) { ?>
                     <th>Last Name</th>
                     <th>Email Address</th>
                     <th>Hashed Password</th>
+                    <th>Student ID</th>
                     <th>Created At</th>
                 </tr>
             </thead>
@@ -36,6 +37,7 @@ if ($result && count($result)) { ?>
                 <td><?php echo escape($row->last_name); ?></td>
                 <td><?php echo escape($row->email); ?></td>
                 <td><?php echo escape($row->password_digest); ?></td>
+                <td><?php echo escape($row->student_id); ?></td>
                 <td><?php echo escape($row->created_at);  ?> </td>
             </tr>
         <?php } ?>
