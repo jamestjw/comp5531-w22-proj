@@ -3,34 +3,18 @@
 require "../modules/models/user.php";
 
 if (isset($_POST['submit'])) {
-    require "../config.php";
-    require "../common.php";
+    $user = new User();
+    $user->first_name = $_POST['first_name'];
+    $user->last_name = $_POST['last_name'];
+    $user->email = $_POST['email'];
+    $user->is_admin = 0;
+    $user->password_digest = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    try  {
-        $connection = new PDO($dsn, $username, $password, $options);
-        
-        $new_user = array(
-            "first_name" => $_POST['first_name'],
-            "last_name"  => $_POST['last_name'],
-            "email"     => $_POST['email'],
-            "is_admin" => 0,
-            "password_digest" => password_hash($_POST['password'], PASSWORD_DEFAULT),
-            "created_at" => date('Y-m-d H:i:s'),
-            "updated_at" => date('Y-m-d H:i:s'),
-        );
-
-        $sql = sprintf(
-            "INSERT INTO %s (%s) values (%s)",
-            "users",
-            implode(", ", array_keys($new_user)),
-            ":" . implode(", :", array_keys($new_user))
-        );
-        
-        $statement = $connection->prepare($sql);
-        $statement->execute($new_user);
+    try {
+        $user->save();
         $create_success = true;
-    } catch(PDOException $error) {
-        echo $sql . "<br>" . $error->getMessage();
+    }  catch(PDOException $error) {
+        echo "<br>" . $error->getMessage();
     }
 }
 ?>
