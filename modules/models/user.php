@@ -9,7 +9,7 @@ class Record {
     static protected $table_name = "default_table_name";
 
     public static function getAll() {
-        $class_name = get_called_class().$str;
+        $class_name = get_called_class();
         $table_name = $class_name::$table_name;
         $sql = "SELECT * FROM $table_name;";
 
@@ -18,7 +18,7 @@ class Record {
         $res = $statement->fetchAll();
 
         $load_user = function($data) {
-            $class = get_called_class().$str;
+            $class = get_called_class();
             $obj = new $class();
             foreach (array_keys($data) as $attr) {
                 $obj->$attr = $data[$attr];
@@ -30,7 +30,7 @@ class Record {
     }
 
     public static function getAttrs() {
-        $class = get_called_class().$str;
+        $class = get_called_class();
         $obj = new $class();
         $reflect = new ReflectionClass($obj);
         // Assume that public properties are attributes of the record

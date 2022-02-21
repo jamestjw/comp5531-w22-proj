@@ -1,5 +1,9 @@
 # comp5531-w22-proj
 
+## Requirements
+- PHP 8.0
+- MySQL
+
 ## How to install? 
 
 `config.php` should not be committed to the VCS, it should contain values that are specific to your local machine.
