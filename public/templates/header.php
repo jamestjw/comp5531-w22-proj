@@ -12,5 +12,14 @@
 
   <body>
     <h1>COMP 5531 Database App</h1>
+    <?php
+    session_start();
+    if (isset($_SESSION["current_user"])) {
+      echo "<p>You are logged in. <a href=\"logout.php\">Logout</a></p>";
+    } else {
+      echo "<p>You are not logged in. <a href=\"login.php\">Login</a></p>";
+    }
+    ?>
+
   </body>
 </html>

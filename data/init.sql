@@ -18,8 +18,3 @@ CREATE TABLE IF NOT EXISTS users (
 	updated_at TIMESTAMP,
 	UNIQUE (email)
 );
-
--- Insert admin user
--- This is idempotent due to the unique constraint on the `email` column
-INSERT INTO users (first_name, last_name, email, is_admin, password_digest, created_at, updated_at)
-VALUES ('ADMIN', 'USER', 'admin@concordia.ca', 1, 'root', now(), now());
