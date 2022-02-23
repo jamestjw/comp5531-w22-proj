@@ -18,8 +18,24 @@ class Record {
     }
 
     public static function getAll() {
+        return get_called_class()::where(array(1=>1));
+    }
+
+    /* 
+        Usage: RecordName::where(array("name"=>"James", "student_id"=>12345));
+    */  
+    public static function where($attrs) {
         $table_name = get_called_class()::$table_name;
-        $sql = "SELECT * FROM $table_name;";
+        $sql_wheres = array();
+        foreach ($attrs as $key => $value) {
+            array_push($sql_wheres, sprintf("%s = '%s'", $key, $value));
+        }
+
+        $sql = sprintf(
+            "SELECT * FROM %s WHERE %s;",
+            $table_name,
+            implode(" AND ", $sql_wheres)
+        );
 
         $statement = getConnection()->prepare($sql);
         $statement->execute();
@@ -70,22 +86,7 @@ class Record {
     }
 
     public static function find_by_id($id) {
-        $sql = sprintf(
-            "SELECT * from %s WHERE %s = %s",
-            get_called_class()::$table_name,
-            "id",
-            $id
-        );
-
-        $statement = getConnection()->prepare($sql);
-        $statement->execute();
-        $res = $statement->fetchAll();
-
-        if (count($res) == 0) {
-            return null;
-        } else {
-            return get_called_class()::loadRecordFromData($res[0]);
-        }
+        return get_called_class()::where(array("id"=>$id))[0];
     }
 
     public static function get_table_name() {

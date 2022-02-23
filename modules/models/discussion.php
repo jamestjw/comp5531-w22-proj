@@ -13,14 +13,6 @@ class Discussion extends Record {
 
     # TODO: Make this more convenient using metaprogramming
     public function discussion_messages() {
-        $table_name = DiscussionMessage::get_table_name();
-        $sql = sprintf("SELECT * FROM %s WHERE %s = %s;", $table_name, 'discussion_id', $this->id);
-
-
-        $statement = getConnection()->prepare($sql);
-        $statement->execute();
-        $res = $statement->fetchAll();
-
-        return array_map(['DiscussionMessage', 'loadRecordFromData'], $res);
+        return DiscussionMessage::where(array("discussion_id"=>$this->id));
     }
 }

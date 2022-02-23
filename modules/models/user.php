@@ -17,21 +17,6 @@ class User extends Record {
     // TODO: Make this method more generic and move it
     // to the Record class
     public static function find_by_email($email) {
-        $sql = sprintf(
-            "SELECT * from %s WHERE %s = '%s'",
-            get_called_class()::$table_name,
-            "email",
-            $email
-        );
-
-        $statement = getConnection()->prepare($sql);
-        $statement->execute();
-        $res = $statement->fetchAll();
-
-        if (count($res) == 0) {
-            return null;
-        } else {
-            return Record::loadRecordFromData($res[0]);
-        }
+        return get_called_class()::where(array("email"=>$email))[0];
     }
 }
