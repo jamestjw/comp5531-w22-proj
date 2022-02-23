@@ -5,7 +5,7 @@ require "../modules/models/discussion.php";
 try  {
     $result = Discussion::getAll();
 } catch(PDOException $error) {
-    echo $sql . "<br>" . $error->getMessage();
+    echo "<br>" . $error->getMessage();
 }
 
 ?>

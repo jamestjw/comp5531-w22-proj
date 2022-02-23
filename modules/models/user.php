@@ -13,10 +13,4 @@ class User extends Record {
 	public $password_digest;
 	public $created_at;
 	public $updated_at;
-
-    // TODO: Make this method more generic and move it
-    // to the Record class
-    public static function find_by_email($email) {
-        return get_called_class()::where(array("email"=>$email))[0] ?? null;
-    }
 }

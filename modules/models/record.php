@@ -1,5 +1,7 @@
 <?php
 
+require(dirname(__FILE__)."/../../common.php");
+
 function getConnection() {
     require(dirname(__FILE__)."/../../config.php");
     return new PDO($dsn, $username, $password, $options);
@@ -7,6 +9,17 @@ function getConnection() {
 
 class Record {
     static protected $table_name = "default_table_name";
+
+    /*
+    e.g. Override in the following manner
+    static protected $has_many = array(
+        "discussion_messages" => array(
+            "class_name" => "DiscussionMessage",
+            "foreign_key" => "discussion_id",
+        )
+    );
+    */
+    static protected $has_many = array();
 
     protected static function loadRecordFromData($data) {
         $class = get_called_class();
@@ -42,6 +55,34 @@ class Record {
         $res = $statement->fetchAll();
 
         return array_map([get_called_class(), 'loadRecordFromData'], $res);
+    }
+
+    /*
+        Usage: RecordName::find_by(array("name"=>"James", "student_id"=>12345));
+        Returns the first record that matches
+    */
+    public static function find_by($attrs) {
+        $table_name = get_called_class()::$table_name;
+        $sql_wheres = array();
+        foreach ($attrs as $key => $value) {
+            array_push($sql_wheres, sprintf("%s = '%s'", $key, $value));
+        }
+
+        $sql = sprintf(
+            "SELECT * FROM %s WHERE %s LIMIT 1;",
+            $table_name,
+            implode(" AND ", $sql_wheres)
+        );
+
+        $statement = getConnection()->prepare($sql);
+        $statement->execute();
+        $res = $statement->fetchAll();
+
+        if (count($res) > 0) {
+            return get_called_class()::loadRecordFromData($res[0]);
+        } else {
+            return null;
+        }
     }
 
     public static function getAttrs() {
@@ -84,12 +125,46 @@ class Record {
         $this->id = $conn->lastInsertId();
     }
 
-    public static function find_by_id($id) {
-        return get_called_class()::where(array("id"=>$id))[0];
-    }
+    // public static function find_by_id($id) {
+    //     return get_called_class()::find_by(array("id"=>$id));
+    // }
 
     public static function get_table_name() {
         return get_called_class()::$table_name;
+    }
+
+    public function __get($name){
+        // Make it easier to access has_many associations
+        if (array_key_exists($name, get_called_class()::$has_many)) {
+            $association = get_called_class()::$has_many[$name];
+
+            // TODO: Cache this
+            return $association['class_name']::where(
+                array($association['foreign_key']=>$this->id)
+            );
+        }
+
+        $trace = debug_backtrace();
+        trigger_error(
+            'Undefined property via __get(): ' . $name .
+            ' in ' . $trace[0]['file'] .
+            ' on line ' . $trace[0]['line'],
+            E_USER_NOTICE);
+        return null;
+    }
+
+    public static function __callStatic($name, $arguments) {
+        if(startsWith($name, "find_by_")) {
+            preg_match('/find_by_(\w+)/', $name, $match);
+            return get_called_class()::find_by(array($match[1]=>$arguments[0]));
+        }
+
+        $trace = debug_backtrace();
+        trigger_error(
+            'Undefined function via __call(): ' . $name .
+            ' in ' . $trace[0]['file'] .
+            ' on line ' . $trace[0]['line'],
+            E_USER_NOTICE);
     }
 }
 

@@ -27,3 +27,8 @@ function ensure_logged_in() {
 function array_last($arr) {
   return $arr[array_key_last($arr)] ?? null;
 }
+
+function startsWith($string, $startString) {
+  $len = strlen($startString);
+  return (substr($string, 0, $len) === $startString);
+}
