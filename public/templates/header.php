@@ -13,7 +13,11 @@
   <body>
     <h1>COMP 5531 Database App</h1>
     <?php
-    session_start();
+    require_once (dirname(__FILE__)."/../../common.php");
+
+    if(isset($_SESSION["error_message"]) && $_SESSION["error_message"]!="") { echo $_SESSION["error_message"]; }
+
+    maybe_session_start();
     if (isset($_SESSION["current_user"])) {
       echo "<p>You are logged in. <a href=\"logout.php\">Logout</a></p>";
     } else {

@@ -1,8 +1,9 @@
-<?php include "templates/header.php"; ?>
-
 <?php
 
 require "../modules/models/user.php";
+require_once "../common.php";
+
+maybe_session_start();
 
 // If there is already a logged in user, redirect to index page
 if (isset($_SESSION["current_user"])) {
@@ -28,24 +29,25 @@ if (count($_POST) > 0) {
 }
 ?>
 
+<?php include "templates/header.php"; ?>
+
 <form name="frmUser" method="post" action="">
-	<div class="message"><?php if(isset($_SESSION["error_message"]) && $_SESSION["error_message"]!="") { echo $_SESSION["error_message"]; } ?></div>
-		<table border="0" cellpadding="10" cellspacing="1" width="500" align="center" class="tblLogin">
-			<tr class="tableheader">
-			<td align="center" colspan="2">Enter Login Details</td>
-			</tr>
-			<tr class="tablerow">
-			<td>
-			<input type="text" name="email" placeholder="Email" class="login-input"></td>
-			</tr>
-			<tr class="tablerow">
-			<td>
-			<input type="password" name="password" placeholder="Password" class="login-input"></td>
-			</tr>
-			<tr class="tableheader">
-			<td align="center" colspan="2"><input type="submit" name="submit" value="Submit" class="btnSubmit"></td>
-			</tr>
-		</table>
+	<table border="0" cellpadding="10" cellspacing="1" width="500" align="center" class="tblLogin">
+		<tr class="tableheader">
+		<td align="center" colspan="2">Enter Login Details</td>
+		</tr>
+		<tr class="tablerow">
+		<td>
+		<input type="text" name="email" placeholder="Email" class="login-input"></td>
+		</tr>
+		<tr class="tablerow">
+		<td>
+		<input type="password" name="password" placeholder="Password" class="login-input"></td>
+		</tr>
+		<tr class="tableheader">
+		<td align="center" colspan="2"><input type="submit" name="submit" value="Submit" class="btnSubmit"></td>
+		</tr>
+	</table>
 </form>
 
 <?php include "templates/footer.php"; ?>
