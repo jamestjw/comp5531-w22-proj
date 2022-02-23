@@ -23,3 +23,7 @@ function ensure_logged_in() {
     header("Location: login.php");
   }
 }
+
+function array_last($arr) {
+  return $arr[array_key_last($arr)] ?? null;
+}

@@ -17,6 +17,6 @@ class User extends Record {
     // TODO: Make this method more generic and move it
     // to the Record class
     public static function find_by_email($email) {
-        return get_called_class()::where(array("email"=>$email))[0];
+        return get_called_class()::where(array("email"=>$email))[0] ?? null;
     }
 }

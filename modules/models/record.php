@@ -78,7 +78,6 @@ class Record {
             implode(", ", array_keys($new_obj)),
             ":" . implode(", :", array_keys($new_obj))
         );
-        
         $conn = getConnection();
         $statement = $conn->prepare($sql);
         $statement->execute($new_obj);
@@ -93,3 +92,7 @@ class Record {
         return get_called_class()::$table_name;
     }
 }
+
+spl_autoload_register(function ($class_name) {
+    require_once $class_name . '.php';
+});

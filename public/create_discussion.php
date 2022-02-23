@@ -1,7 +1,7 @@
 <?php
 
-require "../modules/models/discussion.php";
-require "../modules/models/discussion_message.php";
+require_once "../modules/models/discussion.php";
+require_once "../modules/models/discussion_message.php";
 require_once "../common.php";
 
 ensure_logged_in();

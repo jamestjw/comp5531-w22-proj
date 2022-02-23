@@ -8,6 +8,7 @@ class DiscussionMessage extends Record {
     public $user_id;
     public $discussion_id;
     public $content;
+    public $parent_id;
 	public $created_at;
 	public $updated_at;
 }

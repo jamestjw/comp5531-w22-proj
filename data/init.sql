@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS discussion_messages (
 	user_id INT(11) NOT NULL,
 	discussion_id INT(11) NOT NULL,
 	content TEXT NOT NULL,
+	parent_id INT(11),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );

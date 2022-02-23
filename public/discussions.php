@@ -29,7 +29,7 @@ if ($result && count($result)) { ?>
         <?php foreach ($result as $row) { ?>
             <tr>
                 <td><?php echo escape($row->id); ?></td>
-                <td><?php echo escape($row->title); ?></td>
+                <td><a href="discussion.php?id=<?php echo $row->id; ?>"><?php echo escape($row->title); ?></a></td>
                 <td><?php echo escape($row->user_id); ?></td>
                 <td><?php echo escape($row->created_at);  ?> </td>
             </tr>
