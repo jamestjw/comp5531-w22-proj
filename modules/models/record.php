@@ -21,12 +21,23 @@ class Record {
     */
     static protected $has_many = array();
 
+    protected $is_new_record = true;
+    // Stores arrays of entities for each association (or entity for 1-to-1
+    // relationships)
+    protected $associations = array();
+    // Stores booleans to remember if each association has been loaded from the database
+    protected $associations_are_loaded = array();
+
+    // Loads a record and marks it as not new, i.e.
+    // it will be treated as a record that has already
+    // been saved to the database.
     protected static function loadRecordFromData($data) {
         $class = get_called_class();
         $obj = new $class();
         foreach (array_keys($data) as $attr) {
             $obj->$attr = $data[$attr];
         }
+        $obj->is_new_record = false;
         return $obj;
     }
 
@@ -104,6 +115,10 @@ class Record {
     // when the record is new.
     // TODO: Support updating records
     public function save() {
+        if (!$this->is_new_record) {
+            throw new ErrorException("Unimplemented feature: Saving dirty records.");
+        }
+
         $new_obj = array();
 
         foreach (get_called_class()::getAttrs() as $attr) {
@@ -123,6 +138,12 @@ class Record {
         $statement = $conn->prepare($sql);
         $statement->execute($new_obj);
         $this->id = $conn->lastInsertId();
+
+        foreach(get_called_class()::$has_many as $association_name => $association_values) {
+            foreach($this->$association_name as $obj) {
+                $obj.save();
+            }
+        }
     }
 
     // public static function find_by_id($id) {
@@ -136,12 +157,21 @@ class Record {
     public function __get($name){
         // Make it easier to access has_many associations
         if (array_key_exists($name, get_called_class()::$has_many)) {
+            if (isset($this->associations_are_loaded[$name])
+            && $this->associations_are_loaded[$name]) {
+                return $this->associations[$name];
+            }
+
             $association = get_called_class()::$has_many[$name];
 
-            // TODO: Cache this
-            return $association['class_name']::where(
+            $data = $association['class_name']::where(
                 array($association['foreign_key']=>$this->id)
             );
+
+            $this->associations[$name] = $data;
+            $this->associations_are_loaded[$name] = true;
+
+            return $data;
         }
 
         $trace = debug_backtrace();
