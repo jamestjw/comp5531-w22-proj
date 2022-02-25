@@ -34,7 +34,9 @@ class Record {
     protected static function loadRecordFromData($data) {
         $class = get_called_class();
         $obj = new $class();
+
         foreach (array_keys($data) as $attr) {
+            // $obj->$attr = $data[$attr];
             $obj->$attr = $data[$attr];
         }
         $obj->is_new_record = false;
@@ -139,16 +141,15 @@ class Record {
         $statement->execute($new_obj);
         $this->id = $conn->lastInsertId();
 
+        // TODO: Fix n+1 saving
         foreach(get_called_class()::$has_many as $association_name => $association_values) {
+            $foreign_key = $association_values['foreign_key'];
             foreach($this->$association_name as $obj) {
-                $obj.save();
+                $obj->$foreign_key = $this->id;
+                $obj->save();
             }
         }
     }
-
-    // public static function find_by_id($id) {
-    //     return get_called_class()::find_by(array("id"=>$id));
-    // }
 
     public static function get_table_name() {
         return get_called_class()::$table_name;
@@ -177,6 +178,30 @@ class Record {
         $trace = debug_backtrace();
         trigger_error(
             'Undefined property via __get(): ' . $name .
+            ' in ' . $trace[0]['file'] .
+            ' on line ' . $trace[0]['line'],
+            E_USER_NOTICE);
+        return null;
+    }
+
+    public function __set($name, $val){
+        // TODO: Figure out what is happening here,
+        // why is PHP assigning with integer indices?
+        if (preg_match('/\d+/', $name)) {
+            return;
+        }
+
+        // Make it easier to access has_many associations
+        if (array_key_exists($name, get_called_class()::$has_many)) {
+            $this->associations[$name] = $val;
+            $this->associations_are_loaded[$name] = true;
+
+            return;
+        }
+
+        $trace = debug_backtrace();
+        trigger_error(
+            'Undefined property via __set(): ' . $name .
             ' in ' . $trace[0]['file'] .
             ' on line ' . $trace[0]['line'],
             E_USER_NOTICE);

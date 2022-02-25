@@ -12,16 +12,15 @@ if (isset($_POST["submit"])) {
     $discussion->user_id = $_SESSION["current_user"]->id;
 
     try {
-        $discussion->save();
-
-        # TODO: Make this more convenient
-        # A single $discussion->save() call should save everything.
         $discussionMessage = new DiscussionMessage();
         $discussionMessage->user_id = $_SESSION["current_user"]->id;
         $discussionMessage->discussion_id = $discussion->id;
         $discussionMessage->content = $_POST["content"];
-        $discussionMessage->save();
-        header("Location: discussions.php");
+
+        $discussion->discussion_messages = array($discussionMessage);
+        $discussion->save();
+
+        header("Location: discussion.php?id={$discussion->id}");
     }  catch(PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
