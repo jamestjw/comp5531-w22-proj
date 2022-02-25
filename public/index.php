@@ -10,6 +10,9 @@
   <li>
     <a href="discussions.php"><strong>View</strong></a> - list all discussions
   </li>
+  <li>
+    <a href="account_settings.php"><strong>Account Settings</strong></a> - change account settings
+  </li>
 </ul>
 
 <?php include "templates/footer.php"; ?>
