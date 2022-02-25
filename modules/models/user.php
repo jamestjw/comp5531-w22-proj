@@ -8,25 +8,24 @@ function getConnection() {
 class Record {
     static protected $table_name = "default_table_name";
 
+    protected static function loadRecordFromData($data) {
+        $class = get_called_class();
+        $obj = new $class();
+        foreach (array_keys($data) as $attr) {
+            $obj->$attr = $data[$attr];
+        }
+        return $obj;
+    }
+
     public static function getAll() {
-        $class_name = get_called_class();
-        $table_name = $class_name::$table_name;
+        $table_name = get_called_class()::$table_name;
         $sql = "SELECT * FROM $table_name;";
 
         $statement = getConnection()->prepare($sql);
         $statement->execute();
         $res = $statement->fetchAll();
 
-        $load_user = function($data) {
-            $class = get_called_class();
-            $obj = new $class();
-            foreach (array_keys($data) as $attr) {
-                $obj->$attr = $data[$attr];
-            }
-            return $obj;
-        };
-
-        return array_map($load_user, $res);
+        return array_map([get_called_class(), 'loadRecordFromData'], $res);
     }
 
     public static function getAttrs() {
@@ -81,4 +80,25 @@ class User extends Record {
 	public $password_digest;
 	public $created_at;
 	public $updated_at;
+
+    // TODO: Make this method more generic and move it
+    // to the Record class
+    public static function find_by_email($email) {
+        $sql = sprintf(
+            "SELECT * from %s WHERE %s = '%s'",
+            get_called_class()::$table_name,
+            "email",
+            $email
+        );
+
+        $statement = getConnection()->prepare($sql);
+        $statement->execute();
+        $res = $statement->fetchAll();
+
+        if (count($res) == 0) {
+            return null;
+        } else {
+            return Record::loadRecordFromData($res[0]);
+        }
+    }
 }
