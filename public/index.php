@@ -7,6 +7,9 @@
   <li>
     <a href="view_users.php"><strong>View</strong></a> - list all users
   </li>
+  <li>
+    <a href="discussions.php"><strong>View</strong></a> - list all discussions
+  </li>
 </ul>
 
 <?php include "templates/footer.php"; ?>
