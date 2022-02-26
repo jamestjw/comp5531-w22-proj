@@ -30,11 +30,12 @@ if (isset($_GET["id"]) && ($discussion = Discussion::find_by_id($_GET["id"]))) {
 
     <div>Title: <?php echo $discussion->title; ?> </div>
     <div>Number of posts: <?php echo count($discussion_messages); ?> </div>
+    <div>Author: <?php echo $discussion->user->first_name ?> </div>
 
     <table>
         <tr>
             <th>ID</th>
-            <th>Post Author ID</th>
+            <th>Author</th>
             <th>Content</th>
             <th>Replies to</th>
             <th>Created At</th>
@@ -43,7 +44,7 @@ if (isset($_GET["id"]) && ($discussion = Discussion::find_by_id($_GET["id"]))) {
         <?php foreach ($discussion_messages as $discussion_message) { ?>
             <tr>
                 <td><?php echo $discussion_message->id; ?></td>
-                <td><?php echo $discussion_message->user_id; ?></td>
+                <td><?php echo $discussion_message->user->first_name; ?></td>
                 <td><?php echo $discussion_message->content; ?></td>
                 <td><?php echo $discussion_message->parent_id; ?></td>
                 <td><?php echo $discussion_message->created_at; ?></td>

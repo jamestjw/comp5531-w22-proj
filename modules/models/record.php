@@ -18,8 +18,15 @@ class Record {
             "foreign_key" => "discussion_id",
         )
     );
+    static protected $belongs_to = array(
+        "user" => array(
+            "class_name" => "User",
+            "foreign_key" => "user_id",
+        )
+    );
     */
     static protected $has_many = array();
+    static protected $belongs_to = array();
 
     protected $is_new_record = true;
     // Stores arrays of entities for each association (or entity for 1-to-1
@@ -173,6 +180,23 @@ class Record {
             $this->associations_are_loaded[$name] = true;
 
             return $data;
+        } elseif (array_key_exists($name, get_called_class()::$belongs_to)) {
+            if (isset($this->associations_are_loaded[$name])
+            && $this->associations_are_loaded[$name]) {
+                return $this->associations[$name];
+            }
+
+            $association = get_called_class()::$belongs_to[$name];
+            $foreign_key = $association['foreign_key'];
+
+            $data = $association['class_name']::find_by(
+                array("id"=>$this->$foreign_key)
+            );
+
+            $this->associations[$name] = $data;
+            $this->associations_are_loaded[$name] = true;
+
+            return $data;
         }
 
         $trace = debug_backtrace();
@@ -192,7 +216,7 @@ class Record {
         }
 
         // Make it easier to access has_many associations
-        if (array_key_exists($name, get_called_class()::$has_many)) {
+        if (array_key_exists($name, get_called_class()::$has_many) || array_key_exists($name, get_called_class()::$belongs_to)) {
             $this->associations[$name] = $val;
             $this->associations_are_loaded[$name] = true;
 

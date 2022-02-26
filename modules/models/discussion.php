@@ -10,6 +10,12 @@ class Discussion extends Record {
             "foreign_key" => "discussion_id",
         )
     );
+    static protected $belongs_to = array(
+        "user" => array(
+            "class_name" => "User",
+            "foreign_key" => "user_id",
+        )
+    );
 
     public $id;
     public $user_id;
