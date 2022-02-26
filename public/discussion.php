@@ -47,6 +47,18 @@ if (isset($_GET["id"]) && ($discussion = Discussion::find_by_id($_GET["id"]))) {
                 <td><?php echo $discussion_message->content; ?></td>
                 <td><?php echo $discussion_message->parent_id; ?></td>
                 <td><?php echo $discussion_message->created_at; ?></td>
+                <td><a href="discussions.php" class="replyMessage">Reply</a></td>
+                <td>
+                    <form method="post" action="discussion.php" class="replyMessageForm" style="display: none;">
+                        <label for="content">Content</label>
+                        <input type="text" name="content" id="content">
+                        <input type="hidden" id="discussion_id" name="discussion_id" value="<?php echo $discussion->id; ?>">
+                        <input type="hidden" id="user_id" name="user_id" value="<?php echo $_SESSION["current_user"]->id; ?>">
+                        <!-- Put in actual ID of post to reply to-->
+                        <input type="hidden" id="replies_to" name="replies_to" value="<?php echo $discussion_message->id ?>">
+                        <input type="submit" name="submit" value="Submit">
+                    </form>
+                </td>
             </tr>
         <?php } ?>
     </table>
@@ -57,8 +69,6 @@ if (isset($_GET["id"]) && ($discussion = Discussion::find_by_id($_GET["id"]))) {
         <input type="text" name="content" id="content">
         <input type="hidden" id="discussion_id" name="discussion_id" value="<?php echo $discussion->id; ?>">
         <input type="hidden" id="user_id" name="user_id" value="<?php echo $_SESSION["current_user"]->id; ?>">
-        <!-- Put in actual ID of post to reply to-->
-        <input type="hidden" id="replies_to" name="replies_to" value="<?php echo array_last($discussion_messages)->id ?? null; ?>">
         <input type="submit" name="submit" value="Submit">
     </form>
 
@@ -69,3 +79,4 @@ if (isset($_GET["id"]) && ($discussion = Discussion::find_by_id($_GET["id"]))) {
 ?>
 
 <?php include "templates/footer.php"; ?>
+<script src = "../js/discussion.js"></script>
