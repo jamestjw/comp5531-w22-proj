@@ -19,7 +19,7 @@ try {
     
     echo "Database and table users created successfully.";
 } catch(PDOException $error) {
-    echo $sql . "<br>" . $error->getMessage();
+    echo "<br>" . $error->getMessage();
 }
 
 // Insert admin user

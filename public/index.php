@@ -1,5 +1,10 @@
 <?php include "templates/header.php"; ?>
 
+<?php 
+auth_loggedin();
+
+?>
+
 <ul>
   <li>
     <a href="create_user.php"><strong>Create</strong></a> - add a user

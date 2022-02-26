@@ -2,6 +2,7 @@
 
 require "../modules/models/user.php";
 require_once "../common.php";
+require_once "../modules/models/loggedin.php";
 
 maybe_session_start();
 
@@ -23,7 +24,27 @@ if (count($_POST) > 0) {
     if ($is_success == 0) {
         $_SESSION["error_message"] = "Invalid email or Password!";
     } else {
+		// Create user login token
+		$loginToken = new Loggedin();
+		$loginToken->user_digest = md5(time());
+		$loginToken->user_id = $user->id;	
+		
+		// Check if user id already exists in loggedin table. If it does, delete all entries for the user id before saving new token
+		if(Loggedin::find_by_user_id($user->id)){
+			// TODO: Delete the auth token for the user that already exists.
+		}
+
+		// Add token to logedin table
+		try {
+			$loginToken->save();
+		}  catch(PDOException $error) {
+			echo "<br>" . $error->getMessage();
+		}
+
+		// Register login token in session variable
+		$_SESSION["AuthKey"] = $loginToken->user_digest;
         $_SESSION["current_user"] = $user;
+		
         header("Location:  ./index.php");
     }
 }
