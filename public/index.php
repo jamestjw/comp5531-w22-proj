@@ -9,7 +9,15 @@
   </li>
   <li>
     <a href="discussions.php"><strong>View</strong></a> - list all discussions
+  </li> 
+  <li>
+    <a href="CreateInstructor.php"><strong>View</strong></a> - Create Instructors
+  </li> 
+  <li>
+    <a href="InstructorsList.php"><strong>View</strong></a> - Instructors
   </li>
+  
+
 </ul>
 
 <?php include "templates/footer.php"; ?>
