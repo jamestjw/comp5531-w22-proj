@@ -11,7 +11,7 @@
     <a href="discussions.php"><strong>View</strong></a> - list all discussions
   </li> 
   <li>
-    <a href="InstructorsList.php"><strong>View</strong></a> - Instructors
+    <a href="instructors_list.php"><strong>View</strong></a> - Instructors
   </li>
   
 
