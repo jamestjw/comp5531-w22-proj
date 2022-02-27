@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
 	last_name VARCHAR(30) NOT NULL,
 	email VARCHAR(50) NOT NULL,
 	is_admin BOOLEAN NOT NULL,
+	is_instructor BOOLEAN NOT NULL DEFAULT 0,
 	password_digest VARCHAR(60) NOT NULL,
 	student_id INT UNSIGNED,
 	created_at TIMESTAMP,
