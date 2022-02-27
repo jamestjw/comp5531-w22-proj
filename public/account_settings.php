@@ -42,7 +42,7 @@ li    { display: table-row;}
   </li>
   <li>
     <label for="student_id">Student ID: <?php echo escape($user->student_id)?></label>
-    <input type="number" id="student_id" name="student_id"></input>
+    <input type="text" id="student_id" name="student_id"></input>
   </li>
   <li>
     <label for="email">Email: <?php echo escape($user->email)?></label>
@@ -53,6 +53,7 @@ li    { display: table-row;}
     <input type="text" id="msg" name="password"></input>
   </li>
  </ul>
+ <input type="submit" name="submit" value="Submit">
 </form>
 
 <?php }else{ ?>
