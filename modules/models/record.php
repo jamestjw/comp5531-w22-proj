@@ -26,10 +26,16 @@ class Record
             "foreign_key" => "user_id",
         )
     );
+    static protected $has_one = array(
+        "attachment" => array(
+            "class_name" => "Attachment",
+            "foreign_key" => "attachable_id",
+        )
+    );
     */
-
-    protected static $has_many = array();
-    protected static $belongs_to = array();
+    static protected $has_many = array();
+    static protected $belongs_to = array();
+    static protected $has_one = array();
 
     protected $is_new_record = true;
     // Stores arrays of entities for each association (or entity for 1-to-1
@@ -301,6 +307,23 @@ class Record
             $this->associations_are_loaded[$name] = true;
 
             return $data;
+        } elseif (array_key_exists($name, get_called_class()::$has_one)) {
+            if (isset($this->associations_are_loaded[$name])
+            && $this->associations_are_loaded[$name]) {
+                return $this->associations[$name];
+            }
+
+            $association = get_called_class()::$has_one[$name];
+            $foreign_key = $association['foreign_key'];
+
+            $data = $association['class_name']::find_by(
+                array($foreign_key=>$this->id)
+            );
+
+            $this->associations[$name] = $data;
+            $this->associations_are_loaded[$name] = true;
+
+            return $data;
         }
 
         $trace = debug_backtrace();
@@ -321,8 +344,10 @@ class Record
             return;
         }
 
-        // Make it easier to access has_many associations
-        if (array_key_exists($name, get_called_class()::$has_many) || array_key_exists($name, get_called_class()::$belongs_to)) {
+        // Make it easier to access has_many, belongs_to and has_one associations
+        if (array_key_exists($name, get_called_class()::$has_many)
+            || array_key_exists($name, get_called_class()::$belongs_to)
+            || array_key_exists($name, get_called_class()::$has_one)) {
             $this->associations[$name] = $val;
             $this->associations_are_loaded[$name] = true;
 
