@@ -12,12 +12,14 @@
     <h1>COMP 5531 Database App</h1>
     <?php
     require_once (dirname(__FILE__)."/../../common.php");
+    require_once (dirname(__FILE__)."/../../modules/models/user.php");
 
     if(isset($_SESSION["error_message"]) && $_SESSION["error_message"]!="") { echo $_SESSION["error_message"]; }
 
     maybe_session_start();
     if (isset($_SESSION["current_user"])) {
-      echo "<p>You are logged in. <a href=\"logout.php\">Logout</a></p>";
+      $name = get_users_name();
+      echo "<p>You are logged in as {$name}. <a href=\"logout.php\">Logout</a></p>";
     } else {
       echo "<p>You are not logged in. <a href=\"login.php\">Login</a></p>";
     }

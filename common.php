@@ -53,7 +53,6 @@ function get_users_name() {
         $_SESSION = array();
         setcookie(session_name(), '', time() - 30000, '/');
         session_destroy();
-        header("Location: login.php");
       }
     }else{ // No session details exist or authentication key doesnt exist
       return false;// Should this return none or null?
