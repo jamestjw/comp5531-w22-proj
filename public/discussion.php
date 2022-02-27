@@ -3,7 +3,6 @@ require_once "../modules/models/discussion.php";
 require_once "../common.php";
 
 ensure_logged_in();
-auth_loggedin();
 
 if (isset($_POST['submit'])) {
     $msg = new DiscussionMessage();

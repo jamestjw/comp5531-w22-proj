@@ -17,6 +17,7 @@
     if(isset($_SESSION["error_message"]) && $_SESSION["error_message"]!="") { echo $_SESSION["error_message"]; }
 
     maybe_session_start();
+    verify_logged_in();
     if (isset($_SESSION["current_user"])) {
       $name = get_users_name();
       echo "<p>You are logged in as {$name}. <a href=\"logout.php\">Logout</a></p>";

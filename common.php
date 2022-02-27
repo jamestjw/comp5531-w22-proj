@@ -45,13 +45,13 @@ function get_users_name() {
 	}
   }
 
-  function auth_loggedin() {
+  function verify_logged_in() {
     if(isset($_SESSION) && array_key_exists("AuthKey", $_SESSION)){ // Session is started and authentication key exists
       // Get the auth token from session
       $authtoken = $_SESSION["AuthKey"];
       if(!Loggedin::find_by_user_digest($authtoken)){ // If user does not exist or authentication key does not match an entry in the loggedin table, logout
         $_SESSION = array();
-        setcookie(session_name(), '', time() - 30000, '/');
+        setcookie(session_name(), '', time() - 30000, '/'); // time() - 30000 changes the expiration time of the cookie to some point in the past so that the cookie expires
         session_destroy();
       }
     }else{ // No session details exist or authentication key doesnt exist

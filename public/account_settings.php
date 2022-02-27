@@ -3,11 +3,7 @@ require "../modules/models/user.php";
 require_once "../common.php";
 ?>
 
-
-
 <?php include "templates/header.php"; ?>
-
-
 
 <?php 
 
@@ -61,9 +57,6 @@ li    { display: table-row;}
     <h5>You need to be logged in to see your account details.</h1>
 
 <?php } ?>
-
-
-<form method="post">
 
 <?php include "templates/footer.php"; ?>
 

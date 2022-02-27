@@ -1,7 +1,7 @@
 <?php include "templates/header.php"; ?>
 
 <?php 
-auth_loggedin();
+
 
 ?>
 
