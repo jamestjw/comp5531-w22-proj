@@ -1,7 +1,7 @@
 <?php
 
 require "../modules/models/user.php";
-require "../common.php";
+require_once "../common.php";
 
 try  {
     $result = User::getAll();
@@ -15,7 +15,7 @@ try  {
 
 <?php 
 if ($result && count($result)) { ?>
-        <h2>Results</h2>
+        <h2>Users</h2>
 
         <table>
             <thead>
