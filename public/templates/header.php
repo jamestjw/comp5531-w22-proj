@@ -18,14 +18,31 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse me-auto" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
-            <a class="nav-link" href="#">Courses</a>
-            <a class="nav-link" href="#">Account Settings</a>
-            <a class="nav-link" href="#">Email</a>
-            <a class="nav-link" href="instructors_list.php">Instructors</a>
-          </div>
+        <div class="collapse navbar-collapse me-auto" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Courses</a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="#">Course Edit Page </a> </li>
+                <li><a class="dropdown-item" href="#">Course 1 </a></li>
+                <li><a class="dropdown-item" href="#">Direct Messages</a></li>
+                <li><a class="dropdown-item" href="#">Teams</a></li>
+                <li><a class="dropdown-item" href="#">Meetings</a></li> 
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Account Settings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Email</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="instructors_list.php">Instructors</a>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
