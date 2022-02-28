@@ -19,7 +19,8 @@ if (isset($_POST['submit'])) {
     // Uploads folder needs to be created in the public/ directory
     // TODO: Make this more convenient
     $target_dir = "uploads/";
-    $file_id = basename($_FILES["file"]["name"]);
+    // TODO: Improve the file ID
+    $file_id = uniqid().basename($_FILES["file"]["name"]);
     $target_file = $target_dir . $file_id;
 
     $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -64,6 +65,7 @@ if (isset($marked_entity_id)) {
                     <th>Description</th>
                     <th>File name</th>
                     <th>Created At</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -74,6 +76,9 @@ if (isset($marked_entity_id)) {
                 <td><?php echo escape($row->description); ?></td>
                 <td><?php echo $row->attachment->file_filename; ?></td>
                 <td><?php echo escape($row->created_at);  ?> </td>
+
+                <!-- TODO: Should we apply some sort of transformation to the file ID -->
+                <td><a href='<?php echo "download.php?file_id={$row->attachment->file_id}" ?>'>Download</a></td>
             </tr>
         <?php } ?>
         </tbody>
