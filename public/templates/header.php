@@ -34,7 +34,7 @@
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Account Settings</a>
+              <a class="nav-link" href="account_settings.php">Account Settings</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Email</a>
