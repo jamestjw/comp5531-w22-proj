@@ -16,10 +16,10 @@ try {
     $sql = file_get_contents("data/init.sql");
     $sql = sprintf($sql, $database_name);
     $connection->exec($sql);
-    
+
     echo "Database and table users created successfully.";
-} catch(PDOException $error) {
-    echo $sql . "<br>" . $error->getMessage();
+} catch (PDOException $error) {
+    echo "<br>" . $error->getMessage();
 }
 
 // Insert admin user
