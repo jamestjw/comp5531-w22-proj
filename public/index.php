@@ -10,6 +10,9 @@
   <li>
     <a href="discussions.php"><strong>View</strong></a> - list all discussions
   </li>
+  <li>
+    <a href="course_wizard.php"><strong>Course Wizard</strong></a> - View and Add Courses
+  </li>
 </ul>
 
 <?php include "templates/footer.php"; ?>
