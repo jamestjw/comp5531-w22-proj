@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
     try {
         $msg->save();
         header("Location: discussion.php?id=".$msg->discussion_id);
-    }  catch(PDOException $error) {
+    } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
 }
@@ -73,9 +73,10 @@ if (isset($_GET["id"]) && ($discussion = Discussion::find_by_id($_GET["id"]))) {
         <input type="submit" name="submit" value="Submit">
     </form>
 
-<?php }  else {
-    echo "Invalid discussion ID.";
-}
+<?php
+} else {
+        echo "Invalid discussion ID.";
+    }
 
 ?>
 
