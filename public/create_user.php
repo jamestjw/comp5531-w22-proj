@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
     try {
         $user->save();
         $create_success = true;
-    }  catch(PDOException $error) {
+    } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
 }

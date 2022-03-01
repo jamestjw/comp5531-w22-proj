@@ -2,13 +2,15 @@
 
 require_once(dirname(__FILE__)."/../../common.php");
 
-function getConnection() {
+function getConnection()
+{
     require(dirname(__FILE__)."/../../config.php");
     return new PDO($dsn, $username, $password, $options);
 }
 
-class Record {
-    static protected $table_name = "default_table_name";
+class Record
+{
+    protected static $table_name = "default_table_name";
 
     /*
     e.g. Override in the following manner
@@ -19,7 +21,7 @@ class Record {
         )
     );
     */
-    static protected $has_many = array();
+    protected static $has_many = array();
 
     protected $is_new_record = true;
     // Stores arrays of entities for each association (or entity for 1-to-1
@@ -31,7 +33,8 @@ class Record {
     // Loads a record and marks it as not new, i.e.
     // it will be treated as a record that has already
     // been saved to the database.
-    protected static function loadRecordFromData($data) {
+    protected static function loadRecordFromData($data)
+    {
         $class = get_called_class();
         $obj = new $class();
 
@@ -43,14 +46,16 @@ class Record {
         return $obj;
     }
 
-    public static function getAll() {
+    public static function getAll()
+    {
         return get_called_class()::where(array(1=>1));
     }
 
-    /* 
+    /*
         Usage: RecordName::where(array("name"=>"James", "student_id"=>12345));
-    */  
-    public static function where($attrs) {
+    */
+    public static function where($attrs)
+    {
         $table_name = get_called_class()::$table_name;
         $sql_wheres = array();
         foreach ($attrs as $key => $value) {
@@ -74,7 +79,8 @@ class Record {
         Usage: RecordName::find_by(array("name"=>"James", "student_id"=>12345));
         Returns the first record that matches
     */
-    public static function find_by($attrs) {
+    public static function find_by($attrs)
+    {
         $table_name = get_called_class()::$table_name;
         $sql_wheres = array();
         foreach ($attrs as $key => $value) {
@@ -98,7 +104,8 @@ class Record {
         }
     }
 
-    public static function getAttrs() {
+    public static function getAttrs()
+    {
         $class = get_called_class();
         $obj = new $class();
         $reflect = new ReflectionClass($obj);
@@ -116,7 +123,8 @@ class Record {
     // For now this function only handles the case
     // when the record is new.
     // TODO: Support updating records
-    public function save() {
+    public function save()
+    {
         if (!$this->is_new_record) {
             throw new ErrorException("Unimplemented feature: Saving dirty records.");
         }
@@ -142,20 +150,22 @@ class Record {
         $this->id = $conn->lastInsertId();
 
         // TODO: Fix n+1 saving
-        foreach(get_called_class()::$has_many as $association_name => $association_values) {
+        foreach (get_called_class()::$has_many as $association_name => $association_values) {
             $foreign_key = $association_values['foreign_key'];
-            foreach($this->$association_name as $obj) {
+            foreach ($this->$association_name as $obj) {
                 $obj->$foreign_key = $this->id;
                 $obj->save();
             }
         }
     }
 
-    public static function get_table_name() {
+    public static function get_table_name()
+    {
         return get_called_class()::$table_name;
     }
 
-    public function __get($name){
+    public function __get($name)
+    {
         // Make it easier to access has_many associations
         if (array_key_exists($name, get_called_class()::$has_many)) {
             if (isset($this->associations_are_loaded[$name])
@@ -180,11 +190,13 @@ class Record {
             'Undefined property via __get(): ' . $name .
             ' in ' . $trace[0]['file'] .
             ' on line ' . $trace[0]['line'],
-            E_USER_NOTICE);
+            E_USER_NOTICE
+        );
         return null;
     }
 
-    public function __set($name, $val){
+    public function __set($name, $val)
+    {
         // TODO: Figure out what is happening here,
         // why is PHP assigning with integer indices?
         if (preg_match('/\d+/', $name)) {
@@ -204,12 +216,14 @@ class Record {
             'Undefined property via __set(): ' . $name .
             ' in ' . $trace[0]['file'] .
             ' on line ' . $trace[0]['line'],
-            E_USER_NOTICE);
+            E_USER_NOTICE
+        );
         return null;
     }
 
-    public static function __callStatic($name, $arguments) {
-        if(startsWith($name, "find_by_")) {
+    public static function __callStatic($name, $arguments)
+    {
+        if (startsWith($name, "find_by_")) {
             preg_match('/find_by_(\w+)/', $name, $match);
             return get_called_class()::find_by(array($match[1]=>$arguments[0]));
         }
@@ -219,7 +233,8 @@ class Record {
             'Undefined function via __call(): ' . $name .
             ' in ' . $trace[0]['file'] .
             ' on line ' . $trace[0]['line'],
-            E_USER_NOTICE);
+            E_USER_NOTICE
+        );
     }
 }
 

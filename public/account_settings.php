@@ -5,9 +5,10 @@ require_once "../common.php";
 
 <?php include "templates/header.php"; ?>
 
-<?php 
+<?php
 
-function compare_passwords($p1, $p2){
+function compare_passwords($p1, $p2)
+{
     // Used to verify the confirmation password matches original typed password
     return $p1 === $p2;
 }
@@ -18,7 +19,8 @@ function compare_passwords($p1, $p2){
     User Account
 </h3>
 
-<?php if(isset($_SESSION["current_user"])){ $user = $_SESSION["current_user"] ?>
+<?php if (isset($_SESSION["current_user"])) {
+    $user = $_SESSION["current_user"] ?>
 
 <style>
 label { display: table-cell; }
@@ -52,7 +54,8 @@ li    { display: table-row;}
  <input type="submit" name="submit" value="Submit">
 </form>
 
-<?php }else{ ?>
+<?php
+} else { ?>
 
     <h5>You need to be logged in to see your account details.</h1>
 

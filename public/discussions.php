@@ -2,9 +2,9 @@
 
 require "../modules/models/discussion.php";
 
-try  {
+try {
     $result = Discussion::getAll();
-} catch(PDOException $error) {
+} catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
 
@@ -12,7 +12,7 @@ try  {
 
 <?php include "templates/header.php"; ?>
 
-<?php 
+<?php
 if ($result && count($result)) { ?>
         <h2>Discussions</h2>
 
@@ -38,7 +38,7 @@ if ($result && count($result)) { ?>
     </table>
     <?php } else { ?>
         <blockquote>No discussions found.</blockquote>
-    <?php } 
+    <?php }
 ?> 
 
 <p><a href="create_discussion.php">Create new discussion</a></p>

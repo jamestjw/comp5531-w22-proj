@@ -21,7 +21,7 @@ if (isset($_POST["submit"])) {
         $discussion->save();
 
         header("Location: discussion.php?id={$discussion->id}");
-    }  catch(PDOException $error) {
+    } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
 }

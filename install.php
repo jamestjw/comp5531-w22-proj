@@ -16,9 +16,9 @@ try {
     $sql = file_get_contents("data/init.sql");
     $sql = sprintf($sql, $database_name);
     $connection->exec($sql);
-    
+
     echo "Database and table users created successfully.";
-} catch(PDOException $error) {
+} catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
 
