@@ -16,10 +16,10 @@ try {
     $sql = file_get_contents("data/init.sql");
     $sql = sprintf($sql, $database_name);
     $connection->exec($sql);
-    
+
     echo "Database and table users created successfully.";
-} catch(PDOException $error) {
-    echo $sql . "<br>" . $error->getMessage();
+} catch (PDOException $error) {
+    echo "<br>" . $error->getMessage();
 }
 
 // Insert admin user
@@ -28,5 +28,6 @@ $admin->first_name = "admin";
 $admin->last_name = "user";
 $admin->email = "admin@concordia.ca";
 $admin->is_admin = 1;
+$admin->is_instructor = 0;
 $admin->password_digest = password_hash('root', PASSWORD_DEFAULT);
 $admin->save();

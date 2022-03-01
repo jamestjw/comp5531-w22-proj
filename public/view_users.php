@@ -3,9 +3,9 @@
 require "../modules/models/user.php";
 require_once "../common.php";
 
-try  {
+try {
     $result = User::getAll();
-} catch(PDOException $error) {
+} catch (PDOException $error) {
     echo $sql . "<br>" . $error->getMessage();
 }
 
@@ -13,7 +13,7 @@ try  {
 
 <?php include "templates/header.php"; ?>
 
-<?php 
+<?php
 if ($result && count($result)) { ?>
         <h2>Users</h2>
 
@@ -45,7 +45,7 @@ if ($result && count($result)) { ?>
     </table>
     <?php } else { ?>
         <blockquote>No users found.</blockquote>
-    <?php } 
+    <?php }
 ?> 
 
 <a href="index.php">Back to home</a>
