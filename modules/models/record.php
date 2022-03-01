@@ -132,7 +132,12 @@ class Record
             throw new ErrorException("Primary key specified is not valid as it returns more than one record. PK: ".$pk);
         }
 
-        $condition = sprintf("%s = %s", $pk, $this->$pk);
+        if(is_numeric($pk) and !is_string($pk)) {
+            $condition = sprintf("%s = %s", $pk, $this->$pk);
+        } else {
+            $condition = sprintf("%s = '%s'", $pk, $this->$pk);
+        }
+        
         $sql = sprintf(
             "DELETE FROM %s WHERE %s",
             get_called_class()::$table_name,
