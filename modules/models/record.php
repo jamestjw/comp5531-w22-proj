@@ -28,8 +28,8 @@ class Record
     );
     */
 
-    static protected $has_many = array();
-    static protected $belongs_to = array();
+    protected static $has_many = array();
+    protected static $belongs_to = array();
 
     protected $is_new_record = true;
     // Stores arrays of entities for each association (or entity for 1-to-1

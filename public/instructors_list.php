@@ -3,9 +3,9 @@
 require_once "../modules/models/user.php";
 require_once "../common.php";
 
-try  {
+try {
     $result = User::where(array('is_instructor' => '1'));
-} catch(PDOException $error) {
+} catch (PDOException $error) {
     echo $sql . "<br>" . $error->getMessage();
 }
 if (isset($_POST['submit'])) {
@@ -14,13 +14,13 @@ if (isset($_POST['submit'])) {
     $user->last_name = $_POST['last_name'];
     $user->email = $_POST['email'];
     $user->is_admin = 0;
-	$user->is_instructor = 1;
+    $user->is_instructor = 1;
     $user->password_digest = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     try {
         $user->save();
         $create_success = true;
-    }  catch(PDOException $error) {
+    } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
 }
@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
 
 <?php include "templates/header.php"; ?>
 
-<?php 
+<?php
 if ($result && count($result)) { ?>
         <h2>Instructors</h2>
 
@@ -59,7 +59,7 @@ if ($result && count($result)) { ?>
     </table>
     <?php } else { ?>
         <blockquote>No users found.</blockquote>
-    <?php } 
+    <?php }
 ?> 
 
 <?php if (isset($_POST['submit']) && $create_success) { ?>
