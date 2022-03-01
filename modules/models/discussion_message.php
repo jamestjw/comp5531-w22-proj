@@ -6,6 +6,13 @@ class DiscussionMessage extends Record
 {
     protected static $table_name = "discussion_messages";
 
+    static protected $belongs_to = array(
+        "user" => array(
+            "class_name" => "User",
+            "foreign_key" => "user_id",
+        )
+    );
+
     public $id;
     public $user_id;
     public $discussion_id;
