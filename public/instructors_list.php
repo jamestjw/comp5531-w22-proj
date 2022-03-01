@@ -58,8 +58,8 @@ if ($result && count($result)) { ?>
         </tbody>
     </table>
     <?php } else { ?>
-        <blockquote>No users found.</blockquote>
-    <?php }
+        <blockquote>No instructors found.</blockquote>
+    <?php } 
 ?> 
 
 <?php if (isset($_POST['submit']) && $create_success) { ?>
