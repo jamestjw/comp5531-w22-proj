@@ -5,7 +5,7 @@
   *
   */
 
-include_once "../modules/models/loggedin.php";
+include_once dirname(__FILE__)."/modules/models/loggedin.php";
 
 function escape($html)
 {
