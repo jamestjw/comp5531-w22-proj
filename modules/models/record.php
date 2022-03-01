@@ -112,6 +112,44 @@ class Record
         }
     }
 
+    public function delete($pk="id") // Deletes by assuming $id is always the pk. Not sure if robust enough.
+    {
+        // Check to see if we are deleting a record that has not been saved yet.
+        if ($this->is_new_record) {
+            throw new ErrorException("Cannot delete an object that is not yet in a table. Please set the object to null instead.");
+        }
+
+        $attrs = $this->getAttrs();
+
+        // Ensure that the pk exists
+        if (!in_array($pk, $attrs)) {
+            throw new ErrorException("Record trying to delete using a primary key that does not exist: ".$pk);
+        }
+
+        $result = get_called_class()::where(array($pk=>$this->$pk));
+        // Make sure that only one record with the supplied key exists in the table
+        if (count($result) > 1) {
+            throw new ErrorException("Primary key specified is not valid as it returns more than one record. PK: ".$pk);
+        }
+
+        $condition = sprintf("%s = %s", $pk, $this->$pk);
+        $sql = sprintf(
+            "DELETE FROM %s WHERE %s",
+            get_called_class()::$table_name,
+            $condition
+        );
+
+        $statement = getConnection()->prepare($sql);
+        $statement->execute();
+
+        // Set all attributes of the called object to none
+        foreach ($attrs as $attr) {
+            $this->$attr = null;
+        }
+
+        return;
+    }
+
     public static function getAttrs()
     {
         $class = get_called_class();
@@ -156,6 +194,7 @@ class Record
         $statement = $conn->prepare($sql);
         $statement->execute($new_obj);
         $this->id = $conn->lastInsertId();
+        $this->is_new_record = false;
 
         // TODO: Fix n+1 saving
         foreach (get_called_class()::$has_many as $association_name => $association_values) {
