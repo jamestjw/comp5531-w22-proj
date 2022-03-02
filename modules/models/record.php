@@ -252,14 +252,10 @@ class Record
             implode(', ', $update_fields),
             $where_condition
         );
-
         $statement = getConnection()->prepare($sql);
         $statement->execute();
-
         // Should I do anything to allow the user to update the has_many, belongs_to, etc fields?
-
         return;
-
     }
 
     public static function get_table_name()
