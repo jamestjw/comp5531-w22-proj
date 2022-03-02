@@ -177,8 +177,7 @@ class Record
     public function save()
     {
         if (!$this->is_new_record) {
-            $this->update();
-            return;
+            return $this->update();
         }
 
         $new_obj = array();
@@ -223,7 +222,7 @@ class Record
 
         // Ensure that the pk exists
         if (!in_array($pk, $attrs)) {
-            throw new ErrorException("Record trying to delete using a primary key that does not exist: ".$pk);
+            throw new ErrorException("Record trying to update using a primary key that does not exist: ".$pk);
         }
 
         // Get the record with the primary key from the table
@@ -235,6 +234,10 @@ class Record
             if($this->$attr !== $old->$attr){
                 $to_update[$attr] = $this->$attr;
             }
+        }
+
+        if (empty($to_update)){
+            return;
         }
 
         // update the differing fields
@@ -254,7 +257,6 @@ class Record
         );
         $statement = getConnection()->prepare($sql);
         $statement->execute();
-        // Should I do anything to allow the user to update the has_many, belongs_to, etc fields?
         return;
     }
 
