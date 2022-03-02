@@ -14,7 +14,6 @@ function compare_passwords($p1, $p2)
 }
 ?>
 
-
 <h3>
     User Account
 </h3>
@@ -62,6 +61,3 @@ li    { display: table-row;}
 <?php } ?>
 
 <?php include "templates/footer.php"; ?>
-
-
-
