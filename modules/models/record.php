@@ -177,7 +177,6 @@ class Record
     public function save()
     {
         if (!$this->is_new_record) {
-            //throw new ErrorException("Unimplemented feature: Saving dirty records.");
             $this->update();
             return;
         }
