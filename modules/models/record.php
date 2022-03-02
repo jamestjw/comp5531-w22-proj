@@ -177,7 +177,7 @@ class Record
     public function save()
     {
         if (!$this->is_new_record) {
-            throw new ErrorException("Unimplemented feature: Saving dirty records.");
+            return $this->update();
         }
 
         $new_obj = array();
@@ -209,6 +209,55 @@ class Record
                 $obj->save();
             }
         }
+    }
+    /*
+        I decided to make this a private function that is only invoked internally by save.
+        Save can be considered to be "saving details in the database" so the user shouldnt
+        save a dirty record differently to how they save a clean record.
+    */
+    private function update($pk='id')
+    {
+        // Get attributes of the called object
+        $attrs = $this->getAttrs();
+
+        // Ensure that the pk exists
+        if (!in_array($pk, $attrs)) {
+            throw new ErrorException("Record trying to update using a primary key that does not exist: ".$pk);
+        }
+
+        // Get the record with the primary key from the table
+        $old = get_called_class()::find_by(array($pk => $this->$pk));
+
+        // See which attributes are different from the one in the table to object
+        $to_update = [];
+        foreach($attrs as $attr) {
+            if($this->$attr !== $old->$attr){
+                $to_update[$attr] = $this->$attr;
+            }
+        }
+
+        if (empty($to_update)){
+            return;
+        }
+
+        // update the differing fields
+        $update_fields = array();
+        $where_condition = sprintf("%s = %s", $pk, $this->$pk);
+        foreach($to_update as $key => $value){
+            if(is_string($value)){
+                $value = sprintf("'%s'", $value);
+            }
+            array_push($update_fields, sprintf("%s = %s", $key, $value));
+        }
+        $sql = sprintf(
+            "UPDATE %s SET %s WHERE %s",
+            get_called_class()::$table_name,
+            implode(', ', $update_fields),
+            $where_condition
+        );
+        $statement = getConnection()->prepare($sql);
+        $statement->execute();
+        return;
     }
 
     public static function get_table_name()
