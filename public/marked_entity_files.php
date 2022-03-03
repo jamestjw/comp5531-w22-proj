@@ -27,7 +27,6 @@ if (isset($_POST['submit'])) {
     $file_size = $_FILES["file"]["size"];
 
     $attachment = new Attachment();
-    $attachment->file_content_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
     $attachment->file_size = $_FILES["file"]["size"];
     $attachment->file_filename = basename($_FILES["file"]["name"]);
     $attachment->file_id = $file_id;

@@ -9,7 +9,6 @@ class Attachment extends Record
 
     public $id;
     public $file_id;
-    public $file_content_type;
     public $file_filename;
     public $file_size;
     public $attachable_id;

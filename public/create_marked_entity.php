@@ -26,7 +26,6 @@ if (isset($_FILES['marked_entity_file'])) {
     $file_size = $_FILES["marked_entity_file"]["size"];
 
     $attachment = new Attachment();
-    $attachment->file_content_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
     $attachment->file_size = $_FILES["marked_entity_file"]["size"];
     $attachment->file_filename = basename($_FILES["marked_entity_file"]["name"]);
     $attachment->file_id = $file_id;
