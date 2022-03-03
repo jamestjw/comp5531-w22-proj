@@ -3,6 +3,8 @@
 require_once "../modules/models/user.php";
 require_once "../common.php";
 
+    $create_success = false;
+
     if (isset($_POST['submit2'])) 
 	{
         
@@ -44,6 +46,10 @@ require_once "../common.php";
     if(isset($_POST['submit2']) && $create_success){
         echo "<h3> $count Students added successfully</h3><br>";
     }
+
+    else if (isset($_POST['submit2']) && !$create_success){
+        echo "<h3> Student List upload failed </h3>";
+    }
 ?>
 
 <form enctype='multipart/form-data' action='' method='post'>
@@ -52,6 +58,11 @@ require_once "../common.php";
         <label>Upload Student List</label> 
     </h2>
     <br>
+    <p> 
+        File should have a Header row and the columns should be as follows : Student ID, First Name, Last Name, Email 
+        <br>All new users have the default password: "Welcome"
+    </p>
+    
     <label for="filename">Select File</label>
     <input size='50' type='file' name='filename' accept=".csv">
     </br>
@@ -74,13 +85,8 @@ require_once "../common.php";
 		$headers = fgetcsv($handle, 1000, ",");
         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 
 		{
-            $studentData[$row] = array();
-
-            $num = count($data);
-            for ($c=0; $c<$num; $c++){
-                echo $data[$c] . ", ";
-                $studentData[$row][$c] = $data[$c];
-            }
+            $studentData[$row] = $data;
+            echo join(", ", $data);
             echo "<br>";
             
             $row++;
