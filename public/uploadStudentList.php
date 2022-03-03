@@ -8,7 +8,8 @@ require_once "../common.php";
     if (isset($_POST['submit2'])) 
 	{
         
-		$students = fopen('studentList.csv', 'r');
+		$students = fopen($_POST["fileID"], "r");
+        $headers = fgetcsv($students, 1000, ",");
         $count = 0;
 		while (($studentData = fgetcsv($students, 1000, ",")) !== FALSE) 
         {
@@ -34,8 +35,7 @@ require_once "../common.php";
         
         
         fclose($students);
-        $filePath = 'studentList.csv';
-        unlink($filePath);
+        unlink($_POST["fileID"]);
 
 	}
 ?>
@@ -94,12 +94,8 @@ require_once "../common.php";
         }
         fclose($handle);
 
-        $fp = fopen('studentList.csv', 'w');
-        foreach($studentData as $fields){
-            fputcsv($fp, $fields);
-        }
-
-        fclose($fp);
+        $fileName = uniqid('studentList').".csv";
+        move_uploaded_file($_FILES['filename']['tmp_name'], $fileName);
      
     }
 ?>
@@ -107,6 +103,7 @@ require_once "../common.php";
 <?php if(isset($_POST["submit"])) : ?>
     <form method='post'>
     <input type='submit' name='submit2' value='confirm and upload'>
+    <input type="hidden" id="fileID" name="fileID" value="<?php echo $fileName?>">
     </form>
 
 <?php endif; ?>
