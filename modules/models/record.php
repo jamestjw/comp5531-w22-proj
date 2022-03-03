@@ -33,9 +33,9 @@ class Record
         )
     );
     */
-    static protected $has_many = array();
-    static protected $belongs_to = array();
-    static protected $has_one = array();
+    protected static $has_many = array();
+    protected static $belongs_to = array();
+    protected static $has_one = array();
 
     protected $is_new_record = true;
     // Stores arrays of entities for each association (or entity for 1-to-1
@@ -138,12 +138,12 @@ class Record
             throw new ErrorException("Primary key specified is not valid as it returns more than one record. PK: ".$pk);
         }
 
-        if(is_numeric($pk) and !is_string($pk)) {
+        if (is_numeric($pk) and !is_string($pk)) {
             $condition = sprintf("%s = %s", $pk, $this->$pk);
         } else {
             $condition = sprintf("%s = '%s'", $pk, $this->$pk);
         }
-        
+
         $sql = sprintf(
             "DELETE FROM %s WHERE %s",
             get_called_class()::$table_name,
@@ -189,7 +189,7 @@ class Record
         $new_obj = array();
 
         foreach (get_called_class()::getAttrs() as $attr) {
-            $new_obj[$attr] = $this->$attr;
+            $new_obj[$attr] = $this->$attr ?? null;
         }
 
         $new_obj['created_at'] = date('Y-m-d H:i:s');
@@ -236,21 +236,21 @@ class Record
 
         // See which attributes are different from the one in the table to object
         $to_update = [];
-        foreach($attrs as $attr) {
-            if($this->$attr !== $old->$attr){
+        foreach ($attrs as $attr) {
+            if ($this->$attr !== $old->$attr) {
                 $to_update[$attr] = $this->$attr;
             }
         }
 
-        if (empty($to_update)){
+        if (empty($to_update)) {
             return;
         }
 
         // update the differing fields
         $update_fields = array();
         $where_condition = sprintf("%s = %s", $pk, $this->$pk);
-        foreach($to_update as $key => $value){
-            if(is_string($value)){
+        foreach ($to_update as $key => $value) {
+            if (is_string($value)) {
                 $value = sprintf("'%s'", $value);
             }
             array_push($update_fields, sprintf("%s = %s", $key, $value));

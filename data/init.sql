@@ -60,12 +60,25 @@ CREATE TABLE IF NOT EXISTS attachments (
 	updated_at TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS marked_entity_files (
+CREATE TABLE IF NOT EXISTS marked_entities (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	entity_id INT(11) NOT NULL,
-	user_id INT(11) NOT NULL,
-	title VARCHAR(15),
+	title VARCHAR(50),
 	description TEXT,
+	course_offering_id INT(11) UNSIGNED NOT NULL,
+	is_group_work BOOLEAN,
+	due_at TIMESTAMP,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
+);
+
+
+CREATE TABLE IF NOT EXISTS marked_entity_files (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	entity_id INT(11) UNSIGNED NOT NULL,
+	user_id INT(11) NOT NULL,
+	title VARCHAR(50),
+	description TEXT,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP,
+	FOREIGN KEY (entity_id) REFERENCES marked_entities(id)
 );

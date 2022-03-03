@@ -1,4 +1,5 @@
 <?php
+
 require_once "../modules/models/attachment.php";
 require_once "../common.php";
 
@@ -10,4 +11,3 @@ if (isset($_GET["file_id"]) && ($attachment = Attachment::find_by_file_id($_GET[
 } else {
     echo "Invalid file ID.";
 }
-?>

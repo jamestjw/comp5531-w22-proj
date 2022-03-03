@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
 
     if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
         echo "The file ". htmlspecialchars(basename($_FILES["file"]["name"])). " has been uploaded.";
-      } else {
+    } else {
         echo "Sorry, there was an error uploading your file.";
     }
 
@@ -45,15 +45,14 @@ if (isset($_POST['submit'])) {
         $attachment->save();
 
         // header("Location: marked_entity_files.php?marked_entity_id=".$marked_entity_file->entity_id);
-    }  catch(PDOException $error) {
+    } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
 }
 
 // TODO: Ensure that marked entity ID is valid.
 if (isset($marked_entity_id)) {
-    $files = MarkedEntityFile::where(array("entity_id"=>isset($marked_entity_id))); 
-?>
+    $files = MarkedEntityFile::where(array("entity_id"=>isset($marked_entity_id))); ?>
     <div>Files for marked entity ID: <?php echo $marked_entity_id; ?> </div>
     <div>Number of files: <?php echo count($files); ?> </div>
 
@@ -97,8 +96,8 @@ if (isset($marked_entity_id)) {
     </form>
 <?php
 } else {
-    echo "Invalid marked entity ID.";
-}
+        echo "Invalid marked entity ID.";
+    }
 ?>
 
 <?php include "templates/footer.php"; ?>

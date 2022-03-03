@@ -1,8 +1,10 @@
 <?php
-require_once (dirname(__FILE__)."/record.php");
 
-class Attachment extends Record {
-    static protected $table_name = "attachments";
+require_once(dirname(__FILE__)."/record.php");
+
+class Attachment extends Record
+{
+    protected static $table_name = "attachments";
     // TODO: Implement polymorphic belongs_to
 
     public $id;
@@ -12,6 +14,6 @@ class Attachment extends Record {
     public $file_size;
     public $attachable_id;
     public $attachable_type;
-	public $created_at;
-	public $updated_at;
+    public $created_at;
+    public $updated_at;
 }
