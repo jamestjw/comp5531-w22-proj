@@ -30,11 +30,11 @@
                 <li><a class="dropdown-item" href="#">Course 1 </a></li>
                 <li><a class="dropdown-item" href="#">Direct Messages</a></li>
                 <li><a class="dropdown-item" href="#">Teams</a></li>
-                <li><a class="dropdown-item" href="#">Meetings</a></li> 
+                <li><a class="dropdown-item" href="meetings.php">Meetings</a></li> 
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Account Settings</a>
+              <a class="nav-link" href="account_settings.php">Account Settings</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Email</a>
