@@ -13,6 +13,10 @@
   </li> 
 
 
+  <!-- Remove this when marked entity files can be correctly linked to marked entities-->
+  <li>
+    <a href="marked_entity_files.php?marked_entity_id=1"><strong>View</strong></a> - list all marked entity files
+  </li>
 </ul>
 
 <?php include "templates/footer.php"; ?>

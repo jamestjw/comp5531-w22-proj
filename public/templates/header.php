@@ -1,3 +1,9 @@
+<?php
+require_once(dirname(__FILE__)."/../../common.php");
+maybe_session_start();
+verify_logged_in();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,6 +12,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <title>COMP 5531 Database App</title>
     <link rel="stylesheet" href="css/bootstrap.css">
   </head>
@@ -31,6 +41,7 @@
                 <li><a class="dropdown-item" href="#">Direct Messages</a></li>
                 <li><a class="dropdown-item" href="#">Teams</a></li>
                 <li><a class="dropdown-item" href="#">Meetings</a></li> 
+                <li><a class="dropdown-item" href="marked_entities.php">Marked Entities</a></li>
               </ul>
             </li>
             <li class="nav-item">
@@ -47,17 +58,11 @@
       </div>
     </nav>
     
-
     <?php
-    require_once(dirname(__FILE__)."/../../common.php");
-    require_once(dirname(__FILE__)."/../../modules/models/user.php");
-
     if (isset($_SESSION["error_message"]) && $_SESSION["error_message"]!="") {
         echo $_SESSION["error_message"];
     }
 
-    maybe_session_start();
-    verify_logged_in();
     if (isset($_SESSION["current_user"])) {
         $name = get_users_name();
         echo "<p>You are logged in as {$name}. <a href=\"logout.php\">Logout</a></p>";
@@ -66,10 +71,6 @@
     }
     ?>
 
-
-
     <script src="js/bootstrap.bundle.js"></script>
-    
-
   </body>
 </html>

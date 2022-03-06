@@ -44,7 +44,7 @@ if (count($_POST) > 0) {
         // Register login token in session variable
         $_SESSION["AuthKey"] = $loginToken->user_digest;
         $_SESSION["current_user"] = $user;
-
+        $_SESSION["current_user_id"] = $user->id;
         header("Location:  ./index.php");
     }
 }
