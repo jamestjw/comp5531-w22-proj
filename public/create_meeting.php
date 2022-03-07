@@ -8,7 +8,7 @@ ensure_logged_in();
 if (isset($_POST["submit"])) {
     $meeting = new Meeting();
     $meeting->title = $_POST["title"];
-    //$meeting->user_id = $_SESSION["current_user"]->id;
+    $meeting->user_id = $_SESSION["current_user"]->id;
     $meeting->agenda = $_POST["agenda"];
     $meeting->planned_date = $_POST["date"];
     $meeting->planned_time = $_POST["time"];
@@ -34,7 +34,7 @@ if (isset($_POST["submit"])) {
     <label for="title">Title</label>
     <input type="text" name="title" id="title">
     <label for="agenda">Agenda</label>
-    <input type="text" name="agenda" id="agenda">
+    <textarea name="agenda" cols="40" rows="5"></textarea>
     <label for="date">Date of meeting</label>
     <input type="date" name="date" id="date">
     <label for="time">Time of meeting</label>
