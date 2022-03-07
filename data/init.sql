@@ -91,8 +91,8 @@ CREATE TABLE IF NOT EXISTS meetings (
 	planned_date DATE, 
 	planned_time TIME,
 	has_passed BOOLEAN DEFAULT false,
-	start_at DATETIME,
-	end_at DATETIME,
+	start_at TIMESTAMP,
+	end_at TIMESTAMP,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 	-- TO DO add group_id as foreign key when table Groups is created (from course implementation)

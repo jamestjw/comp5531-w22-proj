@@ -14,11 +14,11 @@ try {
 
 <?php include "templates/header.php"; ?>
 
-
+<h2>Planned Meetings</h2>
 <?php
 if ($planned_meetings && count($planned_meetings)) { ?>
         
-        <h2>Planned Meetings</h2>
+
         <p>
         <table style="width:50%">
             <thead>
@@ -51,11 +51,11 @@ if ($planned_meetings && count($planned_meetings)) { ?>
 
 
 
-
+<h2>Passed Meetings</h2>
 <?php 
 if($past_meetings && count($past_meetings)){?>
 
-    <h2>Passed Meetings</h2>
+
         <p>
             <table style="width:50%">
                 <thead>
@@ -64,8 +64,8 @@ if($past_meetings && count($past_meetings)){?>
                         <th>Title</th>
                         <th>Agenda</th>
                         <th>Date of meeting</th>
-                        <th>Started at</th>
-                        <th>Ended at</th>
+                        <th>Started </th>
+                        <th>Ended </th>
                         <th>Meeting minutes</th>
                         <th>Created At</th>
                     </tr>
@@ -77,9 +77,9 @@ if($past_meetings && count($past_meetings)){?>
                     <td><?php echo escape($row->title); ?></a></td>
                     <td><?php echo escape($row->agenda); ?></td>
                     <td><?php echo escape($row->planned_date); ?></td>
-                    <td><?php echo escape($row->started_at); ?></td>
-                    <td><?php echo escape($row->ended_at); ?></td>
-                    <td><?php echo escape($row->minutes); ?></td>
+                    <td><?php echo escape($row->start_at); ?></td>
+                    <td><?php echo escape($row->end_at); ?></td>
+                    <td><?php echo nl2br(escape($row->minutes)); ?></td>
                     <td><?php echo escape($row->created_at);  ?> </td>
                 </tr>  
                 </tbody>
