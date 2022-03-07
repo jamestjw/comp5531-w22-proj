@@ -12,6 +12,12 @@ class DiscussionMessage extends Record
             "foreign_key" => "user_id",
         )
     );
+    protected static $has_one = array(
+        "poll" => array(
+            "class_name" => "Poll",
+            "foreign_key" => "parent_id",
+        )
+    );
 
     public $id;
     public $user_id;

@@ -210,9 +210,21 @@ class Record
         // TODO: Fix n+1 saving
         foreach (get_called_class()::$has_many as $association_name => $association_values) {
             $foreign_key = $association_values['foreign_key'];
-            foreach ($this->$association_name as $obj) {
-                $obj->$foreign_key = $this->id;
-                $obj->save();
+
+            if (array_key_exists($association_name, $this->associations)) {
+                foreach ($this->associations[$association_name] as $obj) {
+                    $obj->$foreign_key = $this->id;
+                    $obj->save();
+                }
+            }
+        }
+
+        foreach (get_called_class()::$has_one as $association_name => $association_values) {
+            $foreign_key = $association_values['foreign_key'];
+
+            if (array_key_exists($association_name, $this->associations)) {
+                $this->associations[$association_name]->$foreign_key = $this->id;
+                $this->associations[$association_name]->save();
             }
         }
     }
@@ -382,5 +394,6 @@ class Record
 }
 
 spl_autoload_register(function ($class_name) {
-    require_once $class_name . '.php';
+    // Convert camel case to snake case
+    require_once strtolower(preg_replace('/([^A-Z])([A-Z])/', "$1_$2", $class_name)) . '.php';
 });
