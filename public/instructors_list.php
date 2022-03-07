@@ -58,7 +58,7 @@ if ($result && count($result)) { ?>
         </tbody>
     </table>
     <?php } else { ?>
-        <blockquote>No users found.</blockquote>
+        <blockquote>No instructors found.</blockquote>
     <?php }
 ?> 
 
