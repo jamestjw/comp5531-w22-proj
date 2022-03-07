@@ -59,7 +59,7 @@ if ($result && count($result)) { ?>
     </table>
     <?php } else { ?>
         <blockquote>No instructors found.</blockquote>
-    <?php }
+    <?php } 
 ?> 
 
 <?php if (isset($_POST['submit']) && $create_success) { ?>

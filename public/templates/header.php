@@ -1,3 +1,9 @@
+<?php
+require_once(dirname(__FILE__)."/../../common.php");
+maybe_session_start();
+verify_logged_in();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,17 +36,11 @@
       <li class="navelem"><a href="instructors_list.php">Instructors</a></li>
 </ul>
     
-
     <?php
-    require_once(dirname(__FILE__)."/../../common.php");
-    require_once(dirname(__FILE__)."/../../modules/models/user.php");
-
     if (isset($_SESSION["error_message"]) && $_SESSION["error_message"]!="") {
         echo $_SESSION["error_message"];
     }
 
-    maybe_session_start();
-    verify_logged_in();
     if (isset($_SESSION["current_user"])) {
         $name = get_users_name();
         echo "<p>You are logged in as {$name}. <a href=\"logout.php\">Logout</a></p>";
