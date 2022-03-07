@@ -10,7 +10,7 @@ verify_logged_in();
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
     <style>
         <?php include 'header.css'; ?>
     </style>
@@ -51,4 +51,6 @@ verify_logged_in();
     
 
   </body>
+
+  
 </html>
