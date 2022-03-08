@@ -60,6 +60,9 @@ if (isset($_GET["id"]) && ($discussion = Discussion::find_by_id($_GET["id"]))) {
             <th>Content</th>
             <th>Replies to</th>
             <th>Created At</th>
+            <th>Poll</th>
+            <th></th> <!-- Reply button -->
+            <th></th> <!-- Reply form -->
         </tr>
 
         <?php foreach ($discussion_messages as $discussion_message) { ?>
@@ -69,7 +72,40 @@ if (isset($_GET["id"]) && ($discussion = Discussion::find_by_id($_GET["id"]))) {
                 <td><?php echo $discussion_message->content; ?></td>
                 <td><?php echo $discussion_message->parent_id; ?></td>
                 <td><?php echo $discussion_message->created_at; ?></td>
+                <td>
+
+                <?php
+                if (($poll=$discussion_message->poll)) {
+                    if ($poll->user_has_voted($_SESSION['current_user_id'])) {
+                        $poll_result = PollResult::from_poll($poll); ?>
+                        <ul>
+                            <?php foreach ($poll->poll_options as $option) { ?>
+                                <li>
+                                <?php echo sprintf("%s - %d votes - %.2f%%", $option->content, $poll_result->votes[$option->id][0], $poll_result->votes[$option->id][1] * 100) ?></li>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                        <?php
+                    } else { ?>
+                            <form method="post" action="poll.php" id="pollVote">
+                                <input type="hidden" id="poll_id" name="poll_id" value="<?php echo $poll->id; ?>">
+                                <p>Options:</p>
+                                <?php foreach ($poll->poll_options as $option) { ?>
+                                    <input type="radio" id="vote_option_<?php echo $option->id ?>" name="vote_option" value="<?php echo $option->id ?>">
+                                    <label for="vote_option_<?php echo $option->id ?>"><?php echo $option->content ?></label><br>
+                                <?php }?>
+                                <input type="submit" name="submit" value="Vote">
+                            </form>
+                        <?php }
+                } else {
+                    echo "N/A";
+                }
+                ?>
+                
+                </td>
+                <!-- Reply button -->
                 <td><a href="discussions.php" class="replyMessage">Reply</a></td>
+                <!-- Reply form -->
                 <td>
                     <form method="post" action="discussion.php" class="replyMessageForm" style="display: none;">
                         <label for="content">Content</label>
@@ -110,8 +146,8 @@ if (isset($_GET["id"]) && ($discussion = Discussion::find_by_id($_GET["id"]))) {
 
 <?php
 } else {
-        echo "Invalid discussion ID.";
-    }
+                    echo "Invalid discussion ID.";
+                }
 
 ?>
 

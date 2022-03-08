@@ -73,7 +73,11 @@ class Record
         $table_name = get_called_class()::$table_name;
         $sql_wheres = array();
         foreach ($attrs as $key => $value) {
-            array_push($sql_wheres, sprintf("%s = '%s'", $key, $value));
+            if (is_array($value)) {
+                array_push($sql_wheres, sprintf("%s in (%s)", $key, join(",", $value)));
+            } else {
+                array_push($sql_wheres, sprintf("%s = '%s'", $key, $value));
+            }
         }
 
         $sql = sprintf(
@@ -98,7 +102,11 @@ class Record
         $table_name = get_called_class()::$table_name;
         $sql_wheres = array();
         foreach ($attrs as $key => $value) {
-            array_push($sql_wheres, sprintf("%s = '%s'", $key, $value));
+            if (is_array($value)) {
+                array_push($sql_wheres, sprintf("%s in (%s)", $key, join(",", $value)));
+            } else {
+                array_push($sql_wheres, sprintf("%s = '%s'", $key, $value));
+            }
         }
 
         $sql = sprintf(
@@ -204,7 +212,9 @@ class Record
         $conn = getConnection();
         $statement = $conn->prepare($sql);
         $statement->execute($new_obj);
-        $this->id = $conn->lastInsertId();
+        if (in_array("id", get_called_class()::getAttrs())) {
+            $this->id = $conn->lastInsertId();
+        }
         $this->is_new_record = false;
 
         // TODO: Fix n+1 saving
