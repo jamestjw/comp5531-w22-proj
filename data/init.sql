@@ -80,4 +80,21 @@ CREATE TABLE IF NOT EXISTS marked_entity_files (
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
 	FOREIGN KEY (entity_id) REFERENCES marked_entities(id)
+
+CREATE TABLE IF NOT EXISTS meetings (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	group_id INT(11),
+	user_id INT(11),
+	title VARCHAR(60),
+	agenda VARCHAR(1000),
+	minutes VARCHAR(10000),
+	planned_date DATE, 
+	planned_time TIME,
+	has_passed BOOLEAN DEFAULT false,
+	start_at TIMESTAMP,
+	end_at TIMESTAMP,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
+	-- TO DO add group_id as foreign key when table Groups is created (from course implementation)
+	-- FOREIGN KEY (group_id) REFERENCES groups(id) 
 );

@@ -31,6 +31,7 @@ verify_logged_in();
           <a href="#">Course List</a>
           <a href="#">Marked Entities</a>
           <a href="discussions.php">Discussions</a>
+          <a href="meetings.php">Meetings</a>
         </div>
       </li>
       <li class="navelem"><a href="account_settings.php">Account Settings</a></li>
