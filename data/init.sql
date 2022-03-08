@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS marked_entity_files (
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
 	FOREIGN KEY (entity_id) REFERENCES marked_entities(id)
+);
 
 CREATE TABLE IF NOT EXISTS meetings (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
