@@ -1,22 +1,25 @@
-$(".role-option")
-.click(function(e){
-    e.preventDefault();
-    var role = e.target.innerText.toLowerCase();
+document
+    .querySelectorAll(".role-option")
+    .forEach(n => {
+        n.addEventListener("click", function(e) {
+            e.preventDefault();
+            var role = e.target.innerText.toLowerCase();
 
-    $.post("change_role.php", { role: role } )
-        .done(function() {
-            // Make all roles inactive
-            // $(".role-option").each((_, item) => {
-            //     $(item).removeClass("active");
-            // })
-            // Make selected role active
-            // $(e.target).addClass("active");
-
-            // Refreshing the page seems to be more relevant than just changing
-            // the active role
-            location.reload()
-        }).fail(function() {
-            alert("Failed to change row.");
-        });
-});
-
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function()
+            {
+                // When request is complete
+                if (request.readyState == 4)
+                {
+                    if (request.status == 200) {
+                        location.reload();
+                    } else {
+                        alert("Failed to change role.");
+                    }
+                }
+            };
+            request.open("POST", "change_role.php");
+            request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            request.send("role="+role);
+        })
+    });

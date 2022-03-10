@@ -14,7 +14,7 @@ if (isset($_GET["id"]) && ($meeting = Meeting::find_by_id($_GET["id"]))) { ?>
     <div><h5>Agenda</h5> 
     <?php echo nl2br($meeting->agenda); ?> 
     </div>
-        <?php if($meeting->has_passed == false){?>
+        <?php if ($meeting->has_passed == false) {?>
             <form method="post">
             <input type="submit" name="start_meeting" value="Start Meeting">
             </form>
@@ -26,21 +26,19 @@ if (isset($_GET["id"]) && ($meeting = Meeting::find_by_id($_GET["id"]))) { ?>
 
 <?php
 } else {
-        echo "Invalid meeting ID.";
-    }
+    echo "Invalid meeting ID.";
+}
 
 ?>
 
 
-<?php  if(isset($_POST["start_meeting"])) { ?>
+<?php  if (isset($_POST["start_meeting"])) { ?>
     <?php
     $meeting->has_passed = '1';
     $meeting->start_at = date('Y-m-d H:i:s');
 
     try {
-
         $meeting->save();
-
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
@@ -53,17 +51,15 @@ if (isset($_GET["id"]) && ($meeting = Meeting::find_by_id($_GET["id"]))) { ?>
     
 <?php }?>
 
-<?php if(isset($_POST["end_meeting"])) {
-    $meeting->minutes = $_POST["meeting_minutes"];
-    $meeting->end_at = date('Y-m-d H:i:s');
+<?php if (isset($_POST["end_meeting"])) {
+        $meeting->minutes = $_POST["meeting_minutes"];
+        $meeting->end_at = date('Y-m-d H:i:s');
 
 
-    try {
-
-        $meeting->save();
-        header("Refresh:0");
-
-    } catch (PDOException $error) {
-        echo "<br>" . $error->getMessage();
-    }
-}?>
+        try {
+            $meeting->save();
+            header("Refresh:0");
+        } catch (PDOException $error) {
+            echo "<br>" . $error->getMessage();
+        }
+    }?>
