@@ -14,7 +14,13 @@ function sql_log(string $raw_query, ?array $data = null)
     if (isset($data) && !empty($data)) {
         $args_texts = array();
         foreach ($data as $key=>$value) {
-            array_push($args_texts, "['$key', '$value']");
+            if (is_array($value)) {
+                foreach ($value as $v) {
+                    array_push($args_texts, "['$key', '$v']");
+                }
+            } else {
+                array_push($args_texts, "['$key', '$value']");
+            }
         }
         $to_print .= " [".implode(', ', $args_texts)."]";
     }
@@ -27,8 +33,22 @@ function execute_sql_query(string $raw_query, ?array $data = null, $conn = null)
 {
     sql_log($raw_query, $data);
 
+    $prepared_data = array();
+
+    if (isset($data)) {
+        foreach ($data as $key=>$value) {
+            if (is_array($value)) {
+                foreach ($value as $v) {
+                    array_push($prepared_data, $v);
+                }
+            } else {
+                array_push($prepared_data, $value);
+            }
+        }
+    }
+
     $conn = $conn ?? getConnection();
     $statement = $conn->prepare($raw_query);
-    $statement->execute(array_values($data));
+    $statement->execute(array_values($prepared_data));
     return $statement->fetchAll();
 }
