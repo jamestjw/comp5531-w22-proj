@@ -1,6 +1,7 @@
 <?php
 
 require_once(dirname(__FILE__)."/../../common.php");
+require_once(dirname(__FILE__)."/utils.php");
 
 function getConnection()
 {
@@ -62,33 +63,34 @@ class Record
 
     public static function getAll()
     {
-        return get_called_class()::where(array(1=>1));
+        return get_called_class()::where(array());
     }
 
     /*
         Usage: RecordName::where(array("name"=>"James", "student_id"=>12345));
     */
-    public static function where($attrs)
+    public static function where(array $attrs)
     {
         $table_name = get_called_class()::$table_name;
-        $sql_wheres = array();
-        foreach ($attrs as $key => $value) {
-            if (is_array($value)) {
-                array_push($sql_wheres, sprintf("%s in (%s)", $key, join(",", $value)));
-            } else {
-                array_push($sql_wheres, sprintf("%s = '%s'", $key, $value));
+
+        if (!empty($attrs)) {
+            $sql_wheres = array();
+            foreach ($attrs as $key => $value) {
+                array_push($sql_wheres, "$key = :$key");
             }
+            $sql = sprintf(
+                "SELECT * FROM %s WHERE %s",
+                $table_name,
+                implode(" AND ", $sql_wheres)
+            );
+        } else {
+            $sql = sprintf(
+                "SELECT * FROM %s;",
+                $table_name
+            );
         }
 
-        $sql = sprintf(
-            "SELECT * FROM %s WHERE %s;",
-            $table_name,
-            implode(" AND ", $sql_wheres)
-        );
-
-        $statement = getConnection()->prepare($sql);
-        $statement->execute();
-        $res = $statement->fetchAll();
+        $res = execute_sql_query($sql, $attrs);
 
         return array_map([get_called_class(), 'loadRecordFromData'], $res);
     }
@@ -97,27 +99,28 @@ class Record
         Usage: RecordName::find_by(array("name"=>"James", "student_id"=>12345));
         Returns the first record that matches
     */
-    public static function find_by($attrs)
+    public static function find_by(array $attrs)
     {
+        // TODO: Solve code repetition with +where+ method
         $table_name = get_called_class()::$table_name;
-        $sql_wheres = array();
-        foreach ($attrs as $key => $value) {
-            if (is_array($value)) {
-                array_push($sql_wheres, sprintf("%s in (%s)", $key, join(",", $value)));
-            } else {
-                array_push($sql_wheres, sprintf("%s = '%s'", $key, $value));
+
+        if (!empty($attrs)) {
+            $sql_wheres = array();
+            foreach ($attrs as $key => $value) {
+                array_push($sql_wheres, "$key = :$key");
             }
+            $sql = sprintf(
+                "SELECT * FROM %s WHERE %s LIMIT 1;",
+                $table_name,
+                implode(" AND ", $sql_wheres)
+            );
+        } else {
+            $sql = sprintf(
+                "SELECT * FROM %s LIMIT 1;",
+                $table_name
+            );
         }
-
-        $sql = sprintf(
-            "SELECT * FROM %s WHERE %s LIMIT 1;",
-            $table_name,
-            implode(" AND ", $sql_wheres)
-        );
-
-        $statement = getConnection()->prepare($sql);
-        $statement->execute();
-        $res = $statement->fetchAll();
+        $res = execute_sql_query($sql, $attrs);
 
         if (count($res) > 0) {
             return get_called_class()::loadRecordFromData($res[0]);
@@ -146,20 +149,14 @@ class Record
             throw new ErrorException("Primary key specified is not valid as it returns more than one record. PK: ".$pk);
         }
 
-        if (is_numeric($pk) and !is_string($pk)) {
-            $condition = sprintf("%s = %s", $pk, $this->$pk);
-        } else {
-            $condition = sprintf("%s = '%s'", $pk, $this->$pk);
-        }
-
         $sql = sprintf(
-            "DELETE FROM %s WHERE %s",
+            "DELETE FROM %s WHERE %s = :%s",
             get_called_class()::$table_name,
-            $condition
+            $pk,
+            $pk
         );
 
-        $statement = getConnection()->prepare($sql);
-        $statement->execute();
+        execute_sql_query($sql, array($pk => $this->$pk));
 
         // Set all attributes of the called object to none
         foreach ($attrs as $attr) {
@@ -209,12 +206,11 @@ class Record
             implode(", ", array_keys($new_obj)),
             ":" . implode(", :", array_keys($new_obj))
         );
+
         $conn = getConnection();
-        $statement = $conn->prepare($sql);
-        $statement->execute($new_obj);
-        if (in_array("id", get_called_class()::getAttrs())) {
-            $this->id = $conn->lastInsertId();
-        }
+        execute_sql_query($sql, $new_obj, $conn);
+
+        $this->id = $conn->lastInsertId();
         $this->is_new_record = false;
 
         // TODO: Fix n+1 saving
@@ -271,20 +267,21 @@ class Record
         // update the differing fields
         $update_fields = array();
         $where_condition = sprintf("%s = %s", $pk, $this->$pk);
-        foreach ($to_update as $key => $value) {
-            if (is_string($value)) {
-                $value = sprintf("'%s'", $value);
-            }
-            array_push($update_fields, sprintf("%s = %s", $key, $value));
+        foreach (array_keys($to_update) as $key) {
+            array_push($update_fields, "$key = :$key");
         }
+
+        if (in_array("updated_at", get_called_class()::getAttrs())) {
+            array_push($update_fields, "updated_at = now()");
+        }
+
         $sql = sprintf(
-            "UPDATE %s SET %s WHERE %s",
+            "UPDATE %s SET %s WHERE %s;",
             get_called_class()::$table_name,
             implode(', ', $update_fields),
             $where_condition
         );
-        $statement = getConnection()->prepare($sql);
-        $statement->execute();
+        execute_sql_query($sql, $to_update);
         return;
     }
 

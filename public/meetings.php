@@ -1,4 +1,4 @@
-<?php   
+<?php
 require "../modules/models/meeting.php";
 require_once "../common.php";
 
@@ -52,8 +52,8 @@ if ($planned_meetings && count($planned_meetings)) { ?>
 
 
 <h2>Passed Meetings</h2>
-<?php 
-if($past_meetings && count($past_meetings)){?>
+<?php
+if ($past_meetings && count($past_meetings)) {?>
 
 
         <p>
