@@ -29,6 +29,6 @@ function execute_sql_query(string $raw_query, ?array $data = null, $conn = null)
 
     $conn = $conn ?? getConnection();
     $statement = $conn->prepare($raw_query);
-    $statement->execute($data);
+    $statement->execute(array_values($data));
     return $statement->fetchAll();
 }

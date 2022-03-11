@@ -76,7 +76,7 @@ class Record
         if (!empty($attrs)) {
             $sql_wheres = array();
             foreach ($attrs as $key => $value) {
-                array_push($sql_wheres, "$key = :$key");
+                array_push($sql_wheres, "$key = ?");
             }
             $sql = sprintf(
                 "SELECT * FROM %s WHERE %s",
@@ -107,7 +107,7 @@ class Record
         if (!empty($attrs)) {
             $sql_wheres = array();
             foreach ($attrs as $key => $value) {
-                array_push($sql_wheres, "$key = :$key");
+                array_push($sql_wheres, "$key = ?");
             }
             $sql = sprintf(
                 "SELECT * FROM %s WHERE %s LIMIT 1;",
@@ -150,9 +150,8 @@ class Record
         }
 
         $sql = sprintf(
-            "DELETE FROM %s WHERE %s = :%s",
+            "DELETE FROM %s WHERE %s = ?",
             get_called_class()::$table_name,
-            $pk,
             $pk
         );
 
@@ -204,7 +203,7 @@ class Record
             "INSERT INTO %s (%s) values (%s)",
             $this::$table_name,
             implode(", ", array_keys($new_obj)),
-            ":" . implode(", :", array_keys($new_obj))
+            implode(", ", array_map(fn ($i) => " ? ", $new_obj))
         );
 
         $conn = getConnection();
@@ -268,7 +267,7 @@ class Record
         $update_fields = array();
         $where_condition = sprintf("%s = %s", $pk, $this->$pk);
         foreach (array_keys($to_update) as $key) {
-            array_push($update_fields, "$key = :$key");
+            array_push($update_fields, "$key = ?");
         }
 
         if (in_array("updated_at", get_called_class()::getAttrs())) {
