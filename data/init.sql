@@ -70,7 +70,6 @@ CREATE TABLE IF NOT EXISTS marked_entities (
 	updated_at TIMESTAMP
 );
 
-
 CREATE TABLE IF NOT EXISTS marked_entity_files (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	entity_id INT(11) UNSIGNED NOT NULL,
@@ -98,4 +97,31 @@ CREATE TABLE IF NOT EXISTS meetings (
 	updated_at TIMESTAMP
 	-- TO DO add group_id as foreign key when table Groups is created (from course implementation)
 	-- FOREIGN KEY (group_id) REFERENCES groups(id) 
+);
+
+CREATE TABLE IF NOT EXISTS polls (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	parent_id INT(11) UNSIGNED NOT NULL,
+	user_id INT(11) UNSIGNED NOT NULL,
+	title VARCHAR(50),
+	duration INT(11) UNSIGNED NOT NULL,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS poll_options (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	poll_id INT(11) UNSIGNED NOT NULL,
+	content TEXT,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS poll_option_users (
+	option_id INT(11) UNSIGNED NOT NULL,
+	user_id INT(11) UNSIGNED NOT NULL,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP,
+	FOREIGN KEY (user_id) REFERENCES users(id),
+	FOREIGN KEY (option_id) REFERENCES poll_options(id)
 );

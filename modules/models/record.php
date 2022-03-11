@@ -73,7 +73,11 @@ class Record
         $table_name = get_called_class()::$table_name;
         $sql_wheres = array();
         foreach ($attrs as $key => $value) {
-            array_push($sql_wheres, sprintf("%s = '%s'", $key, $value));
+            if (is_array($value)) {
+                array_push($sql_wheres, sprintf("%s in (%s)", $key, join(",", $value)));
+            } else {
+                array_push($sql_wheres, sprintf("%s = '%s'", $key, $value));
+            }
         }
 
         $sql = sprintf(
@@ -98,7 +102,11 @@ class Record
         $table_name = get_called_class()::$table_name;
         $sql_wheres = array();
         foreach ($attrs as $key => $value) {
-            array_push($sql_wheres, sprintf("%s = '%s'", $key, $value));
+            if (is_array($value)) {
+                array_push($sql_wheres, sprintf("%s in (%s)", $key, join(",", $value)));
+            } else {
+                array_push($sql_wheres, sprintf("%s = '%s'", $key, $value));
+            }
         }
 
         $sql = sprintf(
@@ -204,15 +212,29 @@ class Record
         $conn = getConnection();
         $statement = $conn->prepare($sql);
         $statement->execute($new_obj);
-        $this->id = $conn->lastInsertId();
+        if (in_array("id", get_called_class()::getAttrs())) {
+            $this->id = $conn->lastInsertId();
+        }
         $this->is_new_record = false;
 
         // TODO: Fix n+1 saving
         foreach (get_called_class()::$has_many as $association_name => $association_values) {
             $foreign_key = $association_values['foreign_key'];
-            foreach ($this->$association_name as $obj) {
-                $obj->$foreign_key = $this->id;
-                $obj->save();
+
+            if (array_key_exists($association_name, $this->associations)) {
+                foreach ($this->associations[$association_name] as $obj) {
+                    $obj->$foreign_key = $this->id;
+                    $obj->save();
+                }
+            }
+        }
+
+        foreach (get_called_class()::$has_one as $association_name => $association_values) {
+            $foreign_key = $association_values['foreign_key'];
+
+            if (array_key_exists($association_name, $this->associations)) {
+                $this->associations[$association_name]->$foreign_key = $this->id;
+                $this->associations[$association_name]->save();
             }
         }
     }
@@ -382,5 +404,6 @@ class Record
 }
 
 spl_autoload_register(function ($class_name) {
-    require_once $class_name . '.php';
+    // Convert camel case to snake case
+    require_once strtolower(preg_replace('/([^A-Z])([A-Z])/', "$1_$2", $class_name)) . '.php';
 });
