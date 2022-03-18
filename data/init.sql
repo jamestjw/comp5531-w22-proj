@@ -99,6 +99,7 @@ CREATE TABLE IF NOT EXISTS meetings (
 	-- FOREIGN KEY (group_id) REFERENCES groups(id) 
 );
 
+<<<<<<< HEAD
 CREATE TABLE IF NOT EXISTS polls (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	parent_id INT(11) UNSIGNED NOT NULL,
@@ -153,3 +154,11 @@ CREATE TABLE IF NOT EXISTS course_sections(
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 )
+=======
+CREATE TABLE IF NOT EXISTS notices (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	notice VARCHAR(10000),
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
+);
+>>>>>>> bc8cbd7 (saving before pulling main)

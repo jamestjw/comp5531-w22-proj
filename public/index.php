@@ -1,4 +1,20 @@
+<?php 
+require_once "../common.php"; 
+
+try {
+    $latest_notice = Notice:: ;
+    
+} catch (PDOException $error) {
+    echo $sql . "<br>" . $error->getMessage();
+}
+?>
+
+
 <?php include "templates/header.php"; ?>
+
+<h2>Latest Notice: </h2>
+<h4> </h4>
+
 <h2> Landing page </h2>
 
 <ul>
