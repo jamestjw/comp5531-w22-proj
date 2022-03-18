@@ -1,10 +1,10 @@
+<?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
+
 <?php
 
 require_once "../modules/models/discussion.php";
 require_once "../modules/models/discussion_message.php";
 require_once "../common.php";
-
-ensure_logged_in();
 
 if (isset($_POST["submit"])) {
     $discussion = new Discussion();

@@ -1,3 +1,5 @@
+<?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
+
 <?php
 require_once "../modules/models/discussion.php";
 require_once "../modules/models/poll.php";
@@ -5,6 +7,7 @@ require_once "../modules/models/poll_option.php";
 require_once "../common.php";
 
 ensure_logged_in();
+require_once (dirname(__FILE__)."/./modules/ensure_logged_in.php");
 
 if (isset($_POST['submit'])) {
     $msg = new DiscussionMessage();

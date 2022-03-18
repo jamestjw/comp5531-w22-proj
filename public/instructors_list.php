@@ -1,3 +1,5 @@
+<?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
+
 <?php
 
 require_once "../modules/models/user.php";

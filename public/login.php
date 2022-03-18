@@ -45,6 +45,8 @@ if (count($_POST) > 0) {
         $_SESSION["AuthKey"] = $loginToken->user_digest;
         $_SESSION["current_user"] = $user;
         $_SESSION["current_user_id"] = $user->id;
+        set_current_role(current_user_possible_roles()[0] ?? null);
+
         header("Location:  ./index.php");
     }
 }

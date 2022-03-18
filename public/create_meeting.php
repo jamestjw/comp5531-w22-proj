@@ -17,9 +17,7 @@ if (isset($_POST["submit"])) {
     header("Location: meetings.php");
 
     try {
-
         $meeting->save();
-
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
