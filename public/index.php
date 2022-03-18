@@ -2,7 +2,7 @@
 require_once "../common.php"; 
 
 try {
-    $latest_notice = Notice:: ;
+    $latest_notice = Notice::getLast();
     
 } catch (PDOException $error) {
     echo $sql . "<br>" . $error->getMessage();
@@ -12,8 +12,15 @@ try {
 
 <?php include "templates/header.php"; ?>
 
-<h2>Latest Notice: </h2>
-<h4> </h4>
+<?php if($latest_notice != null)
+{?>
+  <h2>Latest Notice: </h2>
+  <h4> <?php echo $latest_notice["notice"] ?></h4>
+  <h6> Posted: <?php echo $latest_notice["created_at"] ?> </h6>
+<?php } else {?>
+<h2>No notice from admin</h2>
+<?php }?>
+
 
 <h2> Landing page </h2>
 

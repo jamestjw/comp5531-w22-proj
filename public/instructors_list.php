@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 if ($result && count($result)) { ?>
         <h2>Instructors</h2>
 
-        <table>
+    <table>
             <thead>
                 <tr>
                     <th>#</th>
