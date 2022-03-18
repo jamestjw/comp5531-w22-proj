@@ -52,4 +52,13 @@ if ($notices && count($notices)) { ?>
 </form>
 <?php }?>
 
+<!-- ADD IF STATEMENT TO SHOW NEW NOTICE ONLY IF USER == ADMNIN -->
+<h2>New notice</h2>
+
+<form method="post">
+    <label for="notice_text">Notice</label>
+    <textarea name="notice_text" cols="40" rows="5"></textarea>
+    <input type="submit" name="submit" value="Submit">
+</form>
+
 <?php include "templates/footer.php"; ?>
