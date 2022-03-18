@@ -21,8 +21,11 @@ class User extends Record
     {
         $res = array();
 
+        // Admins should have access to every role
         if ($this->is_admin) {
             array_push($res, "admin");
+            array_push($res, "instructor");
+            array_push($res, "student");
         }
 
         if ($this->is_instructor) {
