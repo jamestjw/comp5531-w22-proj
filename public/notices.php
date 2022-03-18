@@ -9,6 +9,19 @@ try {
 } catch (PDOException $error) {
     echo $sql . "<br>" . $error->getMessage();
 }
+
+if (isset($_POST['submit'])) {
+    $notice = new Notice();
+    $notice->notice = $_POST['notice_text'];
+
+    try {
+        $notice->save();
+        $create_success = true;
+    } catch (PDOException $error) {
+        echo "<br>" . $error->getMessage();
+    }
+}
+
 ?>
 
 <?php include "templates/header.php"; ?>
@@ -28,5 +41,14 @@ if ($notices && count($notices)) { ?>
 <?php } else { ?>
     <blockquote>No Notices</blockquote>
 <?php }?>
+
+<!-- ADD IF STATEMENT TO SHOW NEW NOTICE ONLY IF USER == ADMNIN -->
+<h2>New notice</h2>
+
+<form method="post">
+    <label for="notice_text">Notice</label>
+    <textarea name="notice_text" cols="40" rows="5"></textarea>
+    <input type="submit" name="submit" value="Submit">
+</form>
 
 <?php include "templates/footer.php"; ?>
