@@ -99,3 +99,10 @@ CREATE TABLE IF NOT EXISTS meetings (
 	-- TO DO add group_id as foreign key when table Groups is created (from course implementation)
 	-- FOREIGN KEY (group_id) REFERENCES groups(id) 
 );
+
+CREATE TABLE IF NOT EXISTS notices (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	notice VARCHAR(10000),
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
+);
