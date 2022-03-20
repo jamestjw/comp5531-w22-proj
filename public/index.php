@@ -18,7 +18,7 @@
     <a href="marked_entity_files.php?marked_entity_id=1"><strong>View</strong></a> - list all marked entity files
   </li>
   <li>
-    <a href="course_wizard.php"><strong>Course Wizard</strong></a> - View and Add Courses
+    <a href="course_list.php"><strong>View and Create</strong></a> - View and Add Courses
   </li>
 </ul>
 

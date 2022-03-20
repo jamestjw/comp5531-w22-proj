@@ -75,7 +75,7 @@ and data entry. -->
         ) && isset($create_success)
         ) && $create_success)
     {
-        header('location: course_wizard.php');
+        header('location: course_list.php');
     }?>
 
     <body>
@@ -85,20 +85,19 @@ and data entry. -->
     <style>
         body
         {
-            background-image: url("../public/assets/lego-wizard.jpg");
             background-repeat: no-repeat;
             background-position: right;
             background-attachment:fixed;
-            font-family: "Comic Sans MS", "Comic Sans";
-            font-size:21px;
+            font-family: "Times New Roman";
+            font-size:16px;
         }
     </style>
     <style type = "text/css">
                 .ctb {border-collapse:collapse;border-spacing:0, margin:0px auto}
-                .ctb td{border-color:black;border-style:solid;border-width:1px;font-family:"Comic Sans MS", "Comic Sans";font-size:16px; overflow:hidden;padding:10px 5px;word-break:normal;}
-                .ctb th{border-color:black;border-style:solid;border-width:1px;font-family:"Comic Sans MS", "Comic Sans";font-size:16px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+                .ctb td{border-color:black;border-style:solid;border-width:1px;font-family:"Times New Roman", "Comic Sans";font-size:16px; overflow:hidden;padding:10px 5px;word-break:normal;}
+                .ctb th{border-color:black;border-style:solid;border-width:1px;font-family:"Times New Roman", "Comic Sans";font-size:16px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
                 .ctb .tgPurp{background-color:#cbcefb;border-color:inherit;text-align:left;vertical-align:top}
-                .ctb .tgNorm{background-color:#ffffff;text-align:left;vertical-align:top}
+                .ctb .tgNorm{background-color:#fafaf0;text-align:left;vertical-align:top}
     </style>
 
 
@@ -121,22 +120,23 @@ and data entry. -->
         <tbody>
             <?php foreach($result_courses as $row):;?>
             <tr>
-                <td><?php echo ($row->id);?></td>
-                <td><?php echo ($row->course_code);?></td>
-                <td><?php echo ($row->course_name);?></td>
+                <td class="tgNorm"><?php echo ($row->id);?></td>
+                <td class="tgNorm"><?php echo ($row->course_code);?></td>
+                <td class="tgNorm"><?php echo ($row->course_name);?></td>
             </tr>
             <?php endforeach;?>
             <tr>
                 <td></td>
                 <form method="post">
-                <td><input type="text" value="Course Code" name="course_code" id="course_code"></td>
-                <td><input type="text" value="Course Name" name="course_name" id="course_name"></td>
-                <td><input type="submit" name="submitCourse" value="Add"></td>
+                <td class="tgNorm"><input type="text" value="Course Code" name="course_code" id="course_code"></td>
+                <td class="tgNorm"><input type="text" value="Course Name" name="course_name" id="course_name"></td>
+                <td class="tgNorm"><input type="submit" name="submitCourse" value="Add"></td>
             </tr>
         </tbody>
         </table>
         <?php else:?>
-            <b>No courses found. Add a course?</b>
+            <br>
+            <b>No courses found, please add a course.</b>
             <form method="post">
             <input type="text" value="Course Code" name="course_code" id="course_code">
             <input type="text" value="Course Name" name="course_name" id="course_name">
@@ -213,8 +213,8 @@ and data entry. -->
                 <thead>
                     <tr>
                         <th class="tgPurp">Section ID</th>
-                        <th class="tgPurp">Course ID:Offering ID</td>
-                        <th class="tgPurp">Course Name:Offering Name</td>
+                        <th class="tgPurp">Course ID-Offering ID</td>
+                        <th class="tgPurp">Course Name-Offering Name</td>
                         <th class="tgPurp">Section Code</th>
                         <th class="tgPurp">Section Name</th>
                     </tr>
@@ -223,8 +223,8 @@ and data entry. -->
             <?php foreach($result_sections as $row):;?>
             <tr>
                 <td class="tgNorm"><?php echo ($row->id);?></td>
-                <td class="tgNorm"><?php echo ($row->course_offering->course_id), ":",($row->offering_id);?></td>
-                <td class="tgNorm"><?php echo ($row->course_offering->course->course_name), " : ",($row->course_offering->course_offering_name);?></td>
+                <td class="tgNorm"><?php echo ($row->course_offering->course_id), " - ",($row->offering_id);?></td>
+                <td class="tgNorm"><?php echo ($row->course_offering->course->course_name), " - ",($row->course_offering->course_offering_name);?></td>
                 <td class="tgNorm"><?php echo ($row->course_section_code);?></td>
                 <td class="tgNorm"><?php echo ($row->course_section_name);?></td>
             </tr>
