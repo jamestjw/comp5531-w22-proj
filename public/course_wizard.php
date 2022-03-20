@@ -16,7 +16,7 @@ and data entry. -->
         $result_offerings = CourseOffering::getAll();
         $result_sections = CourseSection::getAll();
     } catch(PDOException $error) {
-        echo $sql . "<br>" . $error->getMessage();
+        echo "Course Error: <br>" . $error->getMessage();
     }?>
 
 <!-- This section deals with submission of the entered data.-->
@@ -31,7 +31,7 @@ and data entry. -->
             $course->save();
             $create_success = true;
         }catch(PDOException $error) {
-            echo $sql . "<br>" . $error->getMessage();
+            echo "General Error: The course could not be added.<br>" . $error->getMessage();
         }
     }
 
@@ -42,11 +42,12 @@ and data entry. -->
         $offering->course_offering_code = $_POST['course_offering_code'];
         $offering->course_offering_name = $_POST['course_offering_name'];
         
+
         try{
             $offering->save();
             $create_success = true;
         }catch(PDOException $error) {
-            echo $sql . "<br>" . $error->getMessage();
+            echo "General Error: The course offering could not be added.<br>" . $error->getMessage();
         }
     }
     elseif(isset($_POST["submitSection"]))
@@ -60,13 +61,19 @@ and data entry. -->
             $section->save();
             $create_success = true;
         }catch(PDOException $error) {
-            echo $sql . "<br>" . $error->getMessage();
+            echo "General Error: The course Section could not be added.<br>" . $error->getMessage();
         }
     }
     ?>
 
     <!-- Seemed like a good way to prevent form resubmission on refresh? -->
-    <?php if ((isset($_POST['submitCourse']) ||isset($_POST['submitOffering']) ||isset($_POST['submitSection'])) && $create_success)
+    <?php if ((
+        (
+        isset($_POST['submitCourse']) ||
+        isset($_POST['submitOffering']) ||
+        isset($_POST['submitSection'])
+        ) && isset($create_success)
+        ) && $create_success)
     {
         header('location: course_wizard.php');
     }?>
@@ -96,7 +103,7 @@ and data entry. -->
 
 
         <?php include "templates/header.php"?>
-        <h2>Class Creation Wizard!1!</h2>
+        <h2>Class Creation Wizard!</h2>
         <br>
 
         <!-- Show current classes-->
@@ -157,9 +164,10 @@ and data entry. -->
             <tr>
                 <td class="tgNorm"><?php echo ($row->id);?></td>
                 <td class="tgNorm"><?php echo ($row->course_id);?></td>
-                <td class="tgNorm"><?php echo ($result_courses[$row->course_id-1]->course_name);?></td>
+                <td class="tgNorm"><?php echo ($row->course->course_name);?></td>
                 <td class="tgNorm"><?php echo ($row->course_offering_code);?></td>
                 <td class="tgNorm"><?php echo ($row->course_offering_name);?></td>
+            
             </tr>
             <?php endforeach;?>
             <tr>
@@ -197,7 +205,6 @@ and data entry. -->
         <?php endif?>
 
 <!-- Sections -->
-
         <br><br>
         <b>Sections</b>
         <br>
@@ -216,8 +223,8 @@ and data entry. -->
             <?php foreach($result_sections as $row):;?>
             <tr>
                 <td class="tgNorm"><?php echo ($row->id);?></td>
-                <td class="tgNorm"><?php echo ($result_offerings[$row->offering_id-1]->course_id), ":",($row->offering_id);?></td>
-                <td class="tgNorm"><?php echo ($result_courses[($result_offerings[$row->offering_id-1]->course_id)-1]->course_name), ":",$result_offerings[$row->offering_id-1]->course_offering_name;?></td>
+                <td class="tgNorm"><?php echo ($row->course_offering->course_id), ":",($row->offering_id);?></td>
+                <td class="tgNorm"><?php echo ($row->course_offering->course->course_name), " : ",($row->course_offering->course_offering_name);?></td>
                 <td class="tgNorm"><?php echo ($row->course_section_code);?></td>
                 <td class="tgNorm"><?php echo ($row->course_section_name);?></td>
             </tr>
