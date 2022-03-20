@@ -29,7 +29,7 @@ verify_logged_in();
       <li class="dropdown">
         <button class="dropbtn">Courses</button>
         <div class="dropdown-content">
-          <a href="#">Course List</a>
+          <a href="course_list.php">Course List</a>
           <a href="#">Marked Entities</a>
           <a href="discussions.php">Discussions</a>
           <a href="meetings.php">Meetings</a>

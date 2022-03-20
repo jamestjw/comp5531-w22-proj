@@ -125,3 +125,31 @@ CREATE TABLE IF NOT EXISTS poll_option_users (
 	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (option_id) REFERENCES poll_options(id)
 );
+
+CREATE TABLE IF NOT EXISTS courses (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	course_code VARCHAR(60),
+	course_name VARCHAR(60),
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
+); 
+
+CREATE TABLE IF NOT EXISTS course_offerings(
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	course_id INT(11) UNSIGNED,
+	FOREIGN KEY(course_id) REFERENCES courses(id) ON DELETE CASCADE,
+	course_offering_code VARCHAR(60),
+	course_offering_name VARCHAR(60),
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS course_sections(
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	offering_id INT(11) UNSIGNED,
+	FOREIGN KEY(offering_id) REFERENCES course_offerings(id) ON DELETE CASCADE,
+	course_section_code VARCHAR(60),
+	course_section_name VARCHAR(60),
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
+)
