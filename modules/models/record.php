@@ -417,7 +417,7 @@ class Record
         $statement->execute();
         $res = $statement->fetch();
     
-        return $res;
+        return isset($res) ? get_called_class()::loadRecordFromData($res) : null;
 
 
     }
