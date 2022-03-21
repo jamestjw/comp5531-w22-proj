@@ -11,6 +11,15 @@ if (isset($_POST["submit"])) {
     $discussion->title = $_POST["title"];
     $discussion->user_id = $_SESSION["current_user"]->id;
 
+    // TODO: Check if the user has permission to do this
+    if (isset($_POST['discussable_id']) && isset($_POST['discussable_type'])) {
+        if ($_POST['discussable_type']::find_by_id($_POST['discussable_id']) == null) {
+            die("Invalid discussable");
+        }
+        $discussion->discussable_id = $_POST['discussable_id'];
+        $discussion->discussable_type = $_POST['discussable_type'];
+    }
+
     try {
         $discussionMessage = new DiscussionMessage();
         $discussionMessage->user_id = $_SESSION["current_user"]->id;
@@ -20,25 +29,9 @@ if (isset($_POST["submit"])) {
         $discussion->discussion_messages = array($discussionMessage);
         $discussion->save();
 
-        header("Location: discussion.php?id={$discussion->id}");
+        header("Location:".$_SERVER['HTTP_REFERER']);
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
 }
 ?>
-
-<?php include "templates/header.php"; ?>
-
-<h2>Add a discussion</h2>
-
-<form method="post">
-    <label for="title">Title</label>
-    <input type="text" name="title" id="title">
-    <label for="content">Content</label>
-    <input type="text" name="content" id="content">
-    <input type="submit" name="submit" value="Submit">
-</form>
-
-<a href="index.php">Back to home</a>
-
-<?php include "templates/footer.php"; ?>

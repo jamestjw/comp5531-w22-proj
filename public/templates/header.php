@@ -31,7 +31,7 @@ verify_logged_in();
         <button class="dropbtn">Courses</button>
         <div class="dropdown-content">
           <a href="course_list.php">Course List</a>
-          <a href="#">Marked Entities</a>
+          <a href="marked_entities.php">Marked Entities</a>
           <a href="discussions.php">Discussions</a>
           <a href="meetings.php">Meetings</a>
         </div>

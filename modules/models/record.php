@@ -257,9 +257,18 @@ class Record
 
             $association = get_called_class()::$has_many[$name];
 
-            $data = $association['class_name']::where(
-                array($association['foreign_key']=>$this->id)
-            );
+            if (array_key_exists('as', $association)) {
+                $data = $association['class_name']::where(
+                    array(
+                        $association['as']."_id"=>$this->id,
+                        $association['as']."_type"=>get_called_class()
+                    )
+                );
+            } else {
+                $data = $association['class_name']::where(
+                    array($association['foreign_key']=>$this->id)
+                );
+            }
 
             $this->associations[$name] = $data;
             $this->associations_are_loaded[$name] = true;
@@ -273,8 +282,14 @@ class Record
 
             $association = get_called_class()::$belongs_to[$name];
             $foreign_key = $association['foreign_key'];
+            $class_name = array_key_exists('class_name', $association) ? $association['class_name'] : $association[$name."_type"];
 
-            $data = $association['class_name']::find_by(
+            if ($class_name == null) {
+                // Because the polymorphic association is undefined
+                return null;
+            }
+
+            $data = $class_name::find_by(
                 array("id"=>$this->$foreign_key)
             );
 
@@ -425,5 +440,5 @@ class Record
 
 spl_autoload_register(function ($class_name) {
     // Convert camel case to snake case
-    require_once strtolower(preg_replace('/([^A-Z])([A-Z])/', "$1_$2", $class_name)) . '.php';
+    require_once sprintf("%s/%s.php", dirname(__FILE__), strtolower(preg_replace('/([^A-Z])([A-Z])/', "$1_$2", $class_name)));
 });

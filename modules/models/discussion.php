@@ -15,12 +15,18 @@ class Discussion extends Record
         "user" => array(
             "class_name" => "User",
             "foreign_key" => "user_id",
+        ),
+        "discussable" => array(
+            "polymorphic" => true,
+            "foreign_key" => "discussable_id",
         )
     );
 
     public $id;
     public $user_id;
     public $title;
+    public $discussable_id;
+    public $discussable_type;
     public $created_at;
     public $updated_at;
 }

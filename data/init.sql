@@ -34,6 +34,8 @@ CREATE TABLE IF NOT EXISTS discussions (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	user_id INT(11) NOT NULL,
 	title VARCHAR(60) NOT NULL,
+	discussable_id INT(11) UNSIGNED,
+	discussable_type VARCHAR(50),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );

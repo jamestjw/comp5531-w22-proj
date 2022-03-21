@@ -10,6 +10,10 @@ class MarkedEntity extends Record
         "files" => array(
             "class_name" => "Attachment",
             "foreign_key" => "attachable_id",
+        ),
+        "discussions" => array(
+            "class_name" => "Discussion",
+            "as" => "discussable",
         )
     );
 
