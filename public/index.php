@@ -15,8 +15,8 @@ try {
 <?php if($latest_notice != null)
 {?>
   <h2>Latest Announcement: </h2>
-  <h4> <?php echo $latest_notice["notice"] ?></h4>
-  <h6> Posted: <?php echo $latest_notice["created_at"] ?> </h6>
+  <h4> <?php echo $latest_notice->notice ?></h4>
+  <h6> Posted: <?php echo $latest_notice->created_at ?> </h6>
 <?php } else {?>
 <h2>No announcement from admin</h2>
 <?php }?>
