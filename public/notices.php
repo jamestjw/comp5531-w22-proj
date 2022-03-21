@@ -42,21 +42,11 @@ if ($notices && count($notices)) { ?>
     <blockquote>No Announcements</blockquote>
 <?php }?>
 
-<?php if (get_current_role() == "admin"){ ?>
-<h2>New announcements</h2>
+<!-- ADD IF STATEMENT TO SHOW NEW NOTICE ONLY IF USER == ADMNIN -->
+<h2>New announcement</h2>
 
 <form method="post">
     <label for="notice_text">Announcement</label>
-    <textarea name="notice_text" cols="40" rows="5"></textarea>
-    <input type="submit" name="submit" value="Submit">
-</form>
-<?php }?>
-
-<!-- ADD IF STATEMENT TO SHOW NEW NOTICE ONLY IF USER == ADMNIN -->
-<h2>New notice</h2>
-
-<form method="post">
-    <label for="notice_text">Notice</label>
     <textarea name="notice_text" cols="40" rows="5"></textarea>
     <input type="submit" name="submit" value="Submit">
 </form>
