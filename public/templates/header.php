@@ -38,7 +38,9 @@ verify_logged_in();
       </li>
       <li class="navelem"><a href="account_settings.php">Account Settings</a></li>
       <li class="navelem"><a href="#email">Email</a></li>
+      <?php if (get_current_role() == "admin") { ?>
       <li class="navelem"><a href="instructors_list.php">Instructors</a></li>
+      <?php } ?>
 
       <?php
         if (is_logged_in()) {
