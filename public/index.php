@@ -5,7 +5,7 @@ try {
     $latest_notice = Notice::getLast();
     
 } catch (PDOException $error) {
-    echo $sql . "<br>" . $error->getMessage();
+    echo  $error->getMessage();
 }
 ?>
 
