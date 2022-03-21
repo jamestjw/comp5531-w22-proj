@@ -122,7 +122,7 @@ if ($instructors && count($instructors)) { ?>
             <tbody>
         <?php foreach ($course_assignment as $row) { ?>
             <tr>
-                <td><?php echo escape($row->$offering_id); ?></td>
+                <td><?php echo escape($row->offering_id); ?></td>
                 <td><?php echo escape($row->user_id); ?></td>
                 <td><?php echo escape($row->created_at);  ?> </td>
             </tr>
