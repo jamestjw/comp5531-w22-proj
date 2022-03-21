@@ -120,10 +120,16 @@ if ($instructors && count($instructors)) { ?>
                 </tr>
             </thead>
             <tbody>
-        <?php foreach ($course_assignment as $row) { ?>
+        <?php foreach ($course_assignment as $row) { 
+            $inst = User::find_by(array('id' => $row->user_id));
+            $off = CourseOffering::find_by(array('id' => $row->offering_id));
+
+            $inst_name = $inst->first_name." ".$inst->last_name;
+            $off_name = $off->course_offering_name;
+            ?>
             <tr>
-                <td><?php echo escape($row->offering_id); ?></td>
-                <td><?php echo escape($row->user_id); ?></td>
+                <td><?php echo $off_name; ?></td>
+                <td><?php echo $inst_name; ?></td>
                 <td><?php echo escape($row->created_at);  ?> </td>
             </tr>
         <?php } ?>
