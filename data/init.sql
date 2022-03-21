@@ -100,6 +100,7 @@ CREATE TABLE IF NOT EXISTS meetings (
 );
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 CREATE TABLE IF NOT EXISTS polls (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	parent_id INT(11) UNSIGNED NOT NULL,
@@ -155,10 +156,16 @@ CREATE TABLE IF NOT EXISTS course_sections(
 	updated_at TIMESTAMP
 )
 =======
+=======
+>>>>>>> f4e6c87204f67e516a4215fc15b7663e141c870c
 CREATE TABLE IF NOT EXISTS notices (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	notice VARCHAR(10000),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
+<<<<<<< HEAD
 );
 >>>>>>> bc8cbd7 (saving before pulling main)
+=======
+);
+>>>>>>> f4e6c87204f67e516a4215fc15b7663e141c870c
