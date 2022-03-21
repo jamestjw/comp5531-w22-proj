@@ -12,7 +12,7 @@ try {
 
 if (isset($_POST['submit'])) {
     $notice = new Notice();
-    $notice->notice = $_POST['notice_text'];
+    $notice->notice_text = $_POST['notice_text'];
 
     try {
         $notice->save();
@@ -34,7 +34,7 @@ if ($notices && count($notices)) { ?>
 
             <h3>Announcement #<?php echo escape($row->id); ?></h3>
             <h5>Posted on <?php echo escape($row->created_at);?></h5>
-            <p><?php echo escape($row->notice)?></p>
+            <p><?php echo escape($row->notice_text)?></p>
 
         <?php } ?>
 

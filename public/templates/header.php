@@ -26,7 +26,6 @@ verify_logged_in();
     <h1>COMP 5531 Database App</h1>
     <ul class="topnav">
       <li class="navelem"><a class="active" href="index.php">Home</a></li>
-      <li class="navelem"><a href="notices.php">Notices</a></li>
       <li class="dropdown">
         <button class="dropbtn">Courses</button>
         <div class="dropdown-content">
