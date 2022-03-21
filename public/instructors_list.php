@@ -1,5 +1,6 @@
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
 
+<?php if (get_current_role() == "admin") { ?>
 <?php
 
 require_once "../modules/models/user.php";
@@ -170,6 +171,10 @@ if ($instructors && count($instructors)) { ?>
 <?php } else { ?>
     <blockquote> No course offering in database </blockquote>
 <?php } ?>
+
+<?php } else {?>
+    <h2>You do not have the credentials to view this page.</h2>
+<?php }?>
  
 <a href="index.php">Back to home</a>
 
