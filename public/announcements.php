@@ -4,18 +4,18 @@ require_once "../common.php";
 ensure_logged_in();
 
 try {
-    $notices = Notice::getAll();
+    $announcement = Announcement::getAll();
     
 } catch (PDOException $error) {
     echo $sql . "<br>" . $error->getMessage();
 }
 
 if (isset($_POST['submit']) && get_current_role() == "admin") {
-    $notice = new Notice();
-    $notice->notice_text = $_POST['notice_text'];
+    $announcement = new Announcement();
+    $announcement->announcement_text = $_POST['announcement_text'];
 
     try {
-        $notice->save();
+        $announcement->save();
         header("refresh: 1");
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
@@ -30,14 +30,14 @@ elseif (get_current_role() != "admin"){
 <?php include "templates/header.php"; ?>
 
 <?php
-if ($notices && count($notices)) { ?>
+if ($announcement && count($announcement)) { ?>
         
 
-        <?php foreach ($notices as $row) { ?>
+        <?php foreach ($announcement as $row) { ?>
 
             <h3>Announcement #<?php echo escape($row->id); ?></h3>
             <h5>Posted on <?php echo escape($row->created_at);?></h5>
-            <p><?php echo escape($row->notice_text)?></p>
+            <p><?php echo escape($row->announcement_text)?></p>
 
         <?php } ?>
 
@@ -49,8 +49,8 @@ if ($notices && count($notices)) { ?>
 <h2>New announcement</h2>
 
 <form method="post">
-    <label for="notice_text">Announcement</label>
-    <textarea name="notice_text" cols="40" rows="5"></textarea>
+    <label for="announcement_text">Announcement</label>
+    <textarea name="announcement_text" cols="40" rows="5"></textarea>
     <input type="submit" name="submit" value="Submit">
 </form>
 <?php } ?>
