@@ -416,8 +416,7 @@ class Record
         $statement = getConnection()->prepare($sql);
         $statement->execute();
         $res = $statement->fetch();
-    
-        return isset($res) ? get_called_class()::loadRecordFromData($res) : null;
+        return ($res) ? get_called_class()::loadRecordFromData($res) : null; 
 
 
     }
