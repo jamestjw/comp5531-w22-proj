@@ -10,13 +10,13 @@ try {
     echo $sql . "<br>" . $error->getMessage();
 }
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit']) && get_current_role() == "admin") {
     $notice = new Notice();
     $notice->notice_text = $_POST['notice_text'];
 
     try {
         $notice->save();
-        $create_success = true;
+        header("refresh: 1");
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
