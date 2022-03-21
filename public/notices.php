@@ -21,6 +21,9 @@ if (isset($_POST['submit']) && get_current_role() == "admin") {
         echo "<br>" . $error->getMessage();
     }
 }
+elseif (get_current_role() != "admin"){
+    echo "Invalid access, you are not an admin.";
+}
 
 ?>
 
