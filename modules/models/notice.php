@@ -7,7 +7,7 @@ class Notice extends Record
     protected static $table_name = "notices";
 
     public $id;
-    public $notice;
+    public $notice_text;
     public $created_at;
     public $updated_at;
 }

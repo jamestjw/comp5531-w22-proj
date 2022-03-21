@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS course_sections(
 
 CREATE TABLE IF NOT EXISTS notices (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	notice VARCHAR(10000),
+	notice_text VARCHAR(10000),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );
