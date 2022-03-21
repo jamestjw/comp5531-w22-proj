@@ -2,12 +2,12 @@
 
 require_once(dirname(__FILE__)."/record.php");
 
-class Notice extends Record
+class Announcement extends Record
 {
-    protected static $table_name = "notices";
+    protected static $table_name = "announcements";
 
     public $id;
-    public $notice_text;
+    public $announcement_text;
     public $created_at;
     public $updated_at;
 }
