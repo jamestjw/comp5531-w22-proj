@@ -173,6 +173,7 @@ if ($instructors && count($instructors)) { ?>
 <?php } ?>
 
 <?php } else {?>
+    <?php include "templates/header.php"; ?>
     <h2>You do not have the credentials to view this page.</h2>
 <?php }?>
  
