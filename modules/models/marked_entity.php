@@ -9,11 +9,15 @@ class MarkedEntity extends Record
         // Files that the instructor adds to the marked entity
         "files" => array(
             "class_name" => "Attachment",
-            "foreign_key" => "attachable_id",
+            "as" => "attachable",
         ),
         "discussions" => array(
             "class_name" => "Discussion",
             "as" => "discussable",
+        ),
+        "student_files" => array(
+            "class_name" => "MarkedEntityFile",
+            "foreign_key" => "entity_id",
         )
     );
 

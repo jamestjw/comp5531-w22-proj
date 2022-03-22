@@ -173,13 +173,19 @@ class Record
         foreach (get_called_class()::$has_many as $association_name => $association_values) {
             if (array_key_exists("as", $association_values)) {
                 $foreign_key = $association_values['as']."_id";
+                $polymorphic_type = $association_values['as']."_type";
+                $is_polymorphic = true;
             } else {
                 $foreign_key = $association_values['foreign_key'];
+                $is_polymorphic = false;
             }
 
             if (array_key_exists($association_name, $this->associations)) {
                 foreach ($this->associations[$association_name] as $obj) {
                     $obj->$foreign_key = $this->id;
+                    if ($is_polymorphic) {
+                        $obj->$polymorphic_type = get_called_class();
+                    }
                     $obj->save();
                 }
             }
@@ -308,11 +314,19 @@ class Record
             }
 
             $association = get_called_class()::$has_one[$name];
-            $foreign_key = $association['foreign_key'];
 
-            $data = $association['class_name']::find_by(
-                array($foreign_key=>$this->id)
-            );
+            if (array_key_exists('as', $association)) {
+                $data = $association['class_name']::find_by(
+                    array(
+                        $association['as']."_id"=>$this->id,
+                        $association['as']."_type"=>get_called_class()
+                    )
+                );
+            } else {
+                $data = $association['class_name']::find_by(
+                    array($association['foreign_key']=>$this->id)
+                );
+            }
 
             $this->associations[$name] = $data;
             $this->associations_are_loaded[$name] = true;

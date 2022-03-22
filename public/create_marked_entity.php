@@ -14,7 +14,6 @@ $marked_entity->course_offering_id = intval($_POST["course_offering_id"] ?? 1);
 $marked_entity->due_at = $_POST["due_at"];
 
 if (isset($_FILES['marked_entity_file'])) {
-    echo "Handling file";
     // Uploads folder needs to be created in the public/ directory
     // TODO: Make this more convenient
     $target_dir = "uploads/";

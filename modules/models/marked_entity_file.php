@@ -8,7 +8,7 @@ class MarkedEntityFile extends Record
     protected static $has_one = array(
         "attachment" => array(
             "class_name" => "Attachment",
-            "foreign_key" => "attachable_id",
+            "as" => "attachable",
         )
     );
     protected static $belongs_to = array(
@@ -19,6 +19,12 @@ class MarkedEntityFile extends Record
         "user" => array(
             "class_name" => "User",
             "foreign_key" => "user_id",
+        )
+    );
+    protected static $has_many = array(
+        "comments" => array(
+            "class_name" => "Comment",
+            "as" => "commentable",
         )
     );
 

@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
         $attachment->attachable_type = 'MarkedEntityFile';
         $attachment->save();
 
-        // header("Location: marked_entity_files.php?marked_entity_id=".$marked_entity_file->entity_id);
+        header("Location:".$_SERVER['HTTP_REFERER']);
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 
 // TODO: Ensure that marked entity ID is valid.
 if (isset($marked_entity_id)) {
-    $files = MarkedEntityFile::where(array("entity_id"=>isset($marked_entity_id))); ?>
+    $files = MarkedEntityFile::where(array("entity_id"=>$marked_entity_id)); ?>
     <div>Files for marked entity ID: <?php echo $marked_entity_id; ?> </div>
     <div>Number of files: <?php echo count($files); ?> </div>
 
@@ -63,6 +63,7 @@ if (isset($marked_entity_id)) {
                     <th>Description</th>
                     <th>File name</th>
                     <th>Created At</th>
+                    <th>Comments</th>
                     <th></th>
                 </tr>
             </thead>
@@ -74,6 +75,33 @@ if (isset($marked_entity_id)) {
                 <td><?php echo escape($row->description); ?></td>
                 <td><?php echo $row->attachment->file_filename; ?></td>
                 <td><?php echo escape($row->created_at);  ?> </td>
+                <td>
+                    <?php
+                        if (!empty($comments=$row->comments)) { ?>
+                            <ul>
+                                <?php
+                                foreach ($comments as $comment) { ?>
+                                    <li>
+                                        <?php echo sprintf("%s - %s - %s", $comment->content, $comment->user->first_name, $comment->created_at); ?>
+                                    </li>
+                                <?php }
+                                ?>
+                            </ul>
+                        <?php } else {
+                                    echo "N/A";
+                                }
+                    ?>
+
+                    <?php
+                        // TODO: Only display this to TA's of this course!
+                        if (true) {
+                            $user_id = $_SESSION["current_user"]->id;
+                            $commentable_id = $row->id;
+                            $commentable_type = "MarkedEntityFile";
+                            include "new_comment_form.php";
+                        }
+                    ?>
+                </td>
 
                 <!-- TODO: Should we apply some sort of transformation to the file ID -->
                 <td><a href='<?php echo "download.php?file_id={$row->attachment->file_id}" ?>'>Download</a></td>
@@ -95,8 +123,8 @@ if (isset($marked_entity_id)) {
     </form>
 <?php
 } else {
-        echo "Invalid marked entity ID.";
-    }
+                        echo "Invalid marked entity ID.";
+                    }
 ?>
 
 <?php include "templates/footer.php"; ?>
