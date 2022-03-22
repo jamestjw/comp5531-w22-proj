@@ -49,10 +49,10 @@ if (isset($_POST['submit'])) {
 
 <?php
 
-if (isset($_GET["id"]) && ($discussion = Discussion::find_by_id($_GET["id"]))) {
+if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messages" => ["poll"=>"poll_options", "user"=>[]]])->find_by_id($_GET["id"]))) {
     $discussion_messages = $discussion->discussion_messages; ?>
 
-    <div>Title: <?php echo $discussion->title; ?> </div>
+    <div>Title: <?php echo $discussion->title; ?> (#<?php echo $discussion->id ?>) </div>
     <div>Number of posts: <?php echo count($discussion_messages); ?> </div>
     <div>Author: <?php echo $discussion->user->first_name ?> </div>
 

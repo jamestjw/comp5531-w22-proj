@@ -14,7 +14,6 @@ if (isset($_SESSION["current_user"])) {
 if (count($_POST) > 0) {
     $is_success = 0;
     $user = User::find_by_email($_POST["email"]);
-
     if (isset($user)) {
         if (password_verify($_POST["password"], $user->password_digest)) {
             $is_success = 1;

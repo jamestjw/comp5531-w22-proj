@@ -2,6 +2,7 @@
 
 require_once(dirname(__FILE__)."/../../common.php");
 require_once(dirname(__FILE__)."/utils.php");
+require_once(dirname(__FILE__)."/query_builder.php");
 
 function getConnection()
 {
@@ -48,7 +49,7 @@ class Record
     // Loads a record and marks it as not new, i.e.
     // it will be treated as a record that has already
     // been saved to the database.
-    protected static function loadRecordFromData($data)
+    public static function loadRecordFromData($data)
     {
         $class = get_called_class();
         $obj = new $class();
@@ -71,28 +72,8 @@ class Record
     */
     public static function where(array $attrs)
     {
-        $table_name = get_called_class()::$table_name;
-
-        if (!empty($attrs)) {
-            $sql_wheres = array();
-            foreach ($attrs as $key => $value) {
-                array_push($sql_wheres, "$key = ?");
-            }
-            $sql = sprintf(
-                "SELECT * FROM %s WHERE %s",
-                $table_name,
-                implode(" AND ", $sql_wheres)
-            );
-        } else {
-            $sql = sprintf(
-                "SELECT * FROM %s;",
-                $table_name
-            );
-        }
-
-        $res = execute_sql_query($sql, $attrs);
-
-        return array_map([get_called_class(), 'loadRecordFromData'], $res);
+        $query_builder = new QueryBuilder(get_called_class());
+        return $query_builder->where($attrs);
     }
 
     /*
@@ -101,32 +82,8 @@ class Record
     */
     public static function find_by(array $attrs)
     {
-        // TODO: Solve code repetition with +where+ method
-        $table_name = get_called_class()::$table_name;
-
-        if (!empty($attrs)) {
-            $sql_wheres = array();
-            foreach ($attrs as $key => $value) {
-                array_push($sql_wheres, "$key = ?");
-            }
-            $sql = sprintf(
-                "SELECT * FROM %s WHERE %s LIMIT 1;",
-                $table_name,
-                implode(" AND ", $sql_wheres)
-            );
-        } else {
-            $sql = sprintf(
-                "SELECT * FROM %s LIMIT 1;",
-                $table_name
-            );
-        }
-        $res = execute_sql_query($sql, $attrs);
-
-        if (count($res) > 0) {
-            return get_called_class()::loadRecordFromData($res[0]);
-        } else {
-            return null;
-        }
+        $query_builder = new QueryBuilder(get_called_class());
+        return $query_builder->find_by($attrs);
     }
 
     public function delete($pk="id") // Deletes by assuming $id is always the pk. Not sure if robust enough.
@@ -396,6 +353,58 @@ class Record
             ' on line ' . $trace[0]['line'],
             E_USER_NOTICE
         );
+    }
+
+    public static function getAssociations()
+    {
+        return array_merge(
+            array_keys(get_called_class()::$has_many),
+            array_keys(get_called_class()::$has_one),
+            array_keys(get_called_class()::$belongs_to)
+        );
+    }
+
+    public static function getAssociationType(string $association)
+    {
+        if (in_array($association, array_keys(get_called_class()::$has_many))) {
+            return "has_many";
+        } elseif (in_array($association, array_keys(get_called_class()::$has_one))) {
+            return "has_one";
+        } elseif (in_array($association, array_keys(get_called_class()::$belongs_to))) {
+            return "belongs_to";
+        }
+
+        return;
+    }
+
+    public static function getAssociationClassName(string $association)
+    {
+        if (in_array($association, array_keys(get_called_class()::$has_many))) {
+            return get_called_class()::$has_many[$association]['class_name'];
+        } elseif (in_array($association, array_keys(get_called_class()::$has_one))) {
+            return get_called_class()::$has_one[$association]['class_name'];
+        } elseif (in_array($association, array_keys(get_called_class()::$belongs_to))) {
+            return get_called_class()::$belongs_to[$association]['class_name'];
+        }
+
+        return;
+    }
+
+    public static function getAssociationForeignKey(string $association)
+    {
+        if (in_array($association, array_keys(get_called_class()::$has_many))) {
+            return get_called_class()::$has_many[$association]['foreign_key'];
+        } elseif (in_array($association, array_keys(get_called_class()::$has_one))) {
+            return get_called_class()::$has_one[$association]['foreign_key'];
+        } elseif (in_array($association, array_keys(get_called_class()::$belongs_to))) {
+            return get_called_class()::$belongs_to[$association]['foreign_key'];
+        }
+        return;
+    }
+
+    public static function includes($args)
+    {
+        return (new QueryBuilder(get_called_class()))->includes($args);
     }
 }
 
