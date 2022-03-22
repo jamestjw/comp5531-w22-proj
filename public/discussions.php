@@ -5,7 +5,7 @@
 require "../modules/models/discussion.php";
 
 try {
-    $discussions = Discussion::getAll();
+    $discussions = Discussion::where(["discussable_id"=>null, "discussable_type"=>null]);
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }

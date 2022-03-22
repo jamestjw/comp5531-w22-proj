@@ -171,7 +171,11 @@ class Record
 
         // TODO: Fix n+1 saving
         foreach (get_called_class()::$has_many as $association_name => $association_values) {
-            $foreign_key = $association_values['foreign_key'];
+            if (array_key_exists("as", $association_values)) {
+                $foreign_key = $association_values['as']."_id";
+            } else {
+                $foreign_key = $association_values['foreign_key'];
+            }
 
             if (array_key_exists($association_name, $this->associations)) {
                 foreach ($this->associations[$association_name] as $obj) {
