@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
 
 <?php
 
-if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messages" => ["poll"=>"poll_options", "user"=>[]]])->find_by_id($_GET["id"]))) {
+if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messages" => ["poll"=>"poll_options", "user"=>[], "comments" => "user"]])->find_by_id($_GET["id"]))) {
     $discussion_messages = $discussion->discussion_messages; ?>
 
     <div>Title: <?php echo $discussion->title; ?> (#<?php echo $discussion->id ?>) </div>

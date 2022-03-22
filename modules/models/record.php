@@ -417,7 +417,12 @@ class Record
         } elseif (in_array($association, array_keys(get_called_class()::$has_one))) {
             return get_called_class()::$has_one[$association]['class_name'];
         } elseif (in_array($association, array_keys(get_called_class()::$belongs_to))) {
-            return get_called_class()::$belongs_to[$association]['class_name'];
+            $association_data = get_called_class()::$belongs_to[$association];
+            if (array_key_exists("polymorphic", $association_data) && $association_data['polymorphic']) {
+                return $association."_type";
+            } else {
+                return get_called_class()::$belongs_to[$association]['class_name'];
+            }
         }
 
         return;
@@ -426,11 +431,42 @@ class Record
     public static function getAssociationForeignKey(string $association)
     {
         if (in_array($association, array_keys(get_called_class()::$has_many))) {
-            return get_called_class()::$has_many[$association]['foreign_key'];
+            $association_data = get_called_class()::$has_many[$association];
+            if (array_key_exists("as", $association_data)) {
+                return $association_data['as']."_id";
+            } else {
+                return $association_data['foreign_key'];
+            }
         } elseif (in_array($association, array_keys(get_called_class()::$has_one))) {
-            return get_called_class()::$has_one[$association]['foreign_key'];
+            $association_data = get_called_class()::$has_one[$association];
+            if (array_key_exists("as", $association_data)) {
+                return $association_data['as']."_id";
+            } else {
+                return $association_data['foreign_key'];
+            }
         } elseif (in_array($association, array_keys(get_called_class()::$belongs_to))) {
             return get_called_class()::$belongs_to[$association]['foreign_key'];
+        }
+        return;
+    }
+
+    public static function getAssociationPolymorphicTypeColumn(string $association)
+    {
+        if (in_array($association, array_keys(get_called_class()::$has_many))) {
+            $association_data = get_called_class()::$has_many[$association];
+            if (array_key_exists("as", $association_data)) {
+                return $association_data['as']."_type";
+            }
+        } elseif (in_array($association, array_keys(get_called_class()::$has_one))) {
+            $association_data = get_called_class()::$has_one[$association];
+            if (array_key_exists("as", $association_data)) {
+                return $association_data['as']."_type";
+            }
+        } elseif (in_array($association, array_keys(get_called_class()::$belongs_to))) {
+            $association_data = get_called_class()::$belongs_to[$association];
+            if (array_key_exists("polymorphic", $association_data) && $association_data['polymorphic']) {
+                return $association."_type";
+            }
         }
         return;
     }

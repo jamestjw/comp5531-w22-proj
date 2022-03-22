@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 
 // TODO: Ensure that marked entity ID is valid.
 if (isset($marked_entity_id)) {
-    $files = MarkedEntityFile::where(array("entity_id"=>$marked_entity_id)); ?>
+    $files = MarkedEntityFile::includes(["attachment" => [], "comments" => "user"])->where(array("entity_id"=>$marked_entity_id)); ?>
     <div>Files for marked entity ID: <?php echo $marked_entity_id; ?> </div>
     <div>Number of files: <?php echo count($files); ?> </div>
 
