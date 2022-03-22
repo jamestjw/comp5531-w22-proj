@@ -172,3 +172,14 @@ CREATE TABLE IF NOT EXISTS course_offerings_instructors(
 	updated_at TIMESTAMP,
 	PRIMARY KEY (offering_id, user_id)
 );
+
+CREATE TABLE IF NOT EXISTS comments(
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	user_id INT(11) UNSIGNED,
+	content TEXT,
+	commentable_id INT(11) UNSIGNED,
+	commentable_type VARCHAR(50),
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP,
+	FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+);

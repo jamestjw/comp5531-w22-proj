@@ -61,6 +61,7 @@ if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messa
             <th>Replies to</th>
             <th>Created At</th>
             <th>Poll</th>
+            <th>Comments</th> <!-- Comments by TAs -->
             <th></th> <!-- Reply button -->
             <th></th> <!-- Reply form -->
         </tr>
@@ -101,6 +102,34 @@ if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messa
                     echo "N/A";
                 }
                 ?>
+
+                <!-- Comments -->
+                <td>
+                <?php
+                    if (!empty($comments=$discussion_message->comments)) { ?>
+                        <ul>
+                            <?php
+                            foreach ($comments as $comment) { ?>
+                                <li>
+                                    <?php echo sprintf("%s - %s - %s", $comment->content, $comment->user->first_name, $comment->created_at); ?>
+                                </li>
+                            <?php }
+                            ?>
+                        </ul>
+                    <?php } else {
+                                echo "N/A";
+                            }
+                ?>
+                <?php
+                    // TODO: Only display this to TA's of this course!
+                    if (true) {
+                        $user_id = $_SESSION["current_user"]->id;
+                        $commentable_id = $discussion_message->id;
+                        $commentable_type = "DiscussionMessage";
+                        include "new_comment_form.php";
+                    }
+                ?>
+                </td>
                 
                 </td>
                 <!-- Reply button -->

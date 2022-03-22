@@ -10,7 +10,7 @@ $marked_entity->title = $_POST["title"];
 $marked_entity->description = $_POST["description"];
 $marked_entity->is_group_work = $_POST["is_group_work"];
 // TODO: Fix this when courses are fully implemented
-$marked_entity->course_offering_id = $_POST["course_offering_id"] ?? 1;
+$marked_entity->course_offering_id = intval($_POST["course_offering_id"] ?? 1);
 $marked_entity->due_at = $_POST["due_at"];
 
 if (isset($_FILES['marked_entity_file'])) {
