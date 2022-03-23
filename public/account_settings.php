@@ -1,5 +1,5 @@
 <?php
-require "../modules/models/user.php";
+require_once "../modules/models/user.php";
 require_once "../common.php";
 ?>
 

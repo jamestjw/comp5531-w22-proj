@@ -1,13 +1,15 @@
-<?php require_once (dirname(__FILE__)."/record.php");
+<?php
 
-class Course extends Record {
+require_once(dirname(__FILE__)."/record.php");
 
-    static protected $table_name = "courses";
-    
+class Course extends Record
+{
+    protected static $table_name = "courses";
+
 
     public $id;
     public $course_code;
     public $course_name;
-	public $created_at;
-	public $updated_at;
+    public $created_at;
+    public $updated_at;
 }
