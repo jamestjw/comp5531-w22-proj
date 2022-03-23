@@ -150,7 +150,9 @@ class Record
         $new_obj = array();
 
         foreach (get_called_class()::getAttrs() as $attr) {
-            $new_obj[$attr] = $this->$attr ?? null;
+            if ($this->$attr != null) {
+                $new_obj[$attr] = $this->$attr;
+            }
         }
 
         $new_obj['created_at'] = date('Y-m-d H:i:s');

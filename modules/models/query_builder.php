@@ -62,14 +62,23 @@ class QueryBuilder
         $sql = "SELECT * FROM {$this->table_name()}";
         if (!empty($attrs)) {
             $sql_wheres = array();
+            $null_keys = array();
             foreach ($attrs as $key => $value) {
                 if (is_array($value)) {
                     $placeholder = join(", ", array_map(fn ($e) =>"?", $value));
                     array_push($sql_wheres, "$key in ($placeholder)");
+                } elseif ($value == null) {
+                    array_push($null_keys, $key);
+                    array_push($sql_wheres, "$key IS NULL");
                 } else {
                     array_push($sql_wheres, "$key = ?");
                 }
             }
+
+            foreach ($null_keys as $k) {
+                unset($attrs[$k]);
+            }
+
             $sql .= sprintf(
                 " WHERE %s",
                 implode(" AND ", $sql_wheres)
