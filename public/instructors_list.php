@@ -122,15 +122,15 @@ if ($instructors && count($instructors)) { ?>
             </thead>
             <tbody>
         <?php foreach ($course_assignment as $row) { 
-            $inst = User::find_by(array('id' => $row->user_id));
-            $off = CourseOffering::find_by(array('id' => $row->offering_id));
+            //$inst = User::find_by(array('id' => $row->user_id));
+            //$off = CourseOffering::find_by(array('id' => $row->offering_id));
 
-            $inst_name = $inst->first_name." ".$inst->last_name;
-            $off_name = $off->course_offering_name;
+            //$inst_name = $inst.get_full_name();
+            //$off_name = $off->course_offering_name;
             ?>
             <tr>
-                <td><?php echo $off_name; ?></td>
-                <td><?php echo $inst_name; ?></td>
+                <td><?php echo $row->course_offering->course_offering_name; ?></td>
+                <td><?php echo $row->user->get_full_name(); ?></td>
                 <td><?php echo escape($row->created_at);  ?> </td>
             </tr>
         <?php } ?>
@@ -148,7 +148,7 @@ if ($instructors && count($instructors)) { ?>
             <option value="">----Select----</option>
         <?php foreach($instructors as $row) { ?>
             <option value="<?php echo $row->id; ?>">
-            <?php echo $row->last_name." ".$row->first_name; ?>
+            <?php echo $row->get_full_name(); ?>
             </option>
         <?php } ?>
         </select>
