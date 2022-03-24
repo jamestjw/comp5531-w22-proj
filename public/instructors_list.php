@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
     }
 }
 
-if (isset($_POST['offering_submit'])) {
+if (isset($_POST['offering_submit']) && CourseOfferingInstructor::where(array("offering_id" => $_POST['offering_selection'], "user_id" => $_POST['instructor_selection'])) == null) {
     $offering_instructor = new CourseOfferingInstructor();
     $offering_instructor->offering_id = $_POST['offering_selection'];
     $offering_instructor->user_id = $_POST['instructor_selection'];
@@ -53,6 +53,7 @@ if (isset($_POST['offering_submit'])) {
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
+    header("refresh: 1");
 }
 
 ?>
@@ -122,13 +123,7 @@ if ($instructors && count($instructors)) { ?>
                 </tr>
             </thead>
             <tbody>
-        <?php foreach ($course_assignment as $row) { 
-            //$inst = User::find_by(array('id' => $row->user_id));
-            //$off = CourseOffering::find_by(array('id' => $row->offering_id));
-
-            //$inst_name = $inst.get_full_name();
-            //$off_name = $off->course_offering_name;
-            ?>
+        <?php foreach ($course_assignment as $row) {?>
             <tr>
                 <td><?php echo $row->course_offering->course_offering_name; ?></td>
                 <td><?php echo $row->user->get_full_name(); ?></td>
