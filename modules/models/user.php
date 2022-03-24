@@ -39,4 +39,8 @@ class User extends Record
         return $res;
     }
 
+    public function get_full_name()
+    {
+        return $this->first_name." ".$this->last_name;
+    }
 }

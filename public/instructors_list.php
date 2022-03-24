@@ -131,7 +131,7 @@ if ($instructors && count($instructors)) { ?>
             ?>
             <tr>
                 <td><?php echo $row->course_offering->course_offering_name; ?></td>
-                <td><?php echo $row->user->first_name." ".$row->user->last_name; ?></td>
+                <td><?php echo $row->user->get_full_name(); ?></td>
                 <td><?php echo escape($row->created_at);  ?> </td>
             </tr>
         <?php } ?>
@@ -149,7 +149,7 @@ if ($instructors && count($instructors)) { ?>
             <option value="">----Select----</option>
         <?php foreach($instructors as $row) { ?>
             <option value="<?php echo $row->id; ?>">
-            <?php echo $row->first_name." ".$row->last_name; ?>
+            <?php echo $row->get_full_name(); ?>
             </option>
         <?php } ?>
         </select>
