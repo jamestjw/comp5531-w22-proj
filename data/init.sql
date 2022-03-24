@@ -152,12 +152,4 @@ CREATE TABLE IF NOT EXISTS course_sections(
 	course_section_name VARCHAR(60),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
-);
-
-CREATE TABLE IF NOT EXISTS announcements (
-	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	announcement_text TEXT,
-	created_at TIMESTAMP,
-	updated_at TIMESTAMP
-);
-
+)
