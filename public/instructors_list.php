@@ -1,4 +1,5 @@
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
+<?php include "templates/header.php"; ?>
 
 <?php if (get_current_role() == "admin") { ?>
 <?php
@@ -56,7 +57,7 @@ if (isset($_POST['offering_submit'])) {
 
 ?>
 
-<?php include "templates/header.php"; ?>
+
 
 <?php
 if ($instructors && count($instructors)) { ?>
@@ -173,7 +174,6 @@ if ($instructors && count($instructors)) { ?>
 <?php } ?>
 
 <?php } else {?>
-    <?php include "templates/header.php"; ?>
     <h2>You do not have the credentials to view this page.</h2>
 <?php }?>
  
