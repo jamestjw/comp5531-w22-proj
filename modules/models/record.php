@@ -355,6 +355,7 @@ class Record
         );
     }
 
+<<<<<<< HEAD
     public static function getAssociations()
     {
         return array_merge(
@@ -406,6 +407,23 @@ class Record
     {
         return (new QueryBuilder(get_called_class()))->includes($args);
     }
+=======
+    public static function getLast()
+    {
+
+        $table_name = get_called_class()::$table_name;
+
+        $sql = "SELECT * FROM ".$table_name." ORDER BY id DESC LIMIT 1;";
+    
+        $statement = getConnection()->prepare($sql);
+        $statement->execute();
+        $res = $statement->fetch();
+        return ($res) ? get_called_class()::loadRecordFromData($res) : null; 
+
+
+    }
+
+>>>>>>> announcements
 }
 
 spl_autoload_register(function ($class_name) {
