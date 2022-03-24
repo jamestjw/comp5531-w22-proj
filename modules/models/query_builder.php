@@ -85,20 +85,20 @@ class QueryBuilder
 
         // Preload associations
         if (!empty($this->includes)) {
-            $ids = array_map(fn ($o) => $o->id, $res);
-
             foreach ($this->includes as $association => $sub_association) {
                 $association_type = $this->record_class::getAssociationType($association);
                 $association_class_name = $this->record_class::getAssociationClassName($association);
                 $association_foreign_key = $this->record_class::getAssociationForeignKey($association);
                 switch ($association_type) {
                     case "has_one":
+                        $ids = array_map(fn ($o) => $o->id, $res);
                         $association_res = call_user_func($association_class_name."::includes", $sub_association)->where(array($association_foreign_key => $ids));
                         foreach ($res as $r) {
                             $r->$association = current(array_filter($association_res, fn ($o) => $o->$association_foreign_key==$r->id)) ?? null;
                         }
                         break;
                     case "has_many":
+                        $ids = array_map(fn ($o) => $o->id, $res);
                         $association_res = call_user_func($association_class_name."::includes", $sub_association)->where(array($association_foreign_key => $ids));
                         foreach ($res as $r) {
                             $r->$association = array_filter($association_res, fn ($o) => $o->$association_foreign_key==$r->id);
@@ -108,7 +108,7 @@ class QueryBuilder
                         $foreign_keys = array_unique(array_map(fn ($o) => $o->$association_foreign_key, $res));
                         $association_res = call_user_func($association_class_name."::includes", $sub_association)->where(array("id" => $foreign_keys));
                         foreach ($res as $r) {
-                            $r->$association = array_filter($association_res, fn ($o) => $o->id==$r->$association_foreign_key)[0] ?? null;
+                            $r->$association = current(array_filter($association_res, fn ($o) => $o->id==$r->$association_foreign_key)) ?? null;
                         }
                         break;
                 }
