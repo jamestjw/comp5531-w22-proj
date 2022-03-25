@@ -1,15 +1,30 @@
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
+<?php include "templates/header.php"; ?>
 
+<?php if (get_current_role() == "admin") { ?>
 <?php
 
 require_once "../modules/models/user.php";
 require_once "../common.php";
 
 try {
-    $result = User::where(array('is_instructor' => '1'));
+    $instructors = User::where(array('is_instructor' => '1'));
 } catch (PDOException $error) {
-    echo $sql . "<br>" . $error->getMessage();
+    echo "<br>" . $error->getMessage();
 }
+
+try {
+    $course_offering = CourseOffering::getAll();
+} catch (PDOException $error) {
+    echo "<br>" . $error->getMessage();
+}
+
+try {
+    $course_assignment = CourseOfferingInstructor::/*includes(["user", "course_offering"]) ->*/getAll();
+} catch (PDOException $error) {
+    echo "<br>" . $error->getMessage();
+}
+
 if (isset($_POST['submit'])) {
     $user = new User();
     $user->first_name = $_POST['first_name'];
@@ -27,12 +42,26 @@ if (isset($_POST['submit'])) {
     }
 }
 
+if (isset($_POST['offering_submit']) && CourseOfferingInstructor::where(array("offering_id" => $_POST['offering_selection'], "user_id" => $_POST['instructor_selection'])) == null) {
+    $offering_instructor = new CourseOfferingInstructor();
+    $offering_instructor->offering_id = $_POST['offering_selection'];
+    $offering_instructor->user_id = $_POST['instructor_selection'];
+    
+
+    try {
+        $offering_instructor->save();
+    } catch (PDOException $error) {
+        echo "<br>" . $error->getMessage();
+    }
+    header("refresh: 1");
+}
+
 ?>
 
-<?php include "templates/header.php"; ?>
+
 
 <?php
-if ($result && count($result)) { ?>
+if ($instructors && count($instructors)) { ?>
         <h2>Instructors</h2>
 
     <table>
@@ -42,18 +71,16 @@ if ($result && count($result)) { ?>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email Address</th>
-                    <th>Hashed Password</th>
                     <th>Created At</th>
                 </tr>
             </thead>
             <tbody>
-        <?php foreach ($result as $row) { ?>
+        <?php foreach ($instructors as $row) { ?>
             <tr>
                 <td><?php echo escape($row->id); ?></td>
                 <td><?php echo escape($row->first_name); ?></td>
                 <td><?php echo escape($row->last_name); ?></td>
                 <td><?php echo escape($row->email); ?></td>
-                <td><?php echo escape($row->password_digest); ?></td>
                 <td><?php echo escape($row->created_at);  ?> </td>
             </tr>
         <?php } ?>
@@ -85,6 +112,66 @@ if ($result && count($result)) { ?>
 
 <br><br>
 
+<h2>Courses assigned to Instructors</h2>
+<?php if ($course_assignment && count($course_assignment)) { ?>
+    <table>
+            <thead>
+                <tr>
+                    <th>Course Offering</th>
+                    <th>Instructor</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+        <?php foreach ($course_assignment as $row) {?>
+            <tr>
+                <td><?php echo $row->course_offering->course_offering_name; ?></td>
+                <td><?php echo $row->user->get_full_name(); ?></td>
+                <td><?php echo escape($row->created_at);  ?> </td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+<?php } else{ ?>
+    <blockquote>No instructors assigned to courses.</blockquote>
+<?php } ?>
+
+<h2>Assign Instructors to courses</h2>
+<?php if($course_offering && $instructors) { ?>
+    <form method="post">
+        Instructor: 
+        <select Name="instructor_selection" id="instructor_selection">
+            <option value="">----Select----</option>
+        <?php foreach($instructors as $row) { ?>
+            <option value="<?php echo $row->id; ?>">
+            <?php echo $row->get_full_name(); ?>
+            </option>
+        <?php } ?>
+        </select>
+        
+        <!-- TO DO look into having more significant names for course offerings? or get course name as well? -->
+        Course Offering: 
+        <select Name="offering_selection" id="offering_selection">
+            <option value="">----Select----</option>
+        <?php foreach($course_offering as $row) { ?>
+            <option value="<?php echo $row->id; ?>">
+            <?php echo $row->course_offering_name; ?>
+            </option>
+        <?php } ?>
+        </select>
+
+        <input type="submit" name="offering_submit" value="Submit">
+    </form>
+<?php } else if (!$instructors) { ?>
+    <blockquote> No instructors in database </blockquote>
+<?php } else { ?>
+    <blockquote> No course offering in database </blockquote>
+<?php } ?>
+
+<?php } else {?>
+    <h2>You do not have the credentials to view this page.</h2>
+<?php }?>
+ 
 <a href="index.php">Back to home</a>
 
 <?php include "templates/footer.php"; ?>

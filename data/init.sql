@@ -161,3 +161,12 @@ CREATE TABLE IF NOT EXISTS announcements (
 	updated_at TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS course_offerings_instructors(
+	offering_id INT(11) UNSIGNED NOT NULL,
+	user_id INT(11) UNSIGNED NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES users(id),
+	FOREIGN KEY(offering_id) REFERENCES course_offerings(id) ON DELETE CASCADE,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP,
+	PRIMARY KEY (offering_id, user_id)
+);
