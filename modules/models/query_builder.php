@@ -92,6 +92,9 @@ class QueryBuilder
                 switch ($association_type) {
                     case "has_one":
                         $ids = array_map(fn ($o) => $o->id, $res);
+                        if (empty($ids)) {
+                            break;
+                        }
                         $association_res = call_user_func($association_class_name."::includes", $sub_association)->where(array($association_foreign_key => $ids));
                         foreach ($res as $r) {
                             $r->$association = current(array_filter($association_res, fn ($o) => $o->$association_foreign_key==$r->id)) ?? null;
@@ -99,6 +102,9 @@ class QueryBuilder
                         break;
                     case "has_many":
                         $ids = array_map(fn ($o) => $o->id, $res);
+                        if (empty($ids)) {
+                            break;
+                        }
                         $association_res = call_user_func($association_class_name."::includes", $sub_association)->where(array($association_foreign_key => $ids));
                         foreach ($res as $r) {
                             $r->$association = array_filter($association_res, fn ($o) => $o->$association_foreign_key==$r->id);
