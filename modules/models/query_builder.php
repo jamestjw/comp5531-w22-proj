@@ -83,6 +83,10 @@ class QueryBuilder
         $res = execute_sql_query($sql, $attrs);
         $res = array_map([$this->record_class, 'loadRecordFromData'], $res);
 
+        if (empty($res)) {
+            return $res;
+        }
+
         // Preload associations
         if (!empty($this->includes)) {
             foreach ($this->includes as $association => $sub_association) {
@@ -112,6 +116,9 @@ class QueryBuilder
                         break;
                     case "belongs_to":
                         $foreign_keys = array_unique(array_map(fn ($o) => $o->$association_foreign_key, $res));
+                        if (empty($foreign_keys)) {
+                            break;
+                        }
                         $association_res = call_user_func($association_class_name."::includes", $sub_association)->where(array("id" => $foreign_keys));
                         foreach ($res as $r) {
                             $r->$association = current(array_filter($association_res, fn ($o) => $o->id==$r->$association_foreign_key)) ?? null;
