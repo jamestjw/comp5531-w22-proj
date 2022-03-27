@@ -43,8 +43,9 @@ if ($students && count($students)) { ?>
     </table>
     <?php } else { ?>
         <blockquote>No Students found.</blockquote>
-    <?php }
-?> 
+    <?php }?>
+    
+    <br><a href="uploadStudentList.php">Upload Student list </a>
 
 <?php } else {?>
     <h2>You do not have the credentials to view this page.</h2>

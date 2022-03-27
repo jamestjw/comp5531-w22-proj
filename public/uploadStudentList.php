@@ -1,9 +1,22 @@
+<?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
+<?php include "templates/header.php"; ?>
+
+
 
 <?php
 require_once "../modules/models/user.php";
 require_once "../common.php";
+require_once "../modules/models/course_section.php";
+
+try {
+    $course_section = CourseSection::getAll();
+} catch (PDOException $error) {
+    echo "<br>" . $error->getMessage();
+}
+
 
     $create_success = false;
+
 
     if (isset($_POST['submit2'])) {
         $students = fopen($_POST["fileID"], "r");
@@ -27,15 +40,24 @@ require_once "../common.php";
             } catch (PDOException $error) {
                 echo "<br>" . $error->getMessage();
             }
+            $course_section_student = new CourseSectionStudent();
+            $course_section_student->user_id = $user->id;
+            $course_section_student->section_id = $_POST['sectionID'];
+            try {
+                $course_section_student->save();
+            } catch (PDOException $error) {
+                echo "<br>" . $error->getMessage();
+            }
+
         }
 
 
         fclose($students);
         unlink($_POST["fileID"]);
     }
+    
 ?>
 
-<?php include "templates/header.php"; ?>
 
 <?php
     if (isset($_POST['submit2']) && $create_success) {
@@ -60,6 +82,17 @@ require_once "../common.php";
     <input size='50' type='file' name='filename' accept=".csv">
     </br>
 
+    <!-- TO DO change to add info on course name as well -->
+    <label for="section">Select Course section</label>
+    <select Name="section" id="section">
+            <option value="">----Select----</option>
+        <?php foreach($course_section as $row) { ?>
+            <option value="<?php echo $row->id; ?>">
+            <?php echo $row->course_section_name; ?>
+            </option>
+        <?php } ?>
+        </select>
+
     <input type='submit' name='submit' value='Upload List'>
  
 </form>
@@ -68,6 +101,9 @@ require_once "../common.php";
 <?php
     if (isset($_POST["submit"])) {
         global $studentData;
+        global $student_section;
+
+        $student_section = $_POST["section"];
         $studentData = array();
         $row=0;
 
@@ -86,6 +122,8 @@ require_once "../common.php";
 
         $fileName = uniqid('studentList').".csv";
         move_uploaded_file($_FILES['filename']['tmp_name'], $fileName);
+
+        echo "<h5> New users will be added to course section ".$student_section."</h5>";
     }
 ?>
 
@@ -93,12 +131,13 @@ require_once "../common.php";
     <form method='post'>
     <input type='submit' name='submit2' value='confirm and upload'>
     <input type="hidden" id="fileID" name="fileID" value="<?php echo $fileName?>">
+    <input type="hidden" id="sectionID" name="sectionID" value="<?php echo $student_section?>">
     </form>
 
 <?php endif; ?>
 
-
-
+<br><br>
+<a href="student_list.php">Return to student list page</a>
 
 
 <?php include "templates/footer.php"; ?>
