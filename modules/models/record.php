@@ -150,7 +150,7 @@ class Record
         $new_obj = array();
 
         foreach (get_called_class()::getAttrs() as $attr) {
-            if ($this->$attr != null) {
+            if (isset($this->$attr) && !is_null($this->$attr)) {
                 $new_obj[$attr] = $this->$attr;
             }
         }

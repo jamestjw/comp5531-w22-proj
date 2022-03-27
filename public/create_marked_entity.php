@@ -5,6 +5,12 @@ require_once "../common.php";
 
 ensure_logged_in();
 
+// TODO: Check if the user is indeed an instructor of this course
+// when instructors of courses are assigned.
+if (get_current_role() != "instructor") {
+    die("You must be an instructor of this course to create a marked entity.");
+}
+
 $marked_entity = new MarkedEntity();
 $marked_entity->title = $_POST["title"];
 $marked_entity->description = $_POST["description"];
