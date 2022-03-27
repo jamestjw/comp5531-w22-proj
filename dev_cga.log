@@ -156,3 +156,196 @@
 [March 27, 2022, 1:07 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
 [March 27, 2022, 1:07 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
 [March 27, 2022, 1:07 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:13 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:13 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 1:13 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:19 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:19 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:19 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:19 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:19 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:19 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:20 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:20 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:20 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:20 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:20 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:20 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:20 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:20 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:20 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:20 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:20 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:20 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:20 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:20 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:21 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:21 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:21 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:21 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:22 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:24 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:25 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:25 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:25 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:25 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:25 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:25 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:26 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:26 pm] SELECT * FROM users WHERE is_instructor = ? [['is_instructor', '1']]
+[March 27, 2022, 1:27 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:27 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:27 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:28 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:28 pm] SELECT * FROM course_offerings
+[March 27, 2022, 1:31 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:32 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:32 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:39 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:39 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:39 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:39 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:39 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:39 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:40 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:40 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:41 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:41 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:41 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:41 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:41 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:41 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:41 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:41 pm] SELECT * FROM course_sections
+[March 27, 2022, 1:41 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:41 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:05 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 2:05 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:05 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 2:05 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:05 pm] INSERT INTO users (id, student_id, first_name, last_name, email, is_admin, is_instructor, password_digest, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['student_id', '1234'], ['first_name', 'Boo'], ['last_name', 'ba'], ['email', 'boo@mail.com'], ['is_admin', '0'], ['is_instructor', '0'], ['password_digest', '$2y$10$DXHobeqt4hmHZ6ZgaotbsO0fawtj69cmeJRGGp96tZdqewfBqk5D6'], ['created_at', '2022-03-27 14:05:52'], ['updated_at', '2022-03-27 14:05:52']]
+[March 27, 2022, 2:05 pm] INSERT INTO course_section_student (user_id, section_id, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ) [['user_id', '2'], ['section_id', ''], ['created_at', '2022-03-27 14:05:52'], ['updated_at', '2022-03-27 14:05:52']]
+[March 27, 2022, 2:05 pm] INSERT INTO users (id, student_id, first_name, last_name, email, is_admin, is_instructor, password_digest, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['student_id', '1235'], ['first_name', 'Mee'], ['last_name', 'Maa'], ['email', 'Mee@mail.com'], ['is_admin', '0'], ['is_instructor', '0'], ['password_digest', '$2y$10$UrrIykR9idbi0GUKn80b2usQO6FfU7k4KsZnHVve1KLXSGiHO2Vgi'], ['created_at', '2022-03-27 14:05:52'], ['updated_at', '2022-03-27 14:05:52']]
+[March 27, 2022, 2:05 pm] INSERT INTO course_section_student (user_id, section_id, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ) [['user_id', '3'], ['section_id', ''], ['created_at', '2022-03-27 14:05:52'], ['updated_at', '2022-03-27 14:05:52']]
+[March 27, 2022, 2:05 pm] INSERT INTO users (id, student_id, first_name, last_name, email, is_admin, is_instructor, password_digest, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['student_id', '1236'], ['first_name', 'Drop'], ['last_name', 'Drip'], ['email', 'Drip@mail.com'], ['is_admin', '0'], ['is_instructor', '0'], ['password_digest', '$2y$10$RWeXY7XtR1L/H3O/8MXrNO/XV8JphnD1DT12OJAOyPmc8zAmXUDE.'], ['created_at', '2022-03-27 14:05:52'], ['updated_at', '2022-03-27 14:05:52']]
+[March 27, 2022, 2:05 pm] INSERT INTO course_section_student (user_id, section_id, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ) [['user_id', '4'], ['section_id', ''], ['created_at', '2022-03-27 14:05:52'], ['updated_at', '2022-03-27 14:05:52']]
+[March 27, 2022, 2:07 pm] INSERT INTO users (id, student_id, first_name, last_name, email, is_admin, is_instructor, password_digest, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['student_id', ''], ['first_name', 'admin'], ['last_name', 'user'], ['email', 'admin@concordia.ca'], ['is_admin', '1'], ['is_instructor', '0'], ['password_digest', '$2y$10$hQji4whk0L3SDUjBqVIiIOGgGWQ37kQ7hZvobXs.kxUIEiPGATM0.'], ['created_at', '2022-03-27 14:07:58'], ['updated_at', '2022-03-27 14:07:58']]
+[March 27, 2022, 2:11 pm] INSERT INTO users (id, student_id, first_name, last_name, email, is_admin, is_instructor, password_digest, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['student_id', ''], ['first_name', 'admin'], ['last_name', 'user'], ['email', 'admin@concordia.ca'], ['is_admin', '1'], ['is_instructor', '0'], ['password_digest', '$2y$10$ud9CH1eTXGlEohjWF5t0Ce8L0mWvtxWMfWxcjdmXnXOisack1edNO'], ['created_at', '2022-03-27 14:11:27'], ['updated_at', '2022-03-27 14:11:27']]
+[March 27, 2022, 2:11 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 2:11 pm] SELECT * FROM users WHERE email = ? LIMIT 1 [['email', 'admin@concordia.ca']]
+[March 27, 2022, 2:11 pm] SELECT * FROM loggedin WHERE user_id = ? LIMIT 1 [['user_id', '1']]
+[March 27, 2022, 2:11 pm] INSERT INTO loggedin (id, user_digest, user_id, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['user_digest', '672c2743fc0004e05e47b9daa503dbeb'], ['user_id', '1'], ['created_at', '2022-03-27 14:11:36'], ['updated_at', '2022-03-27 14:11:36']]
+[March 27, 2022, 2:11 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:11 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:11 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:11 pm] SELECT * FROM users WHERE is_instructor = ? [['is_instructor', '1']]
+[March 27, 2022, 2:11 pm] SELECT * FROM course_offerings
+[March 27, 2022, 2:11 pm] SELECT * FROM course_offerings_instructors
+[March 27, 2022, 2:11 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:11 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:11 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 2:11 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:11 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 2:11 pm] SELECT * FROM courses
+[March 27, 2022, 2:11 pm] SELECT * FROM course_offerings
+[March 27, 2022, 2:11 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:11 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:12 pm] SELECT * FROM courses
+[March 27, 2022, 2:12 pm] SELECT * FROM course_offerings
+[March 27, 2022, 2:12 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:12 pm] INSERT INTO courses (id, course_code, course_name, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['course_code', 'COMP 5531'], ['course_name', 'Databases'], ['created_at', '2022-03-27 14:12:03'], ['updated_at', '2022-03-27 14:12:03']]
+[March 27, 2022, 2:12 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:12 pm] SELECT * FROM courses
+[March 27, 2022, 2:12 pm] SELECT * FROM course_offerings
+[March 27, 2022, 2:12 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:12 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:12 pm] SELECT * FROM courses
+[March 27, 2022, 2:12 pm] SELECT * FROM course_offerings
+[March 27, 2022, 2:12 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:12 pm] INSERT INTO course_offerings (id, course_id, course_offering_code, course_offering_name, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['course_id', '1'], ['course_offering_code', '1'], ['course_offering_name', 'winter 2022'], ['created_at', '2022-03-27 14:12:13'], ['updated_at', '2022-03-27 14:12:13']]
+[March 27, 2022, 2:12 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:12 pm] SELECT * FROM courses
+[March 27, 2022, 2:12 pm] SELECT * FROM course_offerings
+[March 27, 2022, 2:12 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:12 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:12 pm] SELECT * FROM courses WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 2:12 pm] SELECT * FROM courses
+[March 27, 2022, 2:12 pm] SELECT * FROM course_offerings
+[March 27, 2022, 2:12 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:12 pm] INSERT INTO course_sections (id, offering_id, course_section_code, course_section_name, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['offering_id', '1'], ['course_section_code', '1'], ['course_section_name', 'NNNI'], ['created_at', '2022-03-27 14:12:21'], ['updated_at', '2022-03-27 14:12:21']]
+[March 27, 2022, 2:12 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:12 pm] SELECT * FROM courses WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 2:12 pm] SELECT * FROM courses
+[March 27, 2022, 2:12 pm] SELECT * FROM course_offerings
+[March 27, 2022, 2:12 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:12 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:12 pm] SELECT * FROM courses WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 2:12 pm] SELECT * FROM course_offerings WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 2:12 pm] SELECT * FROM courses WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 2:12 pm] SELECT * FROM courses
+[March 27, 2022, 2:12 pm] SELECT * FROM course_offerings
+[March 27, 2022, 2:12 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:12 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:12 pm] SELECT * FROM courses WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 2:12 pm] SELECT * FROM course_offerings WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 2:12 pm] SELECT * FROM courses WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 2:12 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:12 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 2:12 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:12 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:12 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:12 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:12 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:12 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:12 pm] INSERT INTO users (id, student_id, first_name, last_name, email, is_admin, is_instructor, password_digest, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['student_id', '1234'], ['first_name', 'Boo'], ['last_name', 'ba'], ['email', 'boo@mail.com'], ['is_admin', '0'], ['is_instructor', '0'], ['password_digest', '$2y$10$wcDNRRkAT2q2TKLh5gMvHOGRUCEZbXh3cz1Y5xwzUl89rKh1uUV9i'], ['created_at', '2022-03-27 14:12:34'], ['updated_at', '2022-03-27 14:12:34']]
+[March 27, 2022, 2:12 pm] INSERT INTO course_section_student (user_id, section_id, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ) [['user_id', '2'], ['section_id', ''], ['created_at', '2022-03-27 14:12:34'], ['updated_at', '2022-03-27 14:12:34']]
+[March 27, 2022, 2:12 pm] INSERT INTO users (id, student_id, first_name, last_name, email, is_admin, is_instructor, password_digest, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['student_id', '1235'], ['first_name', 'Mee'], ['last_name', 'Maa'], ['email', 'Mee@mail.com'], ['is_admin', '0'], ['is_instructor', '0'], ['password_digest', '$2y$10$GB1rECyE/D6jx06tf2dgIeVe/CkrPcLcqccba6/ObpDisy4ngNdpq'], ['created_at', '2022-03-27 14:12:34'], ['updated_at', '2022-03-27 14:12:34']]
+[March 27, 2022, 2:12 pm] INSERT INTO course_section_student (user_id, section_id, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ) [['user_id', '3'], ['section_id', ''], ['created_at', '2022-03-27 14:12:34'], ['updated_at', '2022-03-27 14:12:34']]
+[March 27, 2022, 2:12 pm] INSERT INTO users (id, student_id, first_name, last_name, email, is_admin, is_instructor, password_digest, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['student_id', '1236'], ['first_name', 'Drop'], ['last_name', 'Drip'], ['email', 'Drip@mail.com'], ['is_admin', '0'], ['is_instructor', '0'], ['password_digest', '$2y$10$OYaJbq/RtSL.bbN/Cwbw9u8QjQfT0n2hCI.aGE9C53iJZe1x6aSue'], ['created_at', '2022-03-27 14:12:34'], ['updated_at', '2022-03-27 14:12:34']]
+[March 27, 2022, 2:12 pm] INSERT INTO course_section_student (user_id, section_id, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ) [['user_id', '4'], ['section_id', ''], ['created_at', '2022-03-27 14:12:35'], ['updated_at', '2022-03-27 14:12:35']]
+[March 27, 2022, 2:13 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:13 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:13 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:13 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:13 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:13 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:13 pm] INSERT INTO users (id, student_id, first_name, last_name, email, is_admin, is_instructor, password_digest, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['student_id', '1234'], ['first_name', 'Boo'], ['last_name', 'ba'], ['email', 'boo@mail.com'], ['is_admin', '0'], ['is_instructor', '0'], ['password_digest', '$2y$10$njZ7TNVwCRMWd0/nqSciXeUqKJ.r6oKcO9e1zTkQXOfG3Vcur/sTa'], ['created_at', '2022-03-27 14:13:27'], ['updated_at', '2022-03-27 14:13:27']]
+[March 27, 2022, 2:13 pm] INSERT INTO course_section_students (user_id, section_id, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ) [['user_id', ''], ['section_id', ''], ['created_at', '2022-03-27 14:13:27'], ['updated_at', '2022-03-27 14:13:27']]
+[March 27, 2022, 2:13 pm] INSERT INTO users (id, student_id, first_name, last_name, email, is_admin, is_instructor, password_digest, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['student_id', '1235'], ['first_name', 'Mee'], ['last_name', 'Maa'], ['email', 'Mee@mail.com'], ['is_admin', '0'], ['is_instructor', '0'], ['password_digest', '$2y$10$Zm6oB6yaalMbDRshrU3IDOlt7WCPcK928nrLPf0zymjy41Xu3xg3C'], ['created_at', '2022-03-27 14:13:27'], ['updated_at', '2022-03-27 14:13:27']]
+[March 27, 2022, 2:13 pm] INSERT INTO course_section_students (user_id, section_id, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ) [['user_id', ''], ['section_id', ''], ['created_at', '2022-03-27 14:13:27'], ['updated_at', '2022-03-27 14:13:27']]
+[March 27, 2022, 2:13 pm] INSERT INTO users (id, student_id, first_name, last_name, email, is_admin, is_instructor, password_digest, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['student_id', '1236'], ['first_name', 'Drop'], ['last_name', 'Drip'], ['email', 'Drip@mail.com'], ['is_admin', '0'], ['is_instructor', '0'], ['password_digest', '$2y$10$W.EXBpV26FqcgQ2WQw75tucVh.z5iNMZlqdHSs0KNbXe3/4Tmjd06'], ['created_at', '2022-03-27 14:13:27'], ['updated_at', '2022-03-27 14:13:27']]
+[March 27, 2022, 2:13 pm] INSERT INTO course_section_students (user_id, section_id, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ) [['user_id', ''], ['section_id', ''], ['created_at', '2022-03-27 14:13:27'], ['updated_at', '2022-03-27 14:13:27']]
+[March 27, 2022, 2:14 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:14 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:15 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:15 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:15 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:15 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:15 pm] INSERT INTO users (id, student_id, first_name, last_name, email, is_admin, is_instructor, password_digest, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['student_id', '1234'], ['first_name', 'Boo'], ['last_name', 'ba'], ['email', 'boo@mail.com'], ['is_admin', '0'], ['is_instructor', '0'], ['password_digest', '$2y$10$VbW/33fDyiY65pDiiMU7IuY7HRn6EbRZXMJniVM88YY3JkVgbmwdi'], ['created_at', '2022-03-27 14:15:36'], ['updated_at', '2022-03-27 14:15:36']]
+[March 27, 2022, 2:15 pm] INSERT INTO course_section_students (user_id, section_id, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ) [['user_id', ''], ['section_id', ''], ['created_at', '2022-03-27 14:15:37'], ['updated_at', '2022-03-27 14:15:37']]
+[March 27, 2022, 2:15 pm] INSERT INTO users (id, student_id, first_name, last_name, email, is_admin, is_instructor, password_digest, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['student_id', '1235'], ['first_name', 'Mee'], ['last_name', 'Maa'], ['email', 'Mee@mail.com'], ['is_admin', '0'], ['is_instructor', '0'], ['password_digest', '$2y$10$LlenKDN1UQgMMFFqgWb12uURgfcqxe5QhDE7jpS9EETObJudRI9mm'], ['created_at', '2022-03-27 14:15:37'], ['updated_at', '2022-03-27 14:15:37']]
+[March 27, 2022, 2:15 pm] INSERT INTO course_section_students (user_id, section_id, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ) [['user_id', ''], ['section_id', ''], ['created_at', '2022-03-27 14:15:37'], ['updated_at', '2022-03-27 14:15:37']]
+[March 27, 2022, 2:15 pm] INSERT INTO users (id, student_id, first_name, last_name, email, is_admin, is_instructor, password_digest, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['student_id', '1236'], ['first_name', 'Drop'], ['last_name', 'Drip'], ['email', 'Drip@mail.com'], ['is_admin', '0'], ['is_instructor', '0'], ['password_digest', '$2y$10$FVNen6NiL2NYrmcdwC/yLuyEvMgbcT4q90Bur9cvFDTxxgt5MuUYC'], ['created_at', '2022-03-27 14:15:37'], ['updated_at', '2022-03-27 14:15:37']]
+[March 27, 2022, 2:15 pm] INSERT INTO course_section_students (user_id, section_id, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ) [['user_id', ''], ['section_id', ''], ['created_at', '2022-03-27 14:15:37'], ['updated_at', '2022-03-27 14:15:37']]
+[March 27, 2022, 2:17 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:17 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:17 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:17 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:17 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:17 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:17 pm] INSERT INTO users (id, student_id, first_name, last_name, email, is_admin, is_instructor, password_digest, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['student_id', '1234'], ['first_name', 'Boo'], ['last_name', 'ba'], ['email', 'boo@mail.com'], ['is_admin', '0'], ['is_instructor', '0'], ['password_digest', '$2y$10$pVoe255R5CnoI.tfpwb0POVMO1pbiwLOVn9Z3lsyfe7mgE2OsPjxW'], ['created_at', '2022-03-27 14:17:49'], ['updated_at', '2022-03-27 14:17:49']]
+[March 27, 2022, 2:17 pm] INSERT INTO course_section_students (user_id, section_id, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ) [['user_id', '11'], ['section_id', '1'], ['created_at', '2022-03-27 14:17:49'], ['updated_at', '2022-03-27 14:17:49']]
+[March 27, 2022, 2:17 pm] INSERT INTO users (id, student_id, first_name, last_name, email, is_admin, is_instructor, password_digest, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['student_id', '1235'], ['first_name', 'Mee'], ['last_name', 'Maa'], ['email', 'Mee@mail.com'], ['is_admin', '0'], ['is_instructor', '0'], ['password_digest', '$2y$10$FuSnQZfixm32zWcBnX5icOKzBr4ASxCBADdb6TgF31A8Iqstk1n/G'], ['created_at', '2022-03-27 14:17:49'], ['updated_at', '2022-03-27 14:17:49']]
+[March 27, 2022, 2:17 pm] INSERT INTO course_section_students (user_id, section_id, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ) [['user_id', '12'], ['section_id', '1'], ['created_at', '2022-03-27 14:17:49'], ['updated_at', '2022-03-27 14:17:49']]
+[March 27, 2022, 2:17 pm] INSERT INTO users (id, student_id, first_name, last_name, email, is_admin, is_instructor, password_digest, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ) [['id', ''], ['student_id', '1236'], ['first_name', 'Drop'], ['last_name', 'Drip'], ['email', 'Drip@mail.com'], ['is_admin', '0'], ['is_instructor', '0'], ['password_digest', '$2y$10$aewzd0soPOH4Z/3HkGp9zOGsNhqTRVh6fArnemQe7Nkb9QWVv9o4C'], ['created_at', '2022-03-27 14:17:49'], ['updated_at', '2022-03-27 14:17:49']]
+[March 27, 2022, 2:17 pm] INSERT INTO course_section_students (user_id, section_id, created_at, updated_at) values ( ? ,  ? ,  ? ,  ? ) [['user_id', '13'], ['section_id', '1'], ['created_at', '2022-03-27 14:17:49'], ['updated_at', '2022-03-27 14:17:49']]
+[March 27, 2022, 2:22 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:22 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:22 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:22 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 2:22 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:22 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 2:22 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:22 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:22 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:22 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]

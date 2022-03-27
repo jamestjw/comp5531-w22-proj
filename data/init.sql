@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS comments(
 	FOREIGN KEY(user_id) REFERENCES users(id)
 CREATE TABLE IF NOT EXISTS course_section_students(
 	user_id INT(11) UNSIGNED NOT NULL,
-	section_id INT(11) UNSIGNED
+	section_id INT(11) UNSIGNED,
 	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY(section_id) REFERENCES course_sections(id) ON DELETE CASCADE,
 	created_at TIMESTAMP,
