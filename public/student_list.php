@@ -5,6 +5,8 @@
 <?php
 
 require_once "../modules/models/user.php";
+require_once "../modules/models/course_section.php";
+require_once "../modules/models/course_section_student.php";
 require_once "../common.php";
 
 try {
@@ -12,6 +14,21 @@ try {
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
+
+try {
+    $course_sections = CourseSection::getAll();
+} catch (PDOException $error) {
+    echo "<br>" . $error->getMessage();
+}
+
+// TO DO ADD PRELOAD ASSOCIATIONS 
+
+try {
+    $course_sections_students = CourseSectionStudent::getAll();
+} catch (PDOException $error) {
+    echo "<br>" . $error->getMessage();
+}
+
 
 ?>
 
@@ -43,6 +60,45 @@ if ($students && count($students)) { ?>
     </table>
     <?php } else { ?>
         <blockquote>No Students found.</blockquote>
+    <?php }?>
+
+
+  <?php
+    if ($course_sections && count($course_sections)) { ?>
+        <h2>Section student list</h2>
+
+        <?php foreach($course_sections as $section) { ?>
+            
+            <h3>Section <?php echo $section->course_section_name ?> </h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email Address</th>
+                        <th>Created At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($course_sections_students as $section_students) { 
+                        if ($section->id == $section_students->section_id) {
+                            $student = $section_students->user; ?>
+                                <tr>
+                                    <td><?php echo escape($student->id); ?></td>
+                                    <td><?php echo escape($student->first_name); ?></td>
+                                    <td><?php echo escape($student->last_name); ?></td>
+                                    <td><?php echo escape($student->email); ?></td>
+                                    <td><?php echo escape($student->created_at); ?> </td>
+                                </tr>
+                        <?php } ?>
+                    <?php } ?>
+                </tbody>
+            </table>
+
+        <?php }?>
+    <?php } else { ?>
+        <blockquote>No Sections Available.</blockquote>
     <?php }?>
     
     <br><a href="uploadStudentList.php">Upload Student list </a>

@@ -349,3 +349,72 @@
 [March 27, 2022, 2:22 pm] SELECT * FROM course_sections
 [March 27, 2022, 2:22 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
 [March 27, 2022, 2:22 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 2:31 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:31 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 2:31 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:31 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:31 pm] SELECT * FROM course_section_students
+[March 27, 2022, 2:33 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 2:33 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 2:33 pm] SELECT * FROM course_sections
+[March 27, 2022, 2:33 pm] SELECT * FROM course_section_students
+[March 27, 2022, 4:23 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 4:23 pm] SELECT * FROM course_sections
+[March 27, 2022, 4:25 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 4:25 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 4:25 pm] SELECT * FROM course_sections
+[March 27, 2022, 4:25 pm] SELECT * FROM course_section_students
+[March 27, 2022, 4:29 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 4:29 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 4:29 pm] SELECT * FROM course_sections
+[March 27, 2022, 4:29 pm] SELECT * FROM course_section_students
+[March 27, 2022, 4:29 pm] SELECT * FROM course_section_students WHERE section_id = ? [['section_id', '1']]
+[March 27, 2022, 4:41 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 4:41 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 4:41 pm] SELECT * FROM course_sections
+[March 27, 2022, 4:41 pm] SELECT * FROM course_section_students
+[March 27, 2022, 4:42 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 4:42 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 4:42 pm] SELECT * FROM course_sections
+[March 27, 2022, 4:42 pm] SELECT * FROM course_section_students
+[March 27, 2022, 4:42 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 4:42 pm] SELECT * FROM users WHERE is_instructor = ? [['is_instructor', '1']]
+[March 27, 2022, 4:42 pm] SELECT * FROM course_offerings
+[March 27, 2022, 4:42 pm] SELECT * FROM course_offerings_instructors
+[March 27, 2022, 4:42 pm] SELECT * FROM users WHERE id in () []
+[March 27, 2022, 4:43 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 4:43 pm] SELECT * FROM users WHERE is_instructor = ? [['is_instructor', '1']]
+[March 27, 2022, 4:43 pm] SELECT * FROM course_offerings
+[March 27, 2022, 4:43 pm] SELECT * FROM course_offerings_instructors
+[March 27, 2022, 4:43 pm] SELECT * FROM users WHERE id in () []
+[March 27, 2022, 4:51 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 4:51 pm] SELECT * FROM users WHERE is_instructor = ? [['is_instructor', '1']]
+[March 27, 2022, 4:51 pm] SELECT * FROM course_offerings
+[March 27, 2022, 4:51 pm] SELECT * FROM course_offerings_instructors
+[March 27, 2022, 4:59 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 4:59 pm] SELECT * FROM users WHERE is_instructor = ? [['is_instructor', '1']]
+[March 27, 2022, 4:59 pm] SELECT * FROM course_offerings
+[March 27, 2022, 4:59 pm] SELECT * FROM course_offerings_instructors
+[March 27, 2022, 4:59 pm] SELECT * FROM users WHERE id in () []
+[March 27, 2022, 5:04 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 5:04 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 5:04 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 5:04 pm] SELECT * FROM course_sections
+[March 27, 2022, 5:04 pm] SELECT * FROM course_section_students
+[March 27, 2022, 5:04 pm] SELECT * FROM users WHERE id = ? LIMIT 1 [['id', '11']]
+[March 27, 2022, 5:04 pm] SELECT * FROM users WHERE id = ? LIMIT 1 [['id', '12']]
+[March 27, 2022, 5:04 pm] SELECT * FROM users WHERE id = ? LIMIT 1 [['id', '13']]
+[March 27, 2022, 5:04 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 5:04 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 5:04 pm] SELECT * FROM course_sections
+[March 27, 2022, 5:04 pm] SELECT * FROM course_section_students
+[March 27, 2022, 5:04 pm] SELECT * FROM users WHERE id = ? LIMIT 1 [['id', '11']]
+[March 27, 2022, 5:04 pm] SELECT * FROM users WHERE id = ? LIMIT 1 [['id', '12']]
+[March 27, 2022, 5:04 pm] SELECT * FROM users WHERE id = ? LIMIT 1 [['id', '13']]
+[March 27, 2022, 5:08 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', '672c2743fc0004e05e47b9daa503dbeb']]
+[March 27, 2022, 5:08 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 5:08 pm] SELECT * FROM course_sections
+[March 27, 2022, 5:08 pm] SELECT * FROM course_section_students
+[March 27, 2022, 5:08 pm] SELECT * FROM users WHERE id = ? LIMIT 1 [['id', '11']]
+[March 27, 2022, 5:08 pm] SELECT * FROM users WHERE id = ? LIMIT 1 [['id', '12']]
+[March 27, 2022, 5:08 pm] SELECT * FROM users WHERE id = ? LIMIT 1 [['id', '13']]

@@ -12,6 +12,12 @@ class CourseSection extends Record
             "foreign_key" => "offering_id"
             )
         );
+    protected static $has_many = array(
+        "course_section_student"=> array(
+            "class_name" => "CourseSectionStudent",
+            "foreign_key" => "section_id"
+        )
+    );
 
     public $id;
     public $offering_id;
