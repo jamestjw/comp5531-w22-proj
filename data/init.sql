@@ -156,13 +156,6 @@ CREATE TABLE IF NOT EXISTS course_sections(
 	updated_at TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS announcements (
-	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	announcement_text TEXT,
-	created_at TIMESTAMP,
-	updated_at TIMESTAMP
-);
-
 CREATE TABLE IF NOT EXISTS course_offerings_instructors(
 	offering_id INT(11) UNSIGNED NOT NULL,
 	user_id INT(11) UNSIGNED NOT NULL,
@@ -182,4 +175,20 @@ CREATE TABLE IF NOT EXISTS comments(
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
 	FOREIGN KEY(user_id) REFERENCES users(id)
+CREATE TABLE IF NOT EXISTS course_section_students(
+	user_id INT(11) UNSIGNED NOT NULL,
+	section_id INT(11) UNSIGNED
+	FOREIGN KEY (user_id) REFERENCES users(id),
+	FOREIGN KEY(section_id) REFERENCES course_sections(id) ON DELETE CASCADE,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP,
+	PRIMARY KEY (section_id, user_id)
+);
+
+
+CREATE TABLE IF NOT EXISTS announcements (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	announcement_text TEXT,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
 );

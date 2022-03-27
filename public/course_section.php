@@ -7,9 +7,10 @@ require_once "../common.php";
 require_once "../modules/models/course_section.php";
 require_once "../modules/models/course.php";
 
+ensure_logged_in();
 
 ?>
 
-
 <?php include "templates/header.php"; ?>
+
 

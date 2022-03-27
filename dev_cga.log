@@ -88,3 +88,71 @@
 [March 27, 2022, 12:24 pm] SELECT * FROM courses WHERE id = ? LIMIT 1 [['id', '1']]
 [March 27, 2022, 12:24 pm] SELECT * FROM course_offerings WHERE id = ? LIMIT 1 [['id', '1']]
 [March 27, 2022, 12:24 pm] SELECT * FROM courses WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 12:44 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:44 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:44 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:45 pm] SELECT * FROM courses
+[March 27, 2022, 12:45 pm] SELECT * FROM course_offerings
+[March 27, 2022, 12:45 pm] SELECT * FROM course_sections
+[March 27, 2022, 12:45 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:45 pm] SELECT * FROM courses WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 12:45 pm] SELECT * FROM course_offerings WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 12:45 pm] SELECT * FROM courses WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 12:45 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:46 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:46 pm] SELECT * FROM courses
+[March 27, 2022, 12:46 pm] SELECT * FROM course_offerings
+[March 27, 2022, 12:46 pm] SELECT * FROM course_sections
+[March 27, 2022, 12:46 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:46 pm] SELECT * FROM courses WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 12:46 pm] SELECT * FROM course_offerings WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 12:46 pm] SELECT * FROM courses WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 12:46 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:47 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:47 pm] SELECT * FROM discussions
+[March 27, 2022, 12:47 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:48 pm] SELECT * FROM discussions
+[March 27, 2022, 12:48 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:48 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:48 pm] SELECT * FROM discussions WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 12:48 pm] SELECT * FROM discussion_messages WHERE discussion_id in (?) [['discussion_id', '1']]
+[March 27, 2022, 12:48 pm] SELECT * FROM polls WHERE parent_id in (?) [['parent_id', '1']]
+[March 27, 2022, 12:48 pm] SELECT * FROM poll_options WHERE poll_id in () []
+[March 27, 2022, 12:48 pm] SELECT * FROM discussions
+[March 27, 2022, 12:48 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:48 pm] SELECT * FROM courses
+[March 27, 2022, 12:48 pm] SELECT * FROM course_offerings
+[March 27, 2022, 12:48 pm] SELECT * FROM course_sections
+[March 27, 2022, 12:48 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:48 pm] SELECT * FROM courses WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 12:48 pm] SELECT * FROM course_offerings WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 12:48 pm] SELECT * FROM courses WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 12:48 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:48 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:49 pm] SELECT * FROM courses
+[March 27, 2022, 12:49 pm] SELECT * FROM course_offerings
+[March 27, 2022, 12:49 pm] SELECT * FROM course_sections
+[March 27, 2022, 12:49 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:49 pm] SELECT * FROM courses WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 12:49 pm] SELECT * FROM course_offerings WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 12:49 pm] SELECT * FROM courses WHERE id = ? LIMIT 1 [['id', '1']]
+[March 27, 2022, 12:49 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:49 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:49 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:49 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:49 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:50 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:59 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 12:59 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:00 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:00 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:00 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:00 pm] SELECT * FROM users
+[March 27, 2022, 1:00 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:00 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:07 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:07 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 1:07 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:07 pm] SELECT * FROM users WHERE is_instructor = ? AND is_admin = ? [['is_instructor', '0'], ['is_admin', '0']]
+[March 27, 2022, 1:07 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
+[March 27, 2022, 1:07 pm] SELECT * FROM loggedin WHERE user_digest = ? LIMIT 1 [['user_digest', 'c344f299598fe566248f72e5e235eb80']]
