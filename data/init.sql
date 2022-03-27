@@ -181,5 +181,5 @@ CREATE TABLE IF NOT EXISTS comments(
 	commentable_type VARCHAR(50),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
-	FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+	FOREIGN KEY(user_id) REFERENCES users(id)
 );

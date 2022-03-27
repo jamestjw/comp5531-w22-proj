@@ -6,6 +6,8 @@ require_once "../modules/models/user.php";
 require_once "../common.php";
 
 try {
+    // TODO: Make this get Users that are not soft deleted
+    // TODO: Maybe refactor this page and other pages that display users to reuse the same code.
     $result = User::getAll();
 } catch (PDOException $error) {
     echo $sql . "<br>" . $error->getMessage();
