@@ -65,8 +65,15 @@ if ($result && count($result)) { ?>
     
         <!-- TODO: Figure out a better way of getting the course offering ID -->
         <div class="form-group">
-            <label for="course_offering_id">Course Offering ID</label>
-            <input type="text" name="course_offering_id" id="course_offering_id" class="form-control">
+            <label for="course_offering_id">Course Offering</label>
+
+            <select name="course_offering_id" id="course_offering_id">
+                <option value="" disabled selected>Select course offering</option>
+                <!-- TODO: Get only the course offerings that the instructor teaches -->
+                <?php foreach (CourseOffering::getAll() as $course_offering):;?>
+                    <option value = <?php echo($course_offering->id);?>><?php echo($course_offering->course_offering_name);?></option>
+                <?php endforeach;?>
+            </select>
         </div>
 
         <div class="form-group">
