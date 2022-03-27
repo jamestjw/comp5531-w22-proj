@@ -20,7 +20,7 @@ try {
 }
 
 try {
-    $course_assignment = CourseOfferingInstructor::/*includes(["user", "course_offering"])->*/getAll();
+    $course_assignment = CourseOfferingInstructor::includes(["user", "course_offering"])->getAll();
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
