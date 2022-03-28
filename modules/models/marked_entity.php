@@ -5,11 +5,19 @@ require_once(dirname(__FILE__)."/record.php");
 class MarkedEntity extends Record
 {
     protected static $table_name = "marked_entities";
-    // Files that the instructor adds to the marked entity
     protected static $has_many = array(
+        // Files that the instructor adds to the marked entity
         "files" => array(
             "class_name" => "Attachment",
-            "foreign_key" => "attachable_id",
+            "as" => "attachable",
+        ),
+        "discussions" => array(
+            "class_name" => "Discussion",
+            "as" => "discussable",
+        ),
+        "student_files" => array(
+            "class_name" => "MarkedEntityFile",
+            "foreign_key" => "entity_id",
         )
     );
 

@@ -18,6 +18,12 @@ class DiscussionMessage extends Record
             "foreign_key" => "parent_id",
         )
     );
+    protected static $has_many = array(
+        "comments" => array(
+            "class_name" => "Comment",
+            "as" => "commentable",
+        )
+    );
 
     public $id;
     public $user_id;

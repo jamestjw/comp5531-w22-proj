@@ -8,9 +8,9 @@ ensure_logged_in();
 ?>
 
 <?php
-
+// TODO: Students can only see this if they are enrolled this course
 if (isset($_GET["id"]) && ($marked_entity = MarkedEntity::find_by_id($_GET["id"]))) {
-    ?>
+    $discussions = $marked_entity->discussions; ?>
     <div class="container">
         <h4>Marked Entity - <?php echo $marked_entity->title ?></h4>
         <p><?php echo $marked_entity->description ?></p>
@@ -23,16 +23,21 @@ if (isset($_GET["id"]) && ($marked_entity = MarkedEntity::find_by_id($_GET["id"]
                 <p><a href='<?php echo "download.php?file_id={$file->file_id}" ?>'><?php echo $file->file_filename; ?></a></p>
             <?php }
         } else {
-            echo "<p> No files.</p>";
+            echo "<blockquote>No files.</blockquote>";
         } ?>
 
+        <h5>Created at: <?php echo $marked_entity->created_at; ?> </h5>
         <h5>Due at: <?php echo $marked_entity->due_at; ?> </h5>
 
         <h5>Student Files:</h5>
-        <p>TODO: Require course teams to find relevant files</p>
-
+        <blockquote><a href="marked_entity_files.php?marked_entity_id=<?php echo $marked_entity->id ?>">View here</a></blockquote>
+        
         <h5>Discussion:</h5>
-        <p>TODO: Require course teams to list relevant discussions</p>
+        <?php
+            $discussable_id =  $marked_entity->id;
+    $discussable_type = "MarkedEntity";
+    include "discussion_list.php"
+        ?>
 
         <h5>Progress:</h5>
         <p>TODO</p>

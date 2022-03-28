@@ -62,14 +62,23 @@ class QueryBuilder
         $sql = "SELECT * FROM {$this->table_name()}";
         if (!empty($attrs)) {
             $sql_wheres = array();
+            $null_keys = array();
             foreach ($attrs as $key => $value) {
                 if (is_array($value)) {
                     $placeholder = join(", ", array_map(fn ($e) =>"?", $value));
                     array_push($sql_wheres, "$key in ($placeholder)");
+                } elseif ($value == null) {
+                    array_push($null_keys, $key);
+                    array_push($sql_wheres, "$key IS NULL");
                 } else {
                     array_push($sql_wheres, "$key = ?");
                 }
             }
+
+            foreach ($null_keys as $k) {
+                unset($attrs[$k]);
+            }
+
             $sql .= sprintf(
                 " WHERE %s",
                 implode(" AND ", $sql_wheres)
@@ -93,13 +102,18 @@ class QueryBuilder
                 $association_type = $this->record_class::getAssociationType($association);
                 $association_class_name = $this->record_class::getAssociationClassName($association);
                 $association_foreign_key = $this->record_class::getAssociationForeignKey($association);
+                $association_polymorphic_type = $this->record_class::getAssociationPolymorphicTypeColumn($association);
                 switch ($association_type) {
                     case "has_one":
                         $ids = array_map(fn ($o) => $o->id, $res);
                         if (empty($ids)) {
                             break;
                         }
-                        $association_res = call_user_func($association_class_name."::includes", $sub_association)->where(array($association_foreign_key => $ids));
+                        $association_where = array($association_foreign_key => $ids);
+                        if ($association_polymorphic_type) {
+                            $association_where[$association_polymorphic_type] = $this->record_class;
+                        }
+                        $association_res = call_user_func($association_class_name."::includes", $sub_association)->where($association_where);
                         foreach ($res as $r) {
                             $r->$association = current(array_filter($association_res, fn ($o) => $o->$association_foreign_key==$r->id)) ?? null;
                         }
@@ -109,7 +123,11 @@ class QueryBuilder
                         if (empty($ids)) {
                             break;
                         }
-                        $association_res = call_user_func($association_class_name."::includes", $sub_association)->where(array($association_foreign_key => $ids));
+                        $association_where = array($association_foreign_key => $ids);
+                        if ($association_polymorphic_type) {
+                            $association_where[$association_polymorphic_type] = $this->record_class;
+                        }
+                        $association_res = call_user_func($association_class_name."::includes", $sub_association)->where($association_where);
                         foreach ($res as $r) {
                             $r->$association = array_filter($association_res, fn ($o) => $o->$association_foreign_key==$r->id);
                         }

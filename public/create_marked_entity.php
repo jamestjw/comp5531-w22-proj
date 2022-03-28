@@ -5,16 +5,30 @@ require_once "../common.php";
 
 ensure_logged_in();
 
+if (get_current_role() != "instructor") {
+    die("You must be an instructor of this course to create a marked entity.");
+}
+
+if (!isset($_POST["course_offering_id"])) {
+    die("Invalid course offering.");
+}
+
+$course_offering_id = intval($_POST["course_offering_id"]);
+// TODO: Check if the user is indeed an instructor of this course
+// when instructors of courses are assigned.
+if (is_null(CourseOffering::find_by_id($course_offering_id))) {
+    die("Invalid course offering.");
+}
+
 $marked_entity = new MarkedEntity();
 $marked_entity->title = $_POST["title"];
 $marked_entity->description = $_POST["description"];
 $marked_entity->is_group_work = $_POST["is_group_work"];
 // TODO: Fix this when courses are fully implemented
-$marked_entity->course_offering_id = $_POST["course_offering_id"] ?? 1;
+$marked_entity->course_offering_id = $course_offering_id;
 $marked_entity->due_at = $_POST["due_at"];
 
 if (isset($_FILES['marked_entity_file'])) {
-    echo "Handling file";
     // Uploads folder needs to be created in the public/ directory
     // TODO: Make this more convenient
     $target_dir = "uploads/";

@@ -4,6 +4,8 @@ require_once(dirname(__FILE__)."/record.php");
 
 class User extends Record
 {
+    // TODO: Implement soft deletion when searching on null columns with
+    // where clauses is implemented
     protected static $table_name = "users";
 
     public $id;

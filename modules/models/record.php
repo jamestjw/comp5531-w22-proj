@@ -150,7 +150,9 @@ class Record
         $new_obj = array();
 
         foreach (get_called_class()::getAttrs() as $attr) {
-            $new_obj[$attr] = $this->$attr ?? null;
+            if (isset($this->$attr) && !is_null($this->$attr)) {
+                $new_obj[$attr] = $this->$attr;
+            }
         }
 
         $new_obj['created_at'] = date('Y-m-d H:i:s');
@@ -171,11 +173,21 @@ class Record
 
         // TODO: Fix n+1 saving
         foreach (get_called_class()::$has_many as $association_name => $association_values) {
-            $foreign_key = $association_values['foreign_key'];
+            if (array_key_exists("as", $association_values)) {
+                $foreign_key = $association_values['as']."_id";
+                $polymorphic_type = $association_values['as']."_type";
+                $is_polymorphic = true;
+            } else {
+                $foreign_key = $association_values['foreign_key'];
+                $is_polymorphic = false;
+            }
 
             if (array_key_exists($association_name, $this->associations)) {
                 foreach ($this->associations[$association_name] as $obj) {
                     $obj->$foreign_key = $this->id;
+                    if ($is_polymorphic) {
+                        $obj->$polymorphic_type = get_called_class();
+                    }
                     $obj->save();
                 }
             }
@@ -257,9 +269,18 @@ class Record
 
             $association = get_called_class()::$has_many[$name];
 
-            $data = $association['class_name']::where(
-                array($association['foreign_key']=>$this->id)
-            );
+            if (array_key_exists('as', $association)) {
+                $data = $association['class_name']::where(
+                    array(
+                        $association['as']."_id"=>$this->id,
+                        $association['as']."_type"=>get_called_class()
+                    )
+                );
+            } else {
+                $data = $association['class_name']::where(
+                    array($association['foreign_key']=>$this->id)
+                );
+            }
 
             $this->associations[$name] = $data;
             $this->associations_are_loaded[$name] = true;
@@ -273,8 +294,14 @@ class Record
 
             $association = get_called_class()::$belongs_to[$name];
             $foreign_key = $association['foreign_key'];
+            $class_name = array_key_exists('class_name', $association) ? $association['class_name'] : $association[$name."_type"];
 
-            $data = $association['class_name']::find_by(
+            if ($class_name == null) {
+                // Because the polymorphic association is undefined
+                return null;
+            }
+
+            $data = $class_name::find_by(
                 array("id"=>$this->$foreign_key)
             );
 
@@ -289,11 +316,19 @@ class Record
             }
 
             $association = get_called_class()::$has_one[$name];
-            $foreign_key = $association['foreign_key'];
 
-            $data = $association['class_name']::find_by(
-                array($foreign_key=>$this->id)
-            );
+            if (array_key_exists('as', $association)) {
+                $data = $association['class_name']::find_by(
+                    array(
+                        $association['as']."_id"=>$this->id,
+                        $association['as']."_type"=>get_called_class()
+                    )
+                );
+            } else {
+                $data = $association['class_name']::find_by(
+                    array($association['foreign_key']=>$this->id)
+                );
+            }
 
             $this->associations[$name] = $data;
             $this->associations_are_loaded[$name] = true;
@@ -384,7 +419,12 @@ class Record
         } elseif (in_array($association, array_keys(get_called_class()::$has_one))) {
             return get_called_class()::$has_one[$association]['class_name'];
         } elseif (in_array($association, array_keys(get_called_class()::$belongs_to))) {
-            return get_called_class()::$belongs_to[$association]['class_name'];
+            $association_data = get_called_class()::$belongs_to[$association];
+            if (array_key_exists("polymorphic", $association_data) && $association_data['polymorphic']) {
+                return $association."_type";
+            } else {
+                return get_called_class()::$belongs_to[$association]['class_name'];
+            }
         }
 
         return;
@@ -393,11 +433,42 @@ class Record
     public static function getAssociationForeignKey(string $association)
     {
         if (in_array($association, array_keys(get_called_class()::$has_many))) {
-            return get_called_class()::$has_many[$association]['foreign_key'];
+            $association_data = get_called_class()::$has_many[$association];
+            if (array_key_exists("as", $association_data)) {
+                return $association_data['as']."_id";
+            } else {
+                return $association_data['foreign_key'];
+            }
         } elseif (in_array($association, array_keys(get_called_class()::$has_one))) {
-            return get_called_class()::$has_one[$association]['foreign_key'];
+            $association_data = get_called_class()::$has_one[$association];
+            if (array_key_exists("as", $association_data)) {
+                return $association_data['as']."_id";
+            } else {
+                return $association_data['foreign_key'];
+            }
         } elseif (in_array($association, array_keys(get_called_class()::$belongs_to))) {
             return get_called_class()::$belongs_to[$association]['foreign_key'];
+        }
+        return;
+    }
+
+    public static function getAssociationPolymorphicTypeColumn(string $association)
+    {
+        if (in_array($association, array_keys(get_called_class()::$has_many))) {
+            $association_data = get_called_class()::$has_many[$association];
+            if (array_key_exists("as", $association_data)) {
+                return $association_data['as']."_type";
+            }
+        } elseif (in_array($association, array_keys(get_called_class()::$has_one))) {
+            $association_data = get_called_class()::$has_one[$association];
+            if (array_key_exists("as", $association_data)) {
+                return $association_data['as']."_type";
+            }
+        } elseif (in_array($association, array_keys(get_called_class()::$belongs_to))) {
+            $association_data = get_called_class()::$belongs_to[$association];
+            if (array_key_exists("polymorphic", $association_data) && $association_data['polymorphic']) {
+                return $association."_type";
+            }
         }
         return;
     }
@@ -425,5 +496,5 @@ class Record
 
 spl_autoload_register(function ($class_name) {
     // Convert camel case to snake case
-    require_once strtolower(preg_replace('/([^A-Z])([A-Z])/', "$1_$2", $class_name)) . '.php';
+    require_once sprintf("%s/%s.php", dirname(__FILE__), strtolower(preg_replace('/([^A-Z])([A-Z])/', "$1_$2", $class_name)));
 });
