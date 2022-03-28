@@ -11,6 +11,8 @@ ensure_logged_in();
 
 ?>
 
+<!-- TO DO Create page for each course section -->
+
 <?php include "templates/header.php"; ?>
 
 

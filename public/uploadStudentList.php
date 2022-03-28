@@ -84,7 +84,7 @@ try {
     <!-- TO DO change to add info on course name as well -->
     <label for="section">Select Course section</label>
     <select Name="section" id="section">
-            <option value="">----Select----</option>
+        <option value="" disabled selected>----Select----</option>
         <?php foreach($course_section as $row) { ?>
             <option value="<?php echo $row->id; ?>">
             <?php echo $row->course_section_name; ?>
