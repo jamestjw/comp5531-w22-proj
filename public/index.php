@@ -1,9 +1,8 @@
-<?php 
-require_once "../common.php"; 
+<?php
+require_once "../common.php";
 
 try {
     $latest_announcement = Announcement::getLast();
-    
 } catch (PDOException $error) {
     echo  $error->getMessage();
 }
@@ -12,8 +11,7 @@ try {
 
 <?php include "templates/header.php"; ?>
 
-<?php if(isset($latest_announcement))
-{?>
+<?php if (isset($latest_announcement)) {?>
   <h2>Latest Announcement: </h2>
   <h4> <?php echo $latest_announcement->announcement_text ?></h4>
   <h6> Posted: <?php echo $latest_announcement->created_at ?> </h6>

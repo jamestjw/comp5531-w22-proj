@@ -114,10 +114,11 @@ class Record
 
         execute_sql_query($sql, array($pk => $this->$pk));
 
+        // Not sure if this is needed for now
         // Set all attributes of the called object to none
-        foreach ($attrs as $attr) {
-            $this->$attr = null;
-        }
+        // foreach ($attrs as $attr) {
+        //     $this->$attr = null;
+        // }
 
         return;
     }
@@ -479,19 +480,15 @@ class Record
     }
     public static function getLast()
     {
-
         $table_name = get_called_class()::$table_name;
 
         $sql = "SELECT * FROM ".$table_name." ORDER BY id DESC LIMIT 1;";
-    
+
         $statement = getConnection()->prepare($sql);
         $statement->execute();
         $res = $statement->fetch();
-        return ($res) ? get_called_class()::loadRecordFromData($res) : null; 
-
-
+        return ($res) ? get_called_class()::loadRecordFromData($res) : null;
     }
-
 }
 
 spl_autoload_register(function ($class_name) {

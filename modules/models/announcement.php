@@ -11,4 +11,3 @@ class Announcement extends Record
     public $created_at;
     public $updated_at;
 }
-?>

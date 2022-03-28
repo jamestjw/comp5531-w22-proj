@@ -16,7 +16,13 @@ try {
     $sql = sprintf($sql, $dbname);
     $connection->exec($sql);
 
-    echo "Database and table users created successfully.";
+    echo "Database and table created successfully.\n";
+
+    $sql = file_get_contents("data/seed.sql");
+    $sql = sprintf($sql, $dbname);
+    $connection->exec($sql);
+
+    echo "Database seeded successfully.\n";
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }

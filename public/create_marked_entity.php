@@ -28,7 +28,7 @@ $marked_entity->is_group_work = $_POST["is_group_work"];
 $marked_entity->course_offering_id = $course_offering_id;
 $marked_entity->due_at = $_POST["due_at"];
 
-if (isset($_FILES['marked_entity_file'])) {
+if (isset($_FILES['marked_entity_file']) && $_FILES['marked_entity_file']['size'] > 0) {
     // Uploads folder needs to be created in the public/ directory
     // TODO: Make this more convenient
     $target_dir = "uploads/";

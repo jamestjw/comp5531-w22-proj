@@ -1,12 +1,10 @@
+<?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
 <?php include "templates/header.php"; ?>
 
 <?php
 
 require_once "../modules/models/marked_entity.php";
 require_once "../common.php";
-
-// TODO: Require ensure_logged_in.php instead
-ensure_logged_in();
 
 try {
     // TODO: Get different marked entities based on roles
