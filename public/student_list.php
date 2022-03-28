@@ -21,8 +21,6 @@ try {
     echo "<br>" . $error->getMessage();
 }
 
-// TO DO ADD PRELOAD ASSOCIATIONS 
-
 try {
     $course_sections_students = CourseSectionStudent::includes("user")->getAll();
 } catch (PDOException $error) {
