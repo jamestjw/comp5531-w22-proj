@@ -16,10 +16,17 @@ if (!isset($_POST["id"])) {
 }
 
 $id = intval($_POST["id"]);
-// TODO: Check if the user is indeed an instructor of this course
-// when instructors of courses are assigned.
 if (is_null($marked_entity = MarkedEntity::find_by_id($id))) {
     die("Invalid MarkedEntity");
+}
+
+// Check if the user is indeed an instructor of this course
+if (is_null(CourseOfferingInstructor::find_by(["offering_id" => $marked_entity->course_offering_id, "user_id"=> $_SESSION["current_user_id"]]))) {
+    die("Course instructor does not teach this course.");
+}
+
+if ($marked_entity->due_date_passed()) {
+    die("Unable to update marked entity pass its due date.");
 }
 
 foreach ($UPDATABLE_FIELDS as $field) {

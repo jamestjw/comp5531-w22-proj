@@ -29,4 +29,8 @@ class MarkedEntity extends Record
     public string $due_at;
     public string $created_at;
     public string $updated_at;
+
+    public function due_date_passed(): bool {
+        return new DateTime() > new DateTime($this->due_at);
+    }
 }
