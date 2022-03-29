@@ -14,13 +14,13 @@ try {
 }
 
 try {
-    $course_offering = CourseOffering::getAll();
+    $course_section = CourseSection::getAll();
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
 
 try {
-    $course_assignment = CourseOfferingInstructor::/*includes(["user", "course_offering"]) ->*/getAll();
+    $course_assignment = CourseSectionInstructor::/*includes(["user", "course_section"]) ->*/getAll();
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
@@ -42,14 +42,14 @@ if (isset($_POST['submit'])) {
     }
 }
 
-if (isset($_POST['offering_submit']) && CourseOfferingInstructor::where(array("offering_id" => $_POST['offering_selection'], "user_id" => $_POST['instructor_selection'])) == null) {
-    $offering_instructor = new CourseOfferingInstructor();
-    $offering_instructor->offering_id = $_POST['offering_selection'];
-    $offering_instructor->user_id = $_POST['instructor_selection'];
+if (isset($_POST['section_submit']) && CourseSectionInstructor::where(array("section_id" => $_POST['section_selection'], "user_id" => $_POST['instructor_selection'])) == null) {
+    $section_instructor = new CourseSectionInstructor();
+    $section_instructor->section_id = $_POST['section_selection'];
+    $section_instructor->user_id = $_POST['instructor_selection'];
     
 
     try {
-        $offering_instructor->save();
+        $section_instructor->save();
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
@@ -117,7 +117,7 @@ if ($instructors && count($instructors)) { ?>
     <table>
             <thead>
                 <tr>
-                    <th>Course Offering</th>
+                    <th>Course Section</th>
                     <th>Instructor</th>
                     <th>Created At</th>
                 </tr>
@@ -125,7 +125,7 @@ if ($instructors && count($instructors)) { ?>
             <tbody>
         <?php foreach ($course_assignment as $row) {?>
             <tr>
-                <td><?php echo $row->course_offering->course_offering_name; ?></td>
+                <td><?php echo $row->course_section->course_section_name; ?></td>
                 <td><?php echo $row->user->get_full_name(); ?></td>
                 <td><?php echo escape($row->created_at);  ?> </td>
             </tr>
@@ -137,7 +137,7 @@ if ($instructors && count($instructors)) { ?>
 <?php } ?>
 
 <h2>Assign Instructors to courses</h2>
-<?php if($course_offering && $instructors) { ?>
+<?php if($course_section && $instructors) { ?>
     <form method="post">
         Instructor: 
         <select Name="instructor_selection" id="instructor_selection">
@@ -149,23 +149,23 @@ if ($instructors && count($instructors)) { ?>
         <?php } ?>
         </select>
         
-        <!-- TO DO look into having more significant names for course offerings? or get course name as well? -->
-        Course Offering: 
-        <select Name="offering_selection" id="offering_selection">
+        <!-- TO DO look into having more significant names for course sections? or get course name as well? -->
+        Course Section: 
+        <select Name="section_selection" id="section_selection">
             <option value="">----Select----</option>
-        <?php foreach($course_offering as $row) { ?>
+        <?php foreach($course_section as $row) { ?>
             <option value="<?php echo $row->id; ?>">
-            <?php echo $row->course_offering_name; ?>
+            <?php echo $row->course_section_name; ?>
             </option>
         <?php } ?>
         </select>
 
-        <input type="submit" name="offering_submit" value="Submit">
+        <input type="submit" name="section_submit" value="Submit">
     </form>
 <?php } else if (!$instructors) { ?>
     <blockquote> No instructors in database </blockquote>
 <?php } else { ?>
-    <blockquote> No course offering in database </blockquote>
+    <blockquote> No course section in database </blockquote>
 <?php } ?>
 
 <?php } else {?>

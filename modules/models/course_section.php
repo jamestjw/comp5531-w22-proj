@@ -7,14 +7,14 @@ class CourseSection extends Record
     protected static $table_name = "course_sections";
 
     protected static $belongs_to = array(
-        "course_offering"=> array(
-            "class_name" => "CourseOffering",
-            "foreign_key" => "offering_id"
+        "course"=> array(
+            "class_name" => "Course",
+            "foreign_key" => "course_id"
             )
         );
 
     public $id;
-    public $offering_id;
+    public $course_id;
     public $course_section_code;
     public $course_section_name;
     public $created_at;

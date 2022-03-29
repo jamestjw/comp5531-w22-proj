@@ -63,15 +63,15 @@ if ($result && count($result)) { ?>
             <textarea class="form-control" id="description" name="description"  rows="3"></textarea>
         </div>
     
-        <!-- TODO: Figure out a better way of getting the course offering ID -->
+        <!-- TODO: Figure out a better way of getting the course section ID -->
         <div class="form-group">
-            <label for="course_offering_id">Course Offering</label>
+            <label for="course_section_id">Course Section</label>
 
-            <select name="course_offering_id" id="course_offering_id">
-                <option value="" disabled selected>Select course offering</option>
-                <!-- TODO: Get only the course offerings that the instructor teaches -->
-                <?php foreach (CourseOffering::getAll() as $course_offering):;?>
-                    <option value = <?php echo($course_offering->id);?>><?php echo($course_offering->course_offering_name);?></option>
+            <select name="course_section_id" id="course_section_id">
+                <option value="" disabled selected>Select course section</option>
+                <!-- TODO: Get only the course sectionss that the instructor teaches -->
+                <?php foreach (CourseSection::getAll() as $course_section):;?>
+                    <option value = <?php echo($course_section->id);?>><?php echo($course_section->course_section_name);?></option>
                 <?php endforeach;?>
             </select>
         </div>

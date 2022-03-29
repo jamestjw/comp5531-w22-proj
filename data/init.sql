@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS marked_entities (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	title VARCHAR(50),
 	description TEXT,
-	course_offering_id INT(11) UNSIGNED NOT NULL,
+	course_section_id INT(11) UNSIGNED NOT NULL,
 	is_group_work BOOLEAN,
 	due_at TIMESTAMP,
 	created_at TIMESTAMP,
@@ -136,20 +136,10 @@ CREATE TABLE IF NOT EXISTS courses (
 	updated_at TIMESTAMP
 ); 
 
-CREATE TABLE IF NOT EXISTS course_offerings(
+CREATE TABLE IF NOT EXISTS course_sections(
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	course_id INT(11) UNSIGNED,
 	FOREIGN KEY(course_id) REFERENCES courses(id) ON DELETE CASCADE,
-	course_offering_code VARCHAR(60),
-	course_offering_name VARCHAR(60),
-	created_at TIMESTAMP,
-	updated_at TIMESTAMP
-);
-
-CREATE TABLE IF NOT EXISTS course_sections(
-	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	offering_id INT(11) UNSIGNED,
-	FOREIGN KEY(offering_id) REFERENCES course_offerings(id) ON DELETE CASCADE,
 	course_section_code VARCHAR(60),
 	course_section_name VARCHAR(60),
 	created_at TIMESTAMP,
@@ -163,14 +153,14 @@ CREATE TABLE IF NOT EXISTS announcements (
 	updated_at TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS course_offerings_instructors(
-	offering_id INT(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS course_section_instructors(
+	section_id INT(11) UNSIGNED NOT NULL,
 	user_id INT(11) UNSIGNED NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES users(id),
-	FOREIGN KEY(offering_id) REFERENCES course_offerings(id) ON DELETE CASCADE,
+	FOREIGN KEY(section_id) REFERENCES course_sections(id) ON DELETE CASCADE,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
-	PRIMARY KEY (offering_id, user_id)
+	PRIMARY KEY (section_id, user_id)
 );
 
 CREATE TABLE IF NOT EXISTS comments(
