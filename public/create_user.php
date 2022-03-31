@@ -12,6 +12,7 @@ if (isset($_POST['submit'])) {
     $user->student_id = $_POST['student_id'];
     $user->is_admin = 0;
     $user->is_instructor = 0;
+    $user->is_ta = 0;
     $user->password_digest = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     try {

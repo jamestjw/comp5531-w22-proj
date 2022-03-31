@@ -86,7 +86,7 @@ and data entry. -->
         }
     </style>
     <style type = "text/css">
-                .ctb {border-collapse:collapse;border-spacing:0, margin:0px auto}
+                .ctb {border-collapse:collapse;border-spacing:0; margin:0px auto}
                 .ctb td{border-color:black;border-style:solid;border-width:1px;font-family:"Times New Roman", "Comic Sans";font-size:16px; overflow:hidden;padding:10px 5px;word-break:normal;}
                 .ctb th{border-color:black;border-style:solid;border-width:1px;font-family:"Times New Roman", "Comic Sans";font-size:16px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
                 .ctb .tgPurp{background-color:#cbcefb;border-color:inherit;text-align:left;vertical-align:top}

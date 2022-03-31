@@ -126,7 +126,10 @@ if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messa
                         $user_id = $_SESSION["current_user"]->id;
                         $commentable_id = $discussion_message->id;
                         $commentable_type = "DiscussionMessage";
-                        include "new_comment_form.php";
+                        if (get_current_role() == "instructor" || get_current_role() == "ta") {
+                            include "new_comment_form.php";
+                        }
+                        
                     }
                 ?>
                 </td>

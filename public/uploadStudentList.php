@@ -17,6 +17,7 @@ require_once "../common.php";
             $user->email = $studentData[3];
             $user->is_admin = 0;
             $user->is_instructor = 0;
+            $user->is_ta = 0;
             $user->password_digest = password_hash("welcome", PASSWORD_DEFAULT);
 
             try {
