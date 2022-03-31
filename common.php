@@ -11,7 +11,7 @@ date_default_timezone_set('America/Montreal');
 
 function escape($html)
 {
-    return htmlspecialchars($html, ENT_QUOTES | ENT_SUBSTITUTE, "UTF-8");
+    return htmlspecialchars($html ?? '', ENT_QUOTES | ENT_SUBSTITUTE, "UTF-8");
 }
 
 function maybe_session_start()
