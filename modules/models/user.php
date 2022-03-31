@@ -15,6 +15,7 @@ class User extends Record
     public $email;
     public $is_admin;
     public $is_instructor;
+    public $is_ta;
     public $password_digest;
     public $created_at;
     public $updated_at;
@@ -28,6 +29,7 @@ class User extends Record
             array_push($res, "admin");
             array_push($res, "instructor");
             array_push($res, "student");
+            array_push($res, "ta");
         }
 
         if ($this->is_instructor) {
@@ -36,6 +38,10 @@ class User extends Record
 
         if (isset($this->student_id)) {
             array_push($res, "student");
+        }
+
+        if ($this->is_ta) {
+            array_push($res, "ta");
         }
 
         return $res;
