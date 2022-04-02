@@ -5,8 +5,6 @@ require_once "../common.php";
 
 <?php include "templates/header.php"; ?>
 
-
-
 <h3>
     User Account
 </h3>
