@@ -84,7 +84,11 @@ if (isset($_POST['submit'])) {
     }
   }
 
-  $user->save();
+  try {
+    $user->save();
+  } catch (PDOException $error) {
+      echo "<br>" . $error->getMessage();
+  }
 }
 ?>
 
