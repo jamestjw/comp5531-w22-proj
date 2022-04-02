@@ -30,7 +30,9 @@ li    { display: table-row;}
     <label for="last_name">Last Name:  <?php echo escape($user->last_name)?></label>
     <input type="text" id="last_name" name="last_name">
   </li>
-  <?php if (!is_null($user->student_id)) {?>
+  <?php if (!is_null($user->student_id) 
+    && current_user_possible_roles()[0] == "student"
+    && count(current_user_possible_roles()) == 1) {?>
   <li>
     <label for="student_id">Student ID: <?php echo escape($user->student_id)?></label>
     <input type="text" id="student_id" name="student_id"></input>
