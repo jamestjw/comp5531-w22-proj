@@ -5,14 +5,7 @@ require_once "../common.php";
 
 <?php include "templates/header.php"; ?>
 
-<?php
 
-function compare_passwords($p1, $p2)
-{
-    // Used to verify the confirmation password matches original typed password
-    return $p1 === $p2;
-}
-?>
 
 <h3>
     User Account
@@ -49,6 +42,10 @@ li    { display: table-row;}
     <label for="password">Change Password: </label>
     <input type="text" id="msg" name="password"></input>
   </li>
+  <li>
+    <label for="password_conf">Confirm Password: </label>
+    <input type="text" id="msg" name="password_conf"></input>
+  </li>
  </ul>
  <input type="submit" name="submit" value="Submit">
 </form>
@@ -59,5 +56,23 @@ li    { display: table-row;}
     <h5>You need to be logged in to see your account details.</h1>
 
 <?php } ?>
+
+<?php
+if (isset($_POST['submit'])) {
+
+  empty($_POST["first_name"]) ?: $user->first_name = $_POST["first_name"];
+  empty($_POST["last_name"]) ?: $user->last_name = $_POST["last_name"];
+  empty($_POST["student_id"]) ?: $user->student_id = $_POST["student_id"];
+  empty($_POST["email"]) ?: $user->email = $_POST["email"];
+
+  if (!empty($_POST["password"]) && ($_POST["password"] == $_POST["password_conf"])) {
+    $user->password_digest = password_hash($_POST["password"], PASSWORD_DEFAULT);
+  } else {
+    echo "Password and password confirmation does not match!";
+  }
+
+  $user->save();
+}
+?>
 
 <?php include "templates/footer.php"; ?>
