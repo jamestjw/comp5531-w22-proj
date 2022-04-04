@@ -8,7 +8,22 @@ print_r($_POST);
 ?>
 
 <?php
+
+function delete_all($array) {
+    foreach($array as $elem) {
+        $elem->delete();
+    }
+}
+
 if (isset($_POST["submit"])) {
+
+    if (isset($_SESSION["current_user"])) {
+        $current_user = $_SESSION["current_user"];
+    } else {
+        echo "Error fetching logged in user.";
+        header("Location: login.php");
+    }
+
     if (!empty($_POST["recipient_box"])) {
         // Split "To" field by ; delimiter to obtain all receiving emails
         $recipients = explode(";", $_POST["recipient_box"]);
@@ -36,11 +51,34 @@ if (isset($_POST["submit"])) {
         }
 
         // Add entry in inbox table for each user in "To" field
+        $saved_inboxes = array(); // There needs to be a better way to undo transactions. Maybe update the record class.
         foreach ($valid_emails as $val) {
+            $inbox = new Inbox();
+            $inbox->email_address = $val;
+            $inbox->message_id = $email->id;
             
+            try {
+                $inbox->save();
+                array_push($saved_inboxes, $inbox);
+            } catch (PDOException $error) {
+                echo "<br>" . $error->getMessage();
+                $email->delete();
+                delete_all($saved_inboxes);
+            }
         }
 
         // Add entry in sent table for current_user->email
+        $sent = new Sent();
+        $sent->email_address = $current_user->email;
+        $sent->message_id = $email->id;
+
+        try {
+            $sent->save();
+        } catch (PDOException $error) {
+            echo "<br>" . $error->getMessage();
+            $email->delete();
+            delete_all($saved_inboxes);
+        }
 
         // Tell user which emails could not be sent due to invalid addresses
         if (!empty($invalid_emails)) {
@@ -54,8 +92,6 @@ if (isset($_POST["submit"])) {
     } else {
         echo '<script>alert("Recipient field cannot be empty!")</script>';
     }
-
-
 }
 
 ?>

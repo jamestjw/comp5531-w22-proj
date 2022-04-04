@@ -17,7 +17,7 @@ class Inbox extends Record
         );
 
     public $id;
-    public $user_id;
+    public $email_address;
     public $message_id;
     public $read;
     public $created_at;

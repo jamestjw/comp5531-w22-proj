@@ -17,7 +17,7 @@ class Sent extends Record
         );
 
     public $id;
-    public $user_id;
+    public $email_address;
     public $message_id;
     public $created_at;
     public $updated_at;

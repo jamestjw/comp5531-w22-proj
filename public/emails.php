@@ -1,4 +1,5 @@
 <?php 
+require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php");
 require_once "../common.php";
 require_once "email_view.php";
 include "templates/header.php"; 
@@ -22,6 +23,11 @@ print_r($_POST);
     </div>
     <div class="emailsdisplay">
         <?php
+
+        if(!isset($_SESSION["email_view"])) {
+            $_SESSION["email_view"] = "inbox";
+        }
+
         if (isset($_POST["inbox_btn"])) {
             $_SESSION["email_view"] = "inbox";
         } elseif (isset($_POST["sent_btn"])) {
@@ -36,7 +42,7 @@ print_r($_POST);
             echo "sent";
         } elseif ($_SESSION["email_view"] == "create") {
             include "create_new_email.php";
-        }
+        } 
         ?>
     </div>
 </html>
