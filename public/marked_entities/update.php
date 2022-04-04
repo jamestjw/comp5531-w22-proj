@@ -29,11 +29,29 @@ if ($marked_entity->due_date_passed()) {
     die("Unable to update marked entity past its due date.");
 }
 
-foreach ($UPDATABLE_FIELDS as $field) {
-    if (isset($_POST[$field])) {
-        echo "$field \n";
-        $marked_entity->$field = $_POST[$field];
+if (isset($_FILES['marked_entity_file']) && $_FILES['marked_entity_file']['size'] > 0) {
+    // Uploads folder needs to be created in the public/ directory
+    // TODO: Make this more convenient
+    $target_dir = "../uploads/";
+    // TODO: Improve the file ID
+    $file_id = uniqid().basename($_FILES["marked_entity_file"]["name"]);
+    $target_file = $target_dir . $file_id;
+
+    $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+    $file_size = $_FILES["marked_entity_file"]["size"];
+
+    $attachment = new Attachment();
+    $attachment->file_size = $_FILES["marked_entity_file"]["size"];
+    $attachment->file_filename = basename($_FILES["marked_entity_file"]["name"]);
+    $attachment->file_id = $file_id;
+
+    if (!move_uploaded_file($_FILES["marked_entity_file"]["tmp_name"], $target_file)) {
+        echo "Sorry, there was an error uploading your file.";
     }
+
+    $attachment->attachable_id = $marked_entity->id;
+    $attachment->attachable_type = "MarkedEntity";
+    $attachment->save();
 }
 
 $marked_entity->save();
