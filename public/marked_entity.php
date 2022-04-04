@@ -20,7 +20,16 @@ if (isset($_GET["id"]) && ($marked_entity = MarkedEntity::find_by_id($_GET["id"]
         <?php
         if (!empty($files = $marked_entity->files)) {
             foreach ($files as $file) { ?>
-                <p><a href='<?php echo "download.php?file_id={$file->file_id}" ?>'><?php echo $file->file_filename; ?></a></p>
+                <p>
+                    <a href='<?php echo "download.php?file_id={$file->file_id}" ?>'><?php echo $file->file_filename; ?></a>
+                    <div id="deleteInstructorFileForm">
+                        <form method="post" action="marked_entities/delete_instructor_file.php">
+                            <input type="hidden" id="file_id" name="file_id" value="<?php echo $file->id; ?>">
+                            <input type="hidden" id="marked_entity_id" name="marked_entity_id" value="<?php echo $marked_entity->id; ?>">
+                            <input type="submit" name="submit" value="Delete">
+                        </form>
+                    </div>
+                </p>
             <?php }
         } else {
             echo "<blockquote>No files.</blockquote>";
