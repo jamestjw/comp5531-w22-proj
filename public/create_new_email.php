@@ -92,9 +92,7 @@ if (isset($_POST["submit"])) {
     } else {
         echo '<script>alert("Recipient field cannot be empty!")</script>';
     }
-}
-
-?>
+}?>
 
 <style>
     span {
@@ -117,6 +115,5 @@ if (isset($_POST["submit"])) {
         </span>
     </div>
     <textarea class="content" name="content"><?php echo isset($_POST["content"]) ? $_POST["content"] : ""; ?></textarea>
-
 </form>
 

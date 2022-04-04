@@ -19,7 +19,7 @@ class Inbox extends Record
     public $id;
     public $email_address;
     public $message_id;
-    public $read;
+    public $read_flag;
     public $created_at;
     public $updated_at;
 }
