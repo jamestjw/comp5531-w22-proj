@@ -190,27 +190,26 @@ CREATE TABLE IF NOT EXISTS emails(
 	subject TEXT,
 	content TEXT,
 	created_at TIMESTAMP,
-	updated_at TIMESTAMP,
-)
+	updated_at TIMESTAMP
+);
 
 CREATE TABLE IF NOT EXISTS inbox(
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	user_id INT(11) UNSIGNED,
+	email_address VARCHAR(50) NOT NULL,
 	message_id INT(11) UNSIGNED,
-	read BOOLEAN DEFAULT false,
+	read_flag BOOLEAN DEFAULT false,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
-	FOREIGN KEY(user_id) REFERENCES users(id),
-	FOREIGN KEY(message_id) REFERENCES emails(id),
-)
+	FOREIGN KEY(email_address) REFERENCES users(email),
+	FOREIGN KEY(message_id) REFERENCES emails(id)
+);
 
 CREATE TABLE IF NOT EXISTS sent(
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	user_id INT(11) UNSIGNED,
+	email_address VARCHAR(50) NOT NULL,
 	message_id INT(11) UNSIGNED,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
-	FOREIGN KEY(user_id) REFERENCES users(id),
+	FOREIGN KEY(email_address) REFERENCES users(email),
 	FOREIGN KEY(message_id) REFERENCES emails(id)
-
-)
+);
