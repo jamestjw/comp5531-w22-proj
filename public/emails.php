@@ -3,7 +3,6 @@ require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php");
 require_once "../common.php";
 require_once "email_view.php";
 include "templates/header.php"; 
-print_r($_POST);
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +36,7 @@ print_r($_POST);
         if ($_SESSION["email_view"] == "inbox") {
             include "inbox_view.php";
         } elseif ($_SESSION["email_view"] == "sent") {
-            echo "sent";
+            include "inbox_view.php";
         } elseif ($_SESSION["email_view"] == "create") {
             include "create_new_email.php";
         } 

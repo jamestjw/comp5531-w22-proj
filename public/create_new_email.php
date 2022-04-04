@@ -4,7 +4,6 @@ require_once "../modules/models/user.php";
 require_once "../modules/models/email.php";
 require_once "../modules/models/inbox.php";
 require_once "../modules/models/sent.php";
-print_r($_POST);
 ?>
 
 <?php
