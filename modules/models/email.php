@@ -13,7 +13,8 @@ class Email extends Record
     public $updated_at;
 
     // Returns the email address of the person who sent this email
-    public function get_sender() {
+    public function get_sender()
+    {
         $raw_sql = "
         SELECT email_address
         FROM sent
@@ -27,7 +28,8 @@ class Email extends Record
     }
 
     // Returns all of the user emails who have received the message in their inbox
-    public function get_all_receivers() {
+    public function get_all_receivers()
+    {
         $raw_sql = "
         SELECT email_address
         FROM inbox
@@ -41,9 +43,7 @@ class Email extends Record
         foreach ($sql->fetchAll() as $row) {
             array_push($array_of_emails, $row["email_address"]);
         }
-        
+
         return $array_of_emails; // There should only ever be one sender
     }
-
 }
-?>

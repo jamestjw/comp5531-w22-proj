@@ -1,7 +1,7 @@
-<?php 
+<?php
 require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php");
 require_once "../common.php";
-include "templates/header.php"; 
+include "templates/header.php";
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +20,7 @@ include "templates/header.php";
     <div class="emailsdisplay">
         <?php
         // Set the default view of the email page to the user's inbox
-        if(!isset($_SESSION["email_view"])) {
+        if (!isset($_SESSION["email_view"])) {
             $_SESSION["email_view"] = "inbox";
         }
         // Set the email view depending on which menu item is pressed
@@ -38,7 +38,7 @@ include "templates/header.php";
             include "inbox_sent_view.php";
         } elseif ($_SESSION["email_view"] == "create") {
             include "create_new_email.php";
-        } 
+        }
         ?>
     </div>
 </html>

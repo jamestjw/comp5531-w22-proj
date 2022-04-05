@@ -8,8 +8,9 @@ require_once "../modules/models/sent.php";
 
 <?php
 // Helper function to simply delete all objects contained in an array
-function delete_all($array) {
-    foreach($array as $elem) {
+function delete_all($array)
+{
+    foreach ($array as $elem) {
         $elem->delete();
     }
 }
@@ -27,7 +28,7 @@ if (isset($_POST["submit"])) {
         // Split "To" field by ; delimiter to obtain all receiving emails
         $recipients = explode(";", $_POST["recipient_box"]);
 
-        // Validate each email. 
+        // Validate each email.
         $valid_emails = array();
         $invalid_emails = array();
         foreach ($recipients as $r) {
@@ -37,7 +38,7 @@ if (isset($_POST["submit"])) {
                 array_push($invalid_emails, $r);
             }
         }
-        
+
         // Create new email object
         $email = new Email();
         $email->subject = $_POST["subject_box"];
@@ -55,7 +56,7 @@ if (isset($_POST["submit"])) {
             $inbox = new Inbox();
             $inbox->email_address = $val;
             $inbox->message_id = $email->id;
-            
+
             try {
                 $inbox->save();
                 array_push($saved_inboxes, $inbox);
@@ -85,9 +86,8 @@ if (isset($_POST["submit"])) {
             echo "<br>"."This message could not be sent to the following email addresses as they don't exist internally:"."<br>";
             foreach ($invalid_emails as $inv) {
                 echo $inv . "\n";
-            }   
+            }
         }
-
     } else { // If no recipients are specified
         echo '<script>alert("Recipient field cannot be empty!")</script>';
     }
@@ -110,14 +110,14 @@ if (isset($_POST["submit"])) {
         <span>
             <input name="subject_box" class="header_fields" type="text" value="<?php
                 // Preserve content in text input if recipient isn't set
-                if (isset($_POST["submit"]) && empty($_POST["recipient_box"])) { 
-                    echo isset($_POST["subject_box"]) ? $_POST["subject_box"] : ""; 
+                if (isset($_POST["submit"]) && empty($_POST["recipient_box"])) {
+                    echo isset($_POST["subject_box"]) ? $_POST["subject_box"] : "";
                 }
             ?>"></input>
         </span>
     </div>
     <textarea class="content" name="content"><?php
-        // Preserve content in text input if recipient isn't set 
+        // Preserve content in text input if recipient isn't set
         if (isset($_POST["submit"]) && empty($_POST["recipient_box"])) {
             echo isset($_POST["content"]) ? $_POST["content"] : "";
         }?></textarea>
