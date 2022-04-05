@@ -20,11 +20,11 @@ include "templates/header.php";
     </div>
     <div class="emailsdisplay">
         <?php
-
+        // Set the default view of the email page to the user's inbox
         if(!isset($_SESSION["email_view"])) {
             $_SESSION["email_view"] = "inbox";
         }
-
+        // Set the email view depending on which menu item is pressed
         if (isset($_POST["inbox_btn"])) {
             $_SESSION["email_view"] = "inbox";
         } elseif (isset($_POST["sent_btn"])) {
@@ -32,11 +32,11 @@ include "templates/header.php";
         } elseif (isset($_POST["create_btn"])) {
             $_SESSION["email_view"] = "create";
         }
-
+        // Modify contents of page depending on which button was pressed
         if ($_SESSION["email_view"] == "inbox") {
-            include "inbox_view.php";
+            include "inbox_sent_view.php";
         } elseif ($_SESSION["email_view"] == "sent") {
-            include "inbox_view.php";
+            include "inbox_sent_view.php";
         } elseif ($_SESSION["email_view"] == "create") {
             include "create_new_email.php";
         } 

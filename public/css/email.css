@@ -16,10 +16,6 @@
     height: 100%;
 }
 
-/* .email_div {
-
-} */
-
 .menu_form_label {
     color:white;
     font-size:xx-large;
@@ -50,6 +46,7 @@
     height: 100%;
     resize: none;
     box-sizing: border-box;
+    white-space: pre;
 }
 
 .inboxmessage {

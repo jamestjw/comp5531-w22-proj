@@ -7,7 +7,7 @@ require_once "../modules/models/sent.php";
 ?>
 
 <?php
-
+// Helper function to simply delete all objects contained in an array
 function delete_all($array) {
     foreach($array as $elem) {
         $elem->delete();
@@ -15,7 +15,7 @@ function delete_all($array) {
 }
 
 if (isset($_POST["submit"])) {
-
+    // Get the logged in user
     if (isset($_SESSION["current_user"])) {
         $current_user = $_SESSION["current_user"];
     } else {
@@ -88,7 +88,7 @@ if (isset($_POST["submit"])) {
             }   
         }
 
-    } else {
+    } else { // If no recipients are specified
         echo '<script>alert("Recipient field cannot be empty!")</script>';
     }
 }?>
@@ -108,11 +108,18 @@ if (isset($_POST["submit"])) {
         </span>
         <label class="header_labels" for="subject_box" style="float:left;margin-right:5px;">Subject:</label>
         <span>
-            <input name="subject_box" class="header_fields" type="text" value="<?php 
-                echo isset($_POST["subject_box"]) ? $_POST["subject_box"] : ""; 
+            <input name="subject_box" class="header_fields" type="text" value="<?php
+                // Preserve content in text input if recipient isn't set
+                if (isset($_POST["submit"]) && empty($_POST["recipient_box"])) { 
+                    echo isset($_POST["subject_box"]) ? $_POST["subject_box"] : ""; 
+                }
             ?>"></input>
         </span>
     </div>
-    <textarea class="content" name="content"><?php echo isset($_POST["content"]) ? $_POST["content"] : ""; ?></textarea>
+    <textarea class="content" name="content"><?php
+        // Preserve content in text input if recipient isn't set 
+        if (isset($_POST["submit"]) && empty($_POST["recipient_box"])) {
+            echo isset($_POST["content"]) ? $_POST["content"] : "";
+        }?></textarea>
 </form>
 

@@ -7,27 +7,26 @@ require_once '../modules/models/sent.php';
 ?>
 
 <?php
+// Get the logged in user
 if (isset($_SESSION['current_user'])) {
     $current_user = $_SESSION['current_user'];
 } else {
     echo 'Error fetching logged in user.';
     header('Location: login.php');
 }
-
-
+// Fetch either inbox or sent, depending on what user specified
 if ($_SESSION["email_view"] == "inbox") {
     $box_entries = Inbox::where(array('email_address' => $current_user->email));
 } elseif ($_SESSION["email_view"] == "sent") {
     $box_entries = Sent::where(array('email_address' => $current_user->email));
 }
-
 // Sort the messages by sent date/time
 $by_created_at = array();
 foreach($box_entries as $be) {
     $by_created_at[$be->id] = $be->created_at;
 }
 array_multisort($by_created_at, SORT_DESC, $box_entries);
-
+// Show the messages. User has not clicked on a message yet
 if(!isset($_POST['clicked']) || is_null($_POST['clicked'])) {
     foreach($box_entries as $be) {
         $message = Email::find_by_id($be->message_id);
@@ -54,7 +53,7 @@ if(!isset($_POST['clicked']) || is_null($_POST['clicked'])) {
             </div>
         </form>";
     } 
-} else { // Display the content of the email
+} else { // Display the content of the email. User has clicked on a message
 
     $display_message = Email::find_by_id(key($_POST['clicked']));
     if ($_SESSION["email_view"] == "inbox") {
@@ -63,6 +62,8 @@ if(!isset($_POST['clicked']) || is_null($_POST['clicked'])) {
         $to_from = "To: ".implode(';',$display_message->get_all_receivers());
     }
 
+    // Convert the php new lines to html newlines
+    $content = nl2br($display_message->content);
     echo "
     <div class='messagecontainer'>
         <div class='messagesender'>
@@ -77,7 +78,7 @@ if(!isset($_POST['clicked']) || is_null($_POST['clicked'])) {
             {$display_message->created_at}
         </div>
         <div class='messagecontent'>
-            {$display_message->content}
+            {$content}
         </div>
     </div>
     ";
