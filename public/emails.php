@@ -1,7 +1,6 @@
 <?php 
 require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php");
 require_once "../common.php";
-require_once "email_view.php";
 include "templates/header.php"; 
 ?>
 
