@@ -219,7 +219,7 @@ and data entry. -->
                 <td class="tgNorm"><?php echo($row->course_offering->course_id), " - ",($row->offering_id);?></td>
                 <td class="tgNorm"><?php echo($row->course_offering->course->course_name), " - ",($row->course_offering->course_offering_name);?></td>
                 <td class="tgNorm"><?php echo($row->course_section_code);?></td>
-                <td class="tgNorm"><?php echo($row->course_section_name);?></td>
+                <td class="tgNorm"><a href="course_section.php?id=<?php echo $row->id?>"><?php echo($row->course_section_name);?></a></td>
             </tr>
             <?php endforeach;?>
             <tr>

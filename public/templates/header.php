@@ -32,6 +32,9 @@ verify_logged_in();
         <div class="dropdown-content">
           <a href="course_list.php">Course List</a>
           <a href="marked_entities.php">Marked Entities</a>
+          <?php if(get_current_role() == "instructor") {?> 
+            <a href="student_list.php">Student List</a> 
+          <?php }?>
           <a href="discussions.php">Discussions</a>
           <a href="meetings.php">Meetings</a>
         </div>
