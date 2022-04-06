@@ -43,7 +43,7 @@ foreach ($course_sections as $section) {
             echo "<br>" . $error->getMessage();
         }
         
-        /*$student_in_team = $_POST['student'];
+        $student_in_team = $_POST['student'];
 
         foreach($student_in_team as $stu){
             $team_member = new TeamMember();
@@ -55,7 +55,7 @@ foreach ($course_sections as $section) {
             } catch (PDOException $error) {
                 echo "<br>" . $error->getMessage();
             }
-        }*/
+        }
 
         echo "<h5>New team created </h5>";
         
@@ -67,7 +67,7 @@ foreach ($course_sections as $section) {
 <p>Select 1 to 4 students</p>
 <form method="post">
     <?php foreach ($course_students as $student) { ?>
-        <input class="single-checkbox" type="checkbox" id="<?php $student->id ?>" name="student[]" value="<?php $student->id ?>"> <?php echo ($student->first_name." ".$student->last_name." ".$student->student_id) ?><br>
+        <input class="single-checkbox" type="checkbox" id="<?php echo $student->id; ?>" name="student[]" value="<?php echo $student->id; ?>"> <?php echo ($student->first_name." ".$student->last_name." ".$student->student_id) ?><br>
     <?php } ?>
     <input type='submit' name='submit' value='submit'>
 </form>
