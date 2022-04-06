@@ -14,13 +14,13 @@ try {
 }
 
 try {
-    $course_offering = CourseOffering::getAll();
+    $lecture = Lecture::getAll();
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
 
 try {
-    $course_assignment = CourseOfferingInstructor::includes(["user", "course_offering"])->getAll();
+    $course_assignment = LectureInstructor::includes(["user", "lecture"])->getAll();
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
@@ -42,14 +42,22 @@ if (isset($_POST['submit'])) {
     }
 }
 
+<<<<<<< HEAD
 if (isset($_POST['offering_submit']) && CourseOfferingInstructor::where(array("offering_id" => $_POST['offering_selection'], "user_id" => $_POST['instructor_selection'])) == null) {
     $offering_instructor = new CourseOfferingInstructor();
     $offering_instructor->offering_id = $_POST['offering_selection'];
     $offering_instructor->user_id = $_POST['instructor_selection'];
 
+=======
+if (isset($_POST['lecture_submit']) && LectureInstructor::where(array("lecture_id" => $_POST['lecture_selection'], "user_id" => $_POST['instructor_selection'])) == null) {
+    $lecture_instructor = new LectureInstructor();
+    $lecture_instructor->lecture_id = $_POST['lecture_selection'];
+    $lecture_instructor->user_id = $_POST['instructor_selection'];
+    
+>>>>>>> 3765cbc (Second pass on renaming. All functions effected were tested and work on my end.)
 
     try {
-        $offering_instructor->save();
+        $lecture_instructor->save();
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
@@ -117,7 +125,7 @@ if ($instructors && count($instructors)) { ?>
     <table>
             <thead>
                 <tr>
-                    <th>Course Offering</th>
+                    <th>Course Lecture</th>
                     <th>Instructor</th>
                     <th>Created At</th>
                 </tr>
@@ -125,7 +133,7 @@ if ($instructors && count($instructors)) { ?>
             <tbody>
         <?php foreach ($course_assignment as $row) {?>
             <tr>
-                <td><?php echo $row->course_offering->course_offering_name; ?></td>
+                <td><?php echo $row->lecture->lecture_name; ?></td>
                 <td><?php echo $row->user->get_full_name(); ?></td>
                 <td><?php echo escape($row->created_at);  ?> </td>
             </tr>
@@ -137,7 +145,11 @@ if ($instructors && count($instructors)) { ?>
 <?php } ?>
 
 <h2>Assign Instructors to courses</h2>
+<<<<<<< HEAD
 <?php if ($course_offering && $instructors) { ?>
+=======
+<?php if($lecture && $instructors) { ?>
+>>>>>>> 3765cbc (Second pass on renaming. All functions effected were tested and work on my end.)
     <form method="post">
         Instructor: 
         <select Name="instructor_selection" id="instructor_selection">
@@ -149,23 +161,27 @@ if ($instructors && count($instructors)) { ?>
         <?php } ?>
         </select>
         
-        <!-- TO DO look into having more significant names for course offerings? or get course name as well? -->
-        Course Offering: 
-        <select Name="offering_selection" id="offering_selection">
+        <!-- TO DO look into having more significant names for course lectures? or get course name as well? -->
+        Course Lecture: 
+        <select Name="lecture_selection" id="lecture_selection">
             <option value="">----Select----</option>
+<<<<<<< HEAD
         <?php foreach ($course_offering as $row) { ?>
+=======
+        <?php foreach($lecture as $row) { ?>
+>>>>>>> 3765cbc (Second pass on renaming. All functions effected were tested and work on my end.)
             <option value="<?php echo $row->id; ?>">
-            <?php echo $row->course_offering_name; ?>
+            <?php echo $row->lecture_name; ?>
             </option>
         <?php } ?>
         </select>
 
-        <input type="submit" name="offering_submit" value="Submit">
+        <input type="submit" name="lecture_submit" value="Submit">
     </form>
 <?php } elseif (!$instructors) { ?>
     <blockquote> No instructors in database </blockquote>
 <?php } else { ?>
-    <blockquote> No course offering in database </blockquote>
+    <blockquote> No course lecture in database </blockquote>
 <?php } ?>
 
 <?php } else {?>
