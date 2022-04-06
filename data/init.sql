@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS marked_entities (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	title VARCHAR(50),
 	description TEXT,
-	course_offering_id INT(11) UNSIGNED NOT NULL,
+	lecture_id INT(11) UNSIGNED NOT NULL,
 	is_group_work BOOLEAN,
 	due_at TIMESTAMP,
 	created_at TIMESTAMP,

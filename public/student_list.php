@@ -5,8 +5,8 @@
 <?php
 
 require_once "../modules/models/user.php";
-require_once "../modules/models/course_section.php";
-require_once "../modules/models/course_section_student.php";
+require_once "../modules/models/section.php";
+require_once "../modules/models/section_student.php";
 require_once "../common.php";
 
 try {
@@ -16,13 +16,13 @@ try {
 }
 
 try {
-    $course_sections = CourseSection::getAll();
+    $sections = Section::getAll();
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
 
 try {
-    $course_sections_students = CourseSectionStudent::includes("user")->getAll();
+    $sections_students = SectionStudent::includes("user")->getAll();
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
@@ -62,12 +62,12 @@ if ($students && count($students)) { ?>
 
 
   <?php
-    if ($course_sections && count($course_sections)) { ?>
+    if ($sections && count($sections)) { ?>
         <h2>Section student list</h2>
 
-        <?php foreach($course_sections as $section) { ?>
+        <?php foreach($sections as $section) { ?>
             
-            <h3>Section <?php echo $section->course_section_name ?> </h3>
+            <h3>Section <?php echo $section->section_name ?> </h3>
             <table>
                 <thead>
                     <tr>
@@ -79,7 +79,7 @@ if ($students && count($students)) { ?>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($course_sections_students as $section_students) { 
+                    <?php foreach($sections_students as $section_students) { 
                         if ($section->id == $section_students->section_id) {
                             $student = $section_students->user; ?>
                                 <tr>
