@@ -9,7 +9,7 @@ require_once "../common.php";
 $course_page_id = $_GET['id'];
 
 try {
-    $courseLecture = Course::where(array('id' => $course_page_id));
+    $course_lecture = CourseOffering::includes("course")->where(array('id' => $course_page_id));
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
@@ -27,6 +27,20 @@ try {
     echo "<br>" . $error->getMessage();
 }
 
+try {
+    $course_sections = CourseSection::where(array('offering_id' => $course_page_id));
+
+} catch (PDOException $error) {
+    echo "<br>" . $error->getMessage();
+}
+
+try {
+    $teams = Team::where(array('course_offering_id' => $course_page_id));
+
+} catch (PDOException $error) {
+    echo "<br>" . $error->getMessage();
+}
+
 ?>
 
 <?php include "templates/header.php"; ?>
@@ -34,14 +48,21 @@ try {
 <?php if(get_current_role() == 'instructor') { ?>
     <h2>Student List </h2>
     <?php
-    $student = array();
-    foreach($course_section_students as $section_student) {
-        if($section_student->course_section->course_id == $course->id) {
-            array_push($student, $section_student->user);
-        }
+    $course_students = array();
+
+    foreach ($course_sections as $section) {
+        try {
+            $course_section_student = CourseSectionStudent::includes("user")->where(array('section_id' => $section->id));
+            foreach ($course_section_student as $student){
+                array_push($course_students, $student->user);
+            }
             
+        } catch (PDOException $error) {
+            echo "<br>" . $error->getMessage();
+        }
     }
-    if ($student && count($student)) { ?>
+
+    if ($course_students && count($course_students)) { ?>
     <table>
             <thead>
                 <tr>
@@ -53,7 +74,7 @@ try {
                 </tr>
             </thead>
             <tbody>
-        <?php foreach ($students as $row) { ?>
+        <?php foreach ($course_students as $row) { ?>
             <tr>
                 <td><?php echo escape($row->id); ?></td>
                 <td><?php echo escape($row->first_name); ?></td>
@@ -68,8 +89,43 @@ try {
         <blockquote>No Students found for this course.</blockquote>
     <?php }?>
 
-    <h2>Groups</h2>
-    <a href="group_creation.php?id=<?php echo $course_page_id ?>">Create new groups</a> 
+    <h2>Teams</h2>
+    <?php if ($teams && count($teams)) { ?>
+    
+        <?php foreach ($teams as $row) { ?>
+           <h3><?php echo "Team # ".$row->id ?></h3>
+           <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email Address</th>
+                        <th>Created At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php $students_in_team = TeamMember::includes("user")->where(array('team_id' => $row->id)); 
+                foreach ($students_in_team as $student) {?>
+                <tr>
+                    <td><?php echo escape($student->user_id); ?></td>
+                    <td><?php echo escape($student->user->first_name); ?></td>
+                    <td><?php echo escape($student->user->last_name); ?></td>
+                    <td><?php echo escape($student->user->email); ?></td>
+                    <td><?php echo escape($student->user->created_at);  ?> </td>
+                </tr>
+                <?php }?>
+                </tbody>
+                </table>
+
+        <?php } ?>
+        </tbody>
+    </table>
+    <?php } else { ?>
+        <blockquote>No teams found for this course.</blockquote>
+    <?php }?>
+
+    <a href="team_creation.php?id=<?php echo $course_page_id ?>">Create new teams</a> 
 
 <?php } ?>
 

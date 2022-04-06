@@ -109,8 +109,8 @@ CREATE TABLE IF NOT EXISTS meetings (
 	end_at TIMESTAMP,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
-	-- TO DO add group_id as foreign key when table Groups is created (from course implementation)
-	-- FOREIGN KEY (group_id) REFERENCES groups(id) 
+	-- TO DO add group_id as foreign key when table teams is created (from course implementation)
+	-- FOREIGN KEY (group_id) REFERENCES teams(id) 
 );
 
 CREATE TABLE IF NOT EXISTS polls (
@@ -200,6 +200,24 @@ CREATE TABLE IF NOT EXISTS section_students(
 CREATE TABLE IF NOT EXISTS announcements (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	announcement_text TEXT,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS teams (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	course_offering_id INT(11) UNSIGNED,
+	FOREIGN KEY(course_offering_id) REFERENCES course_offerings(id) ON DELETE CASCADE,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS team_members (
+	team_id INT(11) UNSIGNED,
+	user_id INT(11) UNSIGNED,
+	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+	FOREIGN KEY(team_id) REFERENCES teams(id) ON DELETE CASCADE,
+	PRIMARY KEY (team_id, user_id),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );
