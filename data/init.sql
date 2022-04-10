@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS users (
 	is_ta BOOLEAN NOT NULL DEFAULT 0,
 	password_digest VARCHAR(60) NOT NULL,
 	student_id INT UNSIGNED UNIQUE,
+	is_password_changed BOOLEAN NOT NULL DEFAULT 0,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );

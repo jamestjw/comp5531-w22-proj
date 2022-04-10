@@ -71,8 +71,8 @@ verify_logged_in();
     </ul>
     
     <?php
-    if (isset($_SESSION["error_message"]) && $_SESSION["error_message"]!="") {
-        echo $_SESSION["error_message"];
+    if (isset($_SESSION["alert_message"]) && $_SESSION["alert_message"]!="") {
+        echo $_SESSION["alert_message"];
     }
 
     if (is_logged_in()) {
