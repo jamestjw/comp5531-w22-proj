@@ -142,7 +142,6 @@ CREATE TABLE IF NOT EXISTS lectures (
 	course_id INT(11) UNSIGNED,
 	FOREIGN KEY(course_id) REFERENCES courses(id) ON DELETE CASCADE,
 	lecture_code VARCHAR(60),
-	lecture_name VARCHAR(60),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );
@@ -152,7 +151,6 @@ CREATE TABLE IF NOT EXISTS sections (
 	lecture_id INT(11) UNSIGNED,
 	FOREIGN KEY(lecture_id) REFERENCES lectures(id) ON DELETE CASCADE,
 	section_code VARCHAR(60),
-	section_name VARCHAR(60),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );

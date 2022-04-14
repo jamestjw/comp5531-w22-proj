@@ -67,7 +67,7 @@ if ($students && count($students)) { ?>
 
         <?php foreach($sections as $section) { ?>
             
-            <h3>Section <?php echo $section->section_name ?> </h3>
+            <h3>Section <?php echo $section->id?> </h3>
             <table>
                 <thead>
                     <tr>

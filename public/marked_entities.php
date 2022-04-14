@@ -71,7 +71,7 @@ if ($result && count($result)) { ?>
                 <option value="" disabled selected>Select course lecture</option>
                 <!-- TODO: Get only the course lectures that the instructor teaches -->
                 <?php foreach (Lecture::getAll() as $lecture):;?>
-                    <option value = <?php echo($lecture->id);?>><?php echo($lecture->lecture_name);?></option>
+                    <option value = <?php echo($lecture->id);?>><?php echo($lecture->id);?></option>
                 <?php endforeach;?>
             </select>
         </div>

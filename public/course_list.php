@@ -36,7 +36,6 @@ and data entry. -->
         $lecture = new Lecture();
         $lecture->course_id = $_POST['course_selection'];
         $lecture->lecture_code = $_POST['lecture_code'];
-        $lecture->lecture_name = $_POST['lecture_name'];
 
 
         try {
@@ -49,7 +48,6 @@ and data entry. -->
         $section = new Section();
         $section->lecture_id = $_POST['lecture_selection'];
         $section->section_code = $_POST['section_code'];
-        $section->section_name = $_POST['section_name'];
 
         try {
             $section->save();
@@ -149,7 +147,6 @@ and data entry. -->
                         <th class="tgPurp">Course ID</th>
                         <th class="tgPurp">Course Name</th>
                         <th class="tgPurp">Lecture Code</th>
-                        <th class="tgPurp">Lecture Name</th>
                     </tr>
         </thead>
         <tbody>
@@ -159,14 +156,13 @@ and data entry. -->
                 <td class="tgNorm"><?php echo($row->course_id);?></td>
                 <td class="tgNorm"><?php echo($row->course->course_name);?></td>
                 <td class="tgNorm"><?php echo($row->lecture_code);?></td>
-                <td class="tgNorm"><?php echo($row->lecture_name);?></td>
             
             </tr>
             <?php endforeach;?>
             <tr>
                 <td class="tgNorm"></td>
                 <form method="post">
-                <td class="tgNorm">            
+                <td class="tgNorm">
                     <select name = "course_selection" id="course_selection">
                     <option value = "">--Select Course--</option>
                     <?php foreach ($result_courses as $selectop):;?>
@@ -175,7 +171,6 @@ and data entry. -->
                 </td>
                 <td class="tgNorm"></td>
                 <td class="tgNorm"><input type="text" value="Lecture Code" name="lecture_code" id="lecture_code"></td>
-                <td class="tgNorm"><input type="text" value="Lecture Name" name="lecture_name" id="lecture_name"></td>
                 <td class="tgNorm"><input type="submit" name="submitLecture" value="Add"></td>
             </tr>
         </tbody>
@@ -191,7 +186,6 @@ and data entry. -->
                 <option value = <?php echo($selectop->id);?>><?php echo($selectop->course_name);?></option>
             <?php endforeach;?>
             <input type="text" value="Lecture Code" name="lecture_code" id="lecture_code">
-            <input type="text" value="Lecture Name" name="lecture_name" id="lecture_name">
             <input type="submit" name="submitLecture" value="Add">
         <?php else:?>
             <b>Please add a course before adding an lecture.</b>
@@ -207,19 +201,17 @@ and data entry. -->
                     <tr>
                         <th class="tgPurp">Section ID</th>
                         <th class="tgPurp">Course ID-Lecture ID</td>
-                        <th class="tgPurp">Course Name-Lecture Name</td>
+                        <th class="tgPurp">Course Name</td>
                         <th class="tgPurp">Section Code</th>
-                        <th class="tgPurp">Section Name</th>
                     </tr>
         </thead>
         <tbody>
             <?php foreach ($result_sections as $row):;?>
             <tr>
                 <td class="tgNorm"><?php echo($row->id);?></td>
-                <td class="tgNorm"><?php echo($row->lecture->course_id), " - ",($row->lecture_id);?></td>
-                <td class="tgNorm"><?php echo($row->lecture->course->course_name), " - ",($row->lecture->lecture_name);?></td>
+                <td class="tgNorm"><?php echo($row->lecture->course_id), ".",($row->lecture_id), ": ", ($row->lecture->course->course_name), " - ", ($row->lecture->lecture_code) ;?></td>
+                <td class="tgNorm"><?php echo($row->lecture->course->course_name);?></td>
                 <td class="tgNorm"><?php echo($row->section_code);?></td>
-                <td class="tgNorm"><a href="section.php?id=<?php echo $row->id?>"><?php echo($row->section_name);?></a></td>
             </tr>
             <?php endforeach;?>
             <tr>
@@ -229,12 +221,11 @@ and data entry. -->
                     <select name = "lecture_selection" id="lecture_selection">
                     <option value = "">--Select Course--</option>
                     <?php foreach ($result_lectures as $selectop):;?>
-                        <option value = <?php echo($selectop->id);?>><?php echo($selectop->lecture_name);?></option>
+                        <option value = <?php echo($selectop->id);?>><?php echo($selectop->course->id), ".", ($selectop->id), ": ", ($selectop->course->course_name), " - ", ($selectop->lecture_code);?></option>
                     <?php endforeach;?>
                 </td>
                 <td class="tgNorm"></td>
                 <td class="tgNorm"><input type="text" value="Section Code" name="section_code" id="section_code"></td>
-                <td class="tgNorm"><input type="text" value="Section Name" name="section_name" id="section_name"></td>
                 <td class="tgNorm"><input type="submit" name="submitSection" value="Add"></td>
             </tr>
         </tbody>
@@ -247,10 +238,9 @@ and data entry. -->
             <select name = "lecture_selection" id="lecture_selection">
             <option value = "">--Select Course--</option>
             <?php foreach ($result_lectures as $selectop):;?>
-                <option value = <?php echo($selectop->id);?>><?php echo($selectop->lecture_name);?></option>
+                <option value = <?php echo($selectop->id);?>><?php echo($selectop->course->id), ".", ($selectop->id), ": ", ($selectop->course->course_name), " - ", ($selectop->lecture_code);?></option>
             <?php endforeach;?>
             <input type="text" value="Section Code" name="section_code" id="section_code">
-            <input type="text" value="Section Name" name="section_name" id="section_name">
             <input type="submit" name="submitSection" value="Add">
         <?php else:?>
             <b>Please add a lecture before adding a section</b>
