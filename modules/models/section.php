@@ -22,7 +22,6 @@ class Section extends Record
     public $id;
     public $lecture_id;
     public $section_code;
-    public $section_name;
     public $created_at;
     public $updated_at;
 }

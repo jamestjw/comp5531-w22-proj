@@ -88,7 +88,7 @@ try {
         <option value="" disabled selected>----Select----</option>
         <?php foreach($section as $row) { ?>
             <option value="<?php echo $row->id; ?>">
-            <?php echo $row->section_name; ?>
+            <?php echo $row->id; ?>
             </option>
         <?php } ?>
         </select>
