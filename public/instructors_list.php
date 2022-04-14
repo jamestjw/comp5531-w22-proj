@@ -42,19 +42,11 @@ if (isset($_POST['submit'])) {
     }
 }
 
-<<<<<<< HEAD
-if (isset($_POST['offering_submit']) && CourseOfferingInstructor::where(array("offering_id" => $_POST['offering_selection'], "user_id" => $_POST['instructor_selection'])) == null) {
-    $offering_instructor = new CourseOfferingInstructor();
-    $offering_instructor->offering_id = $_POST['offering_selection'];
-    $offering_instructor->user_id = $_POST['instructor_selection'];
-
-=======
 if (isset($_POST['lecture_submit']) && LectureInstructor::where(array("lecture_id" => $_POST['lecture_selection'], "user_id" => $_POST['instructor_selection'])) == null) {
     $lecture_instructor = new LectureInstructor();
     $lecture_instructor->lecture_id = $_POST['lecture_selection'];
     $lecture_instructor->user_id = $_POST['instructor_selection'];
     
->>>>>>> 3765cbc (Second pass on renaming. All functions effected were tested and work on my end.)
 
     try {
         $lecture_instructor->save();
@@ -145,11 +137,7 @@ if ($instructors && count($instructors)) { ?>
 <?php } ?>
 
 <h2>Assign Instructors to courses</h2>
-<<<<<<< HEAD
-<?php if ($course_offering && $instructors) { ?>
-=======
 <?php if($lecture && $instructors) { ?>
->>>>>>> 3765cbc (Second pass on renaming. All functions effected were tested and work on my end.)
     <form method="post">
         Instructor: 
         <select Name="instructor_selection" id="instructor_selection">
@@ -165,11 +153,7 @@ if ($instructors && count($instructors)) { ?>
         Course Lecture: 
         <select Name="lecture_selection" id="lecture_selection">
             <option value="">----Select----</option>
-<<<<<<< HEAD
-        <?php foreach ($course_offering as $row) { ?>
-=======
         <?php foreach($lecture as $row) { ?>
->>>>>>> 3765cbc (Second pass on renaming. All functions effected were tested and work on my end.)
             <option value="<?php echo $row->id; ?>">
             <?php echo $row->lecture_name; ?>
             </option>
