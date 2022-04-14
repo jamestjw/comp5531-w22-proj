@@ -1,11 +1,10 @@
-<?php 
-require_once "../common.php"; 
+<?php
+require_once "../common.php";
 
 ensure_logged_in();
 
 try {
     $announcement = Announcement::getAll();
-    
 } catch (PDOException $error) {
     echo $sql . "<br>" . $error->getMessage();
 }
@@ -20,8 +19,7 @@ if (isset($_POST['submit']) && get_current_role() == "admin") {
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
-}
-elseif (get_current_role() != "admin"){
+} elseif (get_current_role() != "admin") {
     echo "Invalid access, you are not an admin.";
 }
 
@@ -45,7 +43,7 @@ if ($announcement && count($announcement)) { ?>
     <blockquote>No Announcements</blockquote>
 <?php }?>
 
-<?php if (get_current_role() == "admin"){ ?>
+<?php if (get_current_role() == "admin") { ?>
 <h2>New announcement</h2>
 
 <form method="post">

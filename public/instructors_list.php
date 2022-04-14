@@ -46,7 +46,7 @@ if (isset($_POST['offering_submit']) && CourseOfferingInstructor::where(array("o
     $offering_instructor = new CourseOfferingInstructor();
     $offering_instructor->offering_id = $_POST['offering_selection'];
     $offering_instructor->user_id = $_POST['instructor_selection'];
-    
+
 
     try {
         $offering_instructor->save();
@@ -132,17 +132,17 @@ if ($instructors && count($instructors)) { ?>
         <?php } ?>
         </tbody>
     </table>
-<?php } else{ ?>
+<?php } else { ?>
     <blockquote>No instructors assigned to courses.</blockquote>
 <?php } ?>
 
 <h2>Assign Instructors to courses</h2>
-<?php if($course_offering && $instructors) { ?>
+<?php if ($course_offering && $instructors) { ?>
     <form method="post">
         Instructor: 
         <select Name="instructor_selection" id="instructor_selection">
             <option value="">----Select----</option>
-        <?php foreach($instructors as $row) { ?>
+        <?php foreach ($instructors as $row) { ?>
             <option value="<?php echo $row->id; ?>">
             <?php echo $row->get_full_name(); ?>
             </option>
@@ -153,7 +153,7 @@ if ($instructors && count($instructors)) { ?>
         Course Offering: 
         <select Name="offering_selection" id="offering_selection">
             <option value="">----Select----</option>
-        <?php foreach($course_offering as $row) { ?>
+        <?php foreach ($course_offering as $row) { ?>
             <option value="<?php echo $row->id; ?>">
             <?php echo $row->course_offering_name; ?>
             </option>
@@ -162,7 +162,7 @@ if ($instructors && count($instructors)) { ?>
 
         <input type="submit" name="offering_submit" value="Submit">
     </form>
-<?php } else if (!$instructors) { ?>
+<?php } elseif (!$instructors) { ?>
     <blockquote> No instructors in database </blockquote>
 <?php } else { ?>
     <blockquote> No course offering in database </blockquote>

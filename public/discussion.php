@@ -129,7 +129,6 @@ if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messa
                         if (get_current_role() == "instructor" || get_current_role() == "ta") {
                             include "new_comment_form.php";
                         }
-                        
                     }
                 ?>
                 </td>
