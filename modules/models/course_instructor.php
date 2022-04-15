@@ -18,5 +18,5 @@ class CourseInstructor extends Record {
     public $course_id;
     public $user_id;
 	public $created_at;
-	public $updated_at;
+    public $updated_at;
 }
