@@ -125,7 +125,7 @@ try {
         <blockquote>No teams found for this course.</blockquote>
     <?php }?>
 
-    <a href="team_creation.php?id=<?php echo $course_page_id ?>">Create new teams</a> 
+    <br><a href="team_creation.php?id=<?php echo $course_page_id ?>">Create new teams</a> 
 
 <?php } ?>
 
