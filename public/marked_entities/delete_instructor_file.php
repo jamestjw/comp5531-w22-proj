@@ -25,7 +25,7 @@ if (is_null($marked_entity = MarkedEntity::find_by_id($id))) {
 }
 
 // Check if the user is indeed an instructor of this course
-if (is_null(CourseOfferingInstructor::find_by(["offering_id" => $marked_entity->course_offering_id, "user_id"=> $_SESSION["current_user_id"]]))) {
+if (is_null(CourseLectureInstructor::find_by(["lecture_id" => $marked_entity->lecture_id, "user_id"=> $_SESSION["current_user_id"]]))) {
     die("Course instructor does not teach this course.");
 }
 

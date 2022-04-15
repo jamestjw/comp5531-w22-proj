@@ -1,3 +1,3 @@
 INSERT INTO courses (course_code, course_name, created_at, updated_at) values ('Course Code',  'Course Name' ,  now() ,  now() );
-INSERT INTO course_offerings (course_id, course_offering_code, course_offering_name, created_at, updated_at) values (1 ,  'Offering Code' ,  'Offering Name',  now() ,  now() );
-INSERT INTO course_sections (offering_id, course_section_code, course_section_name, created_at, updated_at) values ( 1 ,  'Section Code' ,  'Section Name' ,  now() ,  now() );
+INSERT INTO lectures (course_id, lecture_code, created_at, updated_at) values (1 ,  'Lecture Code',  now() ,  now() );
+INSERT INTO sections (lecture_id, section_code, created_at, updated_at) values ( 1 ,  'Section Code',  now() ,  now() );
