@@ -109,8 +109,7 @@ CREATE TABLE IF NOT EXISTS meetings (
 	end_at TIMESTAMP,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
-	-- TO DO add group_id as foreign key when table teams is created (from course implementation)
-	-- FOREIGN KEY (group_id) REFERENCES teams(id) 
+	FOREIGN KEY (group_id) REFERENCES teams(id) 
 );
 
 CREATE TABLE IF NOT EXISTS polls (
