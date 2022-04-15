@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php
+=======
+<?php require_once (dirname(__FILE__)."/record.php");
+>>>>>>> 1bf3a476e40cc49cfcd35835f256df59cb84d2e0
 
 class LectureInstructor extends Record {
 
@@ -17,6 +21,12 @@ class LectureInstructor extends Record {
 
     public $lecture_id;
     public $user_id;
+<<<<<<< HEAD
     public $created_at;
     public $updated_at;
 }
+=======
+	public $created_at;
+	public $updated_at;
+}
+>>>>>>> 1bf3a476e40cc49cfcd35835f256df59cb84d2e0
