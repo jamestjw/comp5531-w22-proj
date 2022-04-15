@@ -14,7 +14,7 @@ class Team extends Record
     );
 
     public $id;
-    public $course_offering_id;
+    public $lecture_id;
     public $created_at;
     public $updated_at;
 }

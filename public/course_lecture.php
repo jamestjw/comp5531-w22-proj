@@ -2,40 +2,40 @@
 
 <?php
 require_once "../modules/models/user.php";
-require_once "../modules/models/course_section.php";
-require_once "../modules/models/course_section_student.php";
+require_once "../modules/models/section.php";
+require_once "../modules/models/section_student.php";
 require_once "../common.php";
 
-$course_page_id = $_GET['id'];
+$lecture_page_id = $_GET['id'];
 
 try {
-    $course_lecture = CourseOffering::includes("course")->where(array('id' => $course_page_id));
+    $course_lecture = Lecture::includes("course")->where(array('id' => $lecture_page_id));
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
 
 
 try {
-    $course_section_students = CourseSectionStudent::includes(["user", "course_section"])->getAll();
+    $course_section_students = SectionStudent::includes(["user", "section"])->getAll();
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
 
 try {
-    $marked_entities = MarkedEntity::where(array("course_offering_id" => $course_page_id));
+    $marked_entities = MarkedEntity::where(array("lecture_id" => $lecture_page_id));
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
 
 try {
-    $course_sections = CourseSection::where(array('offering_id' => $course_page_id));
+    $course_sections = Section::where(array('lecture_id' => $lecture_page_id));
 
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
 
 try {
-    $teams = Team::where(array('course_offering_id' => $course_page_id));
+    $teams = Team::where(array('lecture_id' => $lecture_page_id));
 
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
@@ -125,7 +125,7 @@ try {
         <blockquote>No teams found for this course.</blockquote>
     <?php }?>
 
-    <br><a href="team_creation.php?id=<?php echo $course_page_id ?>">Create new teams</a> 
+    <br><a href="team_creation.php?id=<?php echo $lecture_page_id ?>">Create new teams</a> 
 
 <?php } ?>
 
@@ -174,7 +174,7 @@ if ($marked_entities && count($marked_entities)) { ?>
         <!-- TO DO pass info of course lecture to marked entity creation-->
 
         <div class="form-group">
-            <input type = "hidden" name = "course_offering_id" id="course_offering_id" value ="<?php echo $course_page_id ?>" />
+            <input type = "hidden" name = "course_offering_id" id="course_offering_id" value ="<?php echo $lecture_page_id ?>" />
         </div>
 
         <div class="form-group">

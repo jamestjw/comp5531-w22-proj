@@ -206,8 +206,8 @@ CREATE TABLE IF NOT EXISTS announcements (
 
 CREATE TABLE IF NOT EXISTS teams (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	course_offering_id INT(11) UNSIGNED,
-	FOREIGN KEY(course_offering_id) REFERENCES course_offerings(id) ON DELETE CASCADE,
+	lecture_id INT(11) UNSIGNED,
+	FOREIGN KEY(lecture_id) REFERENCES lectures(id) ON DELETE CASCADE,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );
