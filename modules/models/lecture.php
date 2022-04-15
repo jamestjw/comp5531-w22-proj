@@ -2,9 +2,9 @@
 
 require_once(dirname(__FILE__)."/record.php");
 
-class CourseOffering extends Record
+class Lecture extends Record
 {
-    protected static $table_name = "course_offerings";
+    protected static $table_name = "lectures";
 
     protected static $belongs_to = array(
         "course"=> array(
@@ -15,8 +15,7 @@ class CourseOffering extends Record
 
     public $id;
     public $course_id;
-    public $course_offering_code;
-    public $course_offering_name;
+    public $lecture_code;
     public $created_at;
     public $updated_at;
 }

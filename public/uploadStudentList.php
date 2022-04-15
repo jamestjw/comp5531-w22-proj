@@ -6,10 +6,10 @@
 <?php
 require_once "../modules/models/user.php";
 require_once "../common.php";
-require_once "../modules/models/course_section.php";
+require_once "../modules/models/section.php";
 
 try {
-    $course_section = CourseSection::getAll();
+    $section = Section::getAll();
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
@@ -40,11 +40,11 @@ try {
             } catch (PDOException $error) {
                 echo "<br>" . $error->getMessage();
             }
-            $course_section_student = new CourseSectionStudent();
-            $course_section_student->user_id = $user->id;
-            $course_section_student->section_id = $_POST['sectionID'];
+            $section_student = new SectionStudent();
+            $section_student->user_id = $user->id;
+            $section_student->section_id = $_POST['sectionID'];
             try {
-                $course_section_student->save();
+                $section_student->save();
             } catch (PDOException $error) {
                 echo "<br>" . $error->getMessage();
             }
@@ -82,13 +82,13 @@ try {
     <input size='50' type='file' name='filename' accept=".csv">
     </br>
 
-    <!-- TO DO change to add info on course name as well -->
-    <label for="section">Select Course section</label>
+    <!-- TO DO change to add info on section name as well -->
+    <label for="section">Select Section</label>
     <select Name="section" id="section">
         <option value="" disabled selected>----Select----</option>
-        <?php foreach($course_section as $row) { ?>
+        <?php foreach($section as $row) { ?>
             <option value="<?php echo $row->id; ?>">
-            <?php echo $row->course_section_name; ?>
+            <?php echo $row->id; ?>
             </option>
         <?php } ?>
         </select>
@@ -123,7 +123,7 @@ try {
         $fileName = uniqid('studentList').".csv";
         move_uploaded_file($_FILES['filename']['tmp_name'], $fileName);
 
-        echo "<h5> New users will be added to course section ".$student_section."</h5>";
+        echo "<h5> New users will be added to section ".$student_section."</h5>";
     }
 ?>
 

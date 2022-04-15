@@ -2,23 +2,23 @@
 
 require_once(dirname(__FILE__)."/record.php");
 
-class CourseOfferingInstructor extends Record
+class SectionStudent extends Record
 {
-    protected static $table_name = "course_offerings_instructors";
+    protected static $table_name = "section_students";
 
     protected static $belongs_to = array(
         "user" => array(
             "class_name" => "User",
             "foreign_key" => "user_id",
         ),
-        "course_offering" => array(
-            "class_name" => "CourseOffering",
-            "foreign_key" => "offering_id",
+        "section" => array(
+            "class_name" => "Section",
+            "foreign_key" => "section_id",
         )
-    );
+        );
 
-    public $offering_id;
     public $user_id;
+    public $section_id;
     public $created_at;
     public $updated_at;
 }

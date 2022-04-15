@@ -4,7 +4,7 @@
 
 require_once "../modules/models/user.php";
 require_once "../common.php";
-require_once "../modules/models/course_section.php";
+require_once "../modules/models/section.php";
 require_once "../modules/models/course.php";
 
 ensure_logged_in();
