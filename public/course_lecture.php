@@ -28,14 +28,14 @@ try {
 }
 
 try {
-    $course_sections = Section::where(array('lecture_id' => $lecture_page_id));
+    $course_sections = Section::includes(["section_students"])->where(array('lecture_id' => $lecture_page_id));
 
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
 
 try {
-    $teams = Team::where(array('lecture_id' => $lecture_page_id));
+    $teams = Team::includes(['team_member'])->where(array('lecture_id' => $lecture_page_id));
 
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
@@ -51,15 +51,11 @@ try {
     $course_students = array();
 
     foreach ($course_sections as $section) {
-        try {
-            $course_section_student = CourseSectionStudent::includes("user")->where(array('section_id' => $section->id));
+            $course_section_student = $section->section_students;
             foreach ($course_section_student as $student){
                 array_push($course_students, $student->user);
             }
-            
-        } catch (PDOException $error) {
-            echo "<br>" . $error->getMessage();
-        }
+
     }
 
     if ($course_students && count($course_students)) { ?>
@@ -105,7 +101,7 @@ try {
                     </tr>
                 </thead>
                 <tbody>
-                <?php $students_in_team = TeamMember::includes("user")->where(array('team_id' => $row->id)); 
+                <?php $students_in_team = $row->team_member; 
                 foreach ($students_in_team as $student) {?>
                 <tr>
                     <td><?php echo escape($student->user_id); ?></td>
@@ -125,7 +121,7 @@ try {
         <blockquote>No teams found for this course.</blockquote>
     <?php }?>
 
-    <br><a href="team_creation.php?id=<?php echo $lecture_page_id ?>">Create new teams</a> 
+    <br><a href="create_team.php?id=<?php echo $lecture_page_id ?>">Create new teams</a> 
 
 <?php } ?>
 

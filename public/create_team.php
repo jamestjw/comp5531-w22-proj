@@ -11,7 +11,7 @@ require_once "../common.php";
 $lecture_id = $_GET['id'];
 
 try {
-    $course_sections = Section::where(array('lecture_id' => $lecture_id));
+    $course_sections = Section::includes('section_students')->where(array('lecture_id' => $lecture_id));
 
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
@@ -21,7 +21,7 @@ $course_students = array();
 
 foreach ($course_sections as $section) {
     try {
-        $course_section_student = SectionStudent::includes("user")->where(array('section_id' => $section->id));
+        $course_section_student = $section->section_students;
         foreach ($course_section_student as $student){
             array_push($course_students, $student->user);
         }
