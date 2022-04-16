@@ -84,6 +84,17 @@ CREATE TABLE IF NOT EXISTS marked_entity_files (
 	FOREIGN KEY (entity_id) REFERENCES marked_entities(id)
 );
 
+CREATE TABLE IF NOT EXISTS marked_entity_file_changes (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	entity_id INT(11) UNSIGNED NOT NULL,
+	user_id INT(11) NOT NULL,
+	action INT(11) UNSIGNED NOT NULL,
+	file_name TEXT,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP,
+	FOREIGN KEY (entity_id) REFERENCES marked_entities(id)
+);
+
 CREATE TABLE IF NOT EXISTS meetings (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	group_id INT(11),

@@ -8,6 +8,7 @@ class QueryBuilder
     protected string $record_class;
     protected array $includes = array();
     protected ?int $limit = null;
+    protected array $order_by = array();
 
     public function __construct(string $record_class_name)
     {
@@ -57,6 +58,15 @@ class QueryBuilder
         return $this;
     }
 
+    // Usage
+    // QueryBuilder->order(["created_at": "desc"]).where(["id" => [1,2,3]])
+    //      This orders the result set
+    public function order(array $data): QueryBuilder
+    {
+        $this->order_by = array_merge($this->order_by, $data);
+        return $this;
+    }
+
     public function where(array $attrs)
     {
         $sql = "SELECT * FROM {$this->table_name()}";
@@ -83,6 +93,10 @@ class QueryBuilder
                 " WHERE %s",
                 implode(" AND ", $sql_wheres)
             );
+        }
+
+        foreach ($this->order_by as $key => $val) {
+            $sql .= " ORDER BY $key $val";
         }
 
         if (isset($this->limit)) {
