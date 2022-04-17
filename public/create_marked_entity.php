@@ -20,6 +20,10 @@ if (is_null(Lecture::find_by_id($lecture_id))) {
     die("Invalid course lecture.");
 }
 
+if (is_null(LectureInstructor::find_by(["lecture_id"=>$lecture_id, "user_id"=>$_SESSION['current_user_id']]))) {
+    die("Instructor does not teach this course.");
+}
+
 $marked_entity = new MarkedEntity();
 $marked_entity->title = $_POST["title"];
 $marked_entity->description = $_POST["description"];

@@ -47,6 +47,10 @@ if ($result && count($result)) { ?>
     <?php }
 ?>
 
+<?php
+if (get_current_role() == "instructor") {
+    ?>
+
 <div class="container">
     <h2>Add a marked entity</h2>
 
@@ -68,9 +72,9 @@ if ($result && count($result)) { ?>
             <select name="lecture_id" id="lecture_id">
                 <option value="" disabled selected>Select course lecture</option>
                 <!-- TODO: Get only the course lectures that the instructor teaches -->
-                <?php foreach (Lecture::getAll() as $lecture):;?>
-                    <option value = <?php echo($lecture->id);?>><?php echo($lecture->id);?></option>
-                <?php endforeach;?>
+                <?php foreach (Lecture::getAll() as $lecture):; ?>
+                    <option value = <?php echo($lecture->id); ?>><?php echo($lecture->lecture_code); ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
 
@@ -101,3 +105,7 @@ if ($result && count($result)) { ?>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+
+<?php
+}
+?>
