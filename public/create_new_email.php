@@ -24,72 +24,68 @@ if (isset($_POST["submit"])) {
         header("Location: login.php");
     }
 
-    if (!empty($_POST["recipient_box"])) {
-        // Split "To" field by ; delimiter to obtain all receiving emails
-        $recipients = explode(";", $_POST["recipient_box"]);
+    // Split "To" field by ; delimiter to obtain all receiving emails
+    $recipients = explode(";", $_POST["recipient_box"]);
 
-        // Validate each email.
-        $valid_emails = array();
-        $invalid_emails = array();
-        foreach ($recipients as $r) {
-            if (User::find_by_email($r) !== null) {
-                array_push($valid_emails, $r);
-            } else {
-                array_push($invalid_emails, $r);
-            }
+    // Validate each email.
+    $valid_emails = array();
+    $invalid_emails = array();
+    foreach ($recipients as $r) {
+        if (User::find_by_email($r) !== null) {
+            array_push($valid_emails, $r);
+        } else {
+            array_push($invalid_emails, $r);
         }
+    }
 
-        // Create new email object
-        $email = new Email();
-        $email->subject = $_POST["subject_box"];
-        $email->content = $_POST["content"];
+    // Create new email object
+    $email = new Email();
+    $email->subject = $_POST["subject_box"];
+    $email->content = $_POST["content"];
+
+    try {
+        $email->save();
+    } catch (PDOException $error) {
+        echo "<br>" . $error->getMessage();
+    }
+
+    // Add entry in inbox table for each user in "To" field
+    $saved_inboxes = array(); // There needs to be a better way to undo transactions. Maybe update the record class.
+    foreach ($valid_emails as $val) {
+        $inbox = new Inbox();
+        $inbox->email_address = $val;
+        $inbox->message_id = $email->id;
 
         try {
-            $email->save();
-        } catch (PDOException $error) {
-            echo "<br>" . $error->getMessage();
-        }
-
-        // Add entry in inbox table for each user in "To" field
-        $saved_inboxes = array(); // There needs to be a better way to undo transactions. Maybe update the record class.
-        foreach ($valid_emails as $val) {
-            $inbox = new Inbox();
-            $inbox->email_address = $val;
-            $inbox->message_id = $email->id;
-
-            try {
-                $inbox->save();
-                array_push($saved_inboxes, $inbox);
-            } catch (PDOException $error) {
-                echo "<br>" . $error->getMessage();
-                $email->delete();
-                delete_all($saved_inboxes);
-            }
-        }
-
-        // Add entry in sent table for current_user->email
-        $sent = new Sent();
-        $sent->email_address = $current_user->email;
-        $sent->message_id = $email->id;
-
-        try {
-            $sent->save();
+            $inbox->save();
+            array_push($saved_inboxes, $inbox);
         } catch (PDOException $error) {
             echo "<br>" . $error->getMessage();
             $email->delete();
             delete_all($saved_inboxes);
         }
+    }
 
-        // Tell user which emails could not be sent due to invalid addresses
-        if (!empty($invalid_emails)) {
-            // This can probably be done more elegantly
-            echo "<br>"."This message could not be sent to the following email addresses as they don't exist internally:"."<br>";
-            foreach ($invalid_emails as $inv) {
-                echo $inv . "\n";
-            }
+    // Add entry in sent table for current_user->email
+    $sent = new Sent();
+    $sent->email_address = $current_user->email;
+    $sent->message_id = $email->id;
+
+    try {
+        $sent->save();
+    } catch (PDOException $error) {
+        echo "<br>" . $error->getMessage();
+        $email->delete();
+        delete_all($saved_inboxes);
+    }
+
+    // Tell user which emails could not be sent due to invalid addresses
+    if (!empty($invalid_emails)) {
+        // This can probably be done more elegantly
+        echo "<br>"."This message could not be sent to the following email addresses as they don't exist internally:"."<br>";
+        foreach ($invalid_emails as $inv) {
+            echo $inv . "\n";
         }
-    } else { // If no recipients are specified
-        echo '<script>alert("Recipient field cannot be empty!")</script>';
     }
 }?>
 
@@ -104,13 +100,13 @@ if (isset($_POST["submit"])) {
         <span><input type="submit" name="submit" value="Send Message"/></span>
         <label class="header_labels" for="recipient_box" style="float:left;margin-right:5px;">To:</label>
         <span>
-            <input name="recipient_box" class="header_fields" type="text"></input>
+            <input name="recipient_box" class="header_fields" type="text" required></input>
         </span>
         <label class="header_labels" for="subject_box" style="float:left;margin-right:5px;">Subject:</label>
         <span>
             <input name="subject_box" class="header_fields" type="text" value="<?php
                 // Preserve content in text input if recipient isn't set
-                if (isset($_POST["submit"]) && empty($_POST["recipient_box"])) {
+                if (isset($_POST["submit"]) && !empty($invalid_emails)) {
                     echo isset($_POST["subject_box"]) ? $_POST["subject_box"] : "";
                 }
             ?>"></input>
@@ -118,7 +114,7 @@ if (isset($_POST["submit"])) {
     </div>
     <textarea class="content" name="content"><?php
         // Preserve content in text input if recipient isn't set
-        if (isset($_POST["submit"]) && empty($_POST["recipient_box"])) {
+        if (isset($_POST["submit"]) && !empty($invalid_emails)) {
             echo isset($_POST["content"]) ? $_POST["content"] : "";
         }?></textarea>
 </form>

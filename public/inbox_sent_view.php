@@ -8,12 +8,8 @@ require_once '../modules/models/sent.php';
 
 <?php
 // Get the logged in user
-if (isset($_SESSION['current_user'])) {
-    $current_user = $_SESSION['current_user'];
-} else {
-    echo 'Error fetching logged in user.';
-    header('Location: login.php');
-}
+$current_user = $_SESSION['current_user'];
+
 // Fetch either inbox or sent, depending on what user specified
 if ($_SESSION["email_view"] == "inbox") {
     $box_entries = Inbox::where(array('email_address' => $current_user->email));
@@ -31,9 +27,9 @@ if (!isset($_POST['clicked']) || is_null($_POST['clicked'])) {
     foreach ($box_entries as $be) {
         $message = Email::find_by_id($be->message_id);
         if ($_SESSION["email_view"] == "inbox") {
-            $to_from = "From: ".$message->get_sender();
+            $to_from = "From: ".$message->sender->email_address;
         } elseif ($_SESSION["email_view"] == "sent") {
-            $to_from = "To: ".implode(';', $message->get_all_receivers());
+            $to_from = "To: ".implode(';', array_map(function ($rec) {return $rec->email_address;}, $message->receiver));
         }
         echo "
         <form method='post' class='inboxmessage'>
@@ -57,7 +53,7 @@ if (!isset($_POST['clicked']) || is_null($_POST['clicked'])) {
 
     $display_message = Email::find_by_id(key($_POST['clicked']));
     if ($_SESSION["email_view"] == "inbox") {
-        $to_from = "From: ".$display_message->get_sender();
+        $to_from = "From: ".$display_message->sender->email_address;
     } elseif ($_SESSION["email_view"] == "sent") {
         $to_from = "To: ".implode(';', $display_message->get_all_receivers());
     }
