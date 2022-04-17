@@ -12,35 +12,29 @@ $current_user = $_SESSION['current_user'];
 
 // Fetch either inbox or sent, depending on what user specified
 if ($_SESSION["email_view"] == "inbox") {
-    $box_entries = Inbox::where(array('email_address' => $current_user->email));
+    $messages = Inbox::includes("emails")->order_by("created_at", "desc")->where(array("email_address" => $current_user->email));
 } elseif ($_SESSION["email_view"] == "sent") {
-    $box_entries = Sent::where(array('email_address' => $current_user->email));
+    $messages = Sent::includes("emails")->order_by("created_at", "desc")->where(array("email_address" => $current_user->email));
 }
-// Sort the messages by sent date/time
-$by_created_at = array();
-foreach ($box_entries as $be) {
-    $by_created_at[$be->id] = $be->created_at;
-}
-array_multisort($by_created_at, SORT_DESC, $box_entries);
-// Show the messages. User has not clicked on a message yet
+
 if (!isset($_POST['clicked']) || is_null($_POST['clicked'])) {
-    foreach ($box_entries as $be) {
-        $message = Email::find_by_id($be->message_id);
+    foreach ($messages as $message) {
         if ($_SESSION["email_view"] == "inbox") {
-            $to_from = "From: ".$message->sender->email_address;
+            $to_from = "From: ".$message->email_address;
+            
         } elseif ($_SESSION["email_view"] == "sent") {
-            $to_from = "To: ".implode(';', array_map(function ($rec) {return $rec->email_address;}, $message->receiver));
+            $to_from = "To: ".implode(';', array_map(function ($rec) {return $rec->email_address;}, $message->emails->receiver));
         }
         echo "
         <form method='post' class='inboxmessage'>
             <div class='inboxmessage'>
-                <button name='clicked[{$be->message_id}]' class='inboxmessagebtn'>
+                <button name='clicked[{$message->message_id}]' class='inboxmessagebtn'>
                     <div class='inboxmessagefield inboxmessagesender'> 
                         {$to_from}
                     </div>
                     <div class='inboxmessagefield inboxmessagesubject'>
                         Subject:
-                        {$message->subject}
+                        {$message->emails->subject}
                     </div>
                     <div class='inboxmessagefield inboxmessagetimestamp'>
                         {$message->created_at}
@@ -55,7 +49,7 @@ if (!isset($_POST['clicked']) || is_null($_POST['clicked'])) {
     if ($_SESSION["email_view"] == "inbox") {
         $to_from = "From: ".$display_message->sender->email_address;
     } elseif ($_SESSION["email_view"] == "sent") {
-        $to_from = "To: ".implode(';', $display_message->get_all_receivers());
+        $to_from = "To: ".implode(';', array_map(function ($rec) {return $rec->email_address;}, $display_message->receiver));
     }
 
     // Convert the php new lines to html newlines
