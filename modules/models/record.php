@@ -480,14 +480,19 @@ class Record
     }
     public static function getLast()
     {
-        $table_name = get_called_class()::$table_name;
+        return get_called_class()::order(["id" => "desc"])->limit(1)->getAll()[0] ?? null;
+    }
 
-        $sql = "SELECT * FROM ".$table_name." ORDER BY id DESC LIMIT 1;";
+    public static function order(array $data)
+    {
+        $query_builder = new QueryBuilder(get_called_class());
+        return $query_builder->order($data);
+    }
 
-        $statement = getConnection()->prepare($sql);
-        $statement->execute();
-        $res = $statement->fetch();
-        return ($res) ? get_called_class()::loadRecordFromData($res) : null;
+    public static function limit(int $l)
+    {
+        $query_builder = new QueryBuilder(get_called_class());
+        return $query_builder->limit($l);
     }
 }
 
