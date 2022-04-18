@@ -31,9 +31,10 @@ try {
         while (($studentData = fgetcsv($students, 1000, ",")) !== false) {
 
             $existing_student = array_search($studentData[0], array_column($all_students, 'student_id'));
+            print_r($existing_student);
             $student_section_exists = in_array($all_students[$existing_student]->id, array_column($all_student_in_section, 'user_id'));
 
-            if(is_null($existing_student)){
+            if($existing_student === false){
                 $user = new User();
                 $user->student_id = $studentData[0];
                 $user->first_name = $studentData[1];
