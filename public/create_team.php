@@ -49,6 +49,7 @@ foreach ($course_sections as $section) {
             $team_member = new TeamMember();
             $team_member->team_id = $team->id;
             $team_member->user_id = intval($stu);
+            $team_member->lecture_id = $lecture_id;
 
             try {
                 $team_member->save();
