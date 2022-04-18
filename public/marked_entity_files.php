@@ -63,7 +63,9 @@ if (isset($marked_entity_id)) {
     <div>Files for marked entity ID: <?php echo $marked_entity_id; ?> </div>
     <div>Number of files: <?php echo count($files); ?> </div>
 
-    <table>
+    <?php
+    if (count($files) > 0) { ?>
+   <table>
             <thead>
                 <tr>
                     <th>#</th>
@@ -124,6 +126,12 @@ if (isset($marked_entity_id)) {
         <?php } ?>
         </tbody>
     </table>
+<?php
+    } else {
+        echo "<p> No files.</p>";
+    } ?>
+
+
 
     <div>Add new file:</div>
     <form method="post" action="marked_entity_files.php" enctype="multipart/form-data">
@@ -139,7 +147,9 @@ if (isset($marked_entity_id)) {
 
     <div id="fileHistory">
         <?php
-            $changes = MarkedEntityFileChange::order(["created_at"=>"desc"])->includes("user")->where(["entity_id"=>$marked_entity_id]); ?>
+            $changes = MarkedEntityFileChange::order(["created_at"=>"desc"])->includes("user")->where(["entity_id"=>$marked_entity_id]);
+    if (count($changes) > 0) {
+        ?>
 
         <h4>History</h4>
 
@@ -164,11 +174,14 @@ if (isset($marked_entity_id)) {
                 <?php } ?>
             </tbody>
         </table>
+
+        <?php
+    } ?>
     </div>
 <?php
 } else {
-                    echo "Invalid marked entity ID.";
-                }
+        echo "Invalid marked entity ID.";
+    }
 ?>
 
 <?php include "templates/footer.php"; ?>

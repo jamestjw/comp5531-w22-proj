@@ -25,7 +25,7 @@ if (isset($_GET["id"]) && ($marked_entity = MarkedEntity::find_by_id($_GET["id"]
 
                     <?php
                     if (get_current_role() == "instructor") {
-                    ?>
+                        ?>
                     <div id="deleteInstructorFileForm">
                         <form method="post" action="marked_entities/delete_instructor_file.php">
                             <input type="hidden" id="file_id" name="file_id" value="<?php echo $file->id; ?>">
@@ -56,6 +56,11 @@ if (isset($_GET["id"]) && ($marked_entity = MarkedEntity::find_by_id($_GET["id"]
         ?>
     </div>
 
+
+    <?php
+                    if (get_current_role() == "instructor") {
+                        ?>
+    <p>Update marked entity</p>
     <button type="button" id="displayUpdateForm">Toggle update</button>
     <!-- Update form -->
     <div style="display: none" id="updateForm">
@@ -91,6 +96,9 @@ if (isset($_GET["id"]) && ($marked_entity = MarkedEntity::find_by_id($_GET["id"]
         <input type="submit" name="submit" value="Delete">
     </form>
     </div>
+
+    <?php
+                    } ?>
 <?php
 }
 ?>
