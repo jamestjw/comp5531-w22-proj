@@ -75,10 +75,14 @@ class QueryBuilder
             $sql_wheres = array();
             $null_keys = array();
             foreach ($attrs as $key => $value) {
+                if (is_bool($value)) {
+                    $attrs[$key] = intval($value);
+                }
+
                 if (is_array($value)) {
                     $placeholder = join(", ", array_map(fn ($e) =>"?", $value));
                     array_push($sql_wheres, "$key in ($placeholder)");
-                } elseif ($value == null) {
+                } elseif (is_null($value)) {
                     array_push($null_keys, $key);
                     array_push($sql_wheres, "$key IS NULL");
                 } else {
