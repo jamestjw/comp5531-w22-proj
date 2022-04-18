@@ -72,10 +72,10 @@ and data entry. -->
     <!-- Seemed like a good way to prevent form resubmission on refresh? -->
     <?php if ((
                 (
-            isset($_POST['submitCourse']) ||
+                    isset($_POST['submitCourse']) ||
         isset($_POST['submitLecture']) ||
         isset($_POST['submitSection'])
-        ) && isset($create_success)
+                ) && isset($create_success)
             ) && $create_success) {
                 header('location: course_list.php');
             } ?>
@@ -178,15 +178,15 @@ and data entry. -->
             <?php endforeach;?>
             <tr>
                 <td class="tgNorm"></td>
+                <td class="tgNorm"></td>
                 <form method="post">
                 <td class="tgNorm">
                     <select name = "course_selection" id="course_selection">
-                    <option value = "">--Select Course--</option>
+                    <option value = "" disabled seleted>--Select Course--</option>
                     <?php foreach ($result_courses as $selectop):;?>
                         <option value = <?php echo($selectop->id);?>><?php echo($selectop->course_name);?></option>
                     <?php endforeach;?>
                 </td>
-                <td class="tgNorm"></td>
                 <td class="tgNorm"><input type="text" value="Lecture Code" name="lecture_code" id="lecture_code"></td>
                 <td class="tgNorm"><input type ="date" name = "starting_date" id="starting_date"> - <input type ="date" name = "ending_date" id="ending_date"></td>
                 <td class="tgNorm"><input type="submit" name="submitLecture" value="Add"></td>
@@ -200,7 +200,7 @@ and data entry. -->
             <form method="post">
 
             <select name = "course_selection" id="course_selection">
-            <option value = "">--Select Course--</option>
+            <option value = "" disabled seleted>--Select Course--</option>
             <?php foreach ($result_courses as $selectop):;?>
                 <option value = <?php echo($selectop->id);?>><?php echo($selectop->course_name);?></option>
             <?php endforeach;?>
