@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS marked_entities (
 	title VARCHAR(50),
 	description TEXT,
 	lecture_id INT(11) UNSIGNED NOT NULL,
-	is_group_work BOOLEAN,
+	is_team_work BOOLEAN,
 	due_at TIMESTAMP,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
@@ -95,23 +95,6 @@ CREATE TABLE IF NOT EXISTS marked_entity_file_changes (
 	FOREIGN KEY (entity_id) REFERENCES marked_entities(id)
 );
 
-CREATE TABLE IF NOT EXISTS meetings (
-	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	group_id INT(11),
-	user_id INT(11),
-	title VARCHAR(60),
-	agenda VARCHAR(1000),
-	minutes VARCHAR(10000),
-	planned_date DATE, 
-	planned_time TIME,
-	has_passed BOOLEAN DEFAULT false,
-	start_at TIMESTAMP,
-	end_at TIMESTAMP,
-	created_at TIMESTAMP,
-	updated_at TIMESTAMP
-	-- TO DO add group_id as foreign key when table Groups is created (from course implementation)
-	-- FOREIGN KEY (group_id) REFERENCES groups(id) 
-);
 
 CREATE TABLE IF NOT EXISTS polls (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -202,4 +185,39 @@ CREATE TABLE IF NOT EXISTS announcements (
 	announcement_text TEXT,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS teams (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	lecture_id INT(11) UNSIGNED,
+	FOREIGN KEY(lecture_id) REFERENCES lectures(id) ON DELETE CASCADE,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS team_members (
+	team_id INT(11) UNSIGNED,
+	user_id INT(11) UNSIGNED,
+	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+	FOREIGN KEY(team_id) REFERENCES teams(id) ON DELETE CASCADE,
+	PRIMARY KEY (team_id, user_id),
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS meetings (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	team_id INT(11) UNSIGNED,
+	user_id INT(11),
+	title VARCHAR(60),
+	agenda VARCHAR(1000),
+	minutes VARCHAR(10000),
+	planned_date DATE, 
+	planned_time TIME,
+	has_passed BOOLEAN DEFAULT false,
+	start_at TIMESTAMP,
+	end_at TIMESTAMP,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP,
+	FOREIGN KEY (team_id) REFERENCES teams(id) 
 );
