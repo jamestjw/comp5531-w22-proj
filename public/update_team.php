@@ -24,6 +24,20 @@ try {
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
+try {
+    $current_teams = Team::includes('team_member')->where(array('lecture_id' => $lecture_id));
+
+} catch (PDOException $error) {
+    echo "<br>" . $error->getMessage();
+}
+
+$students_in_teams = array();
+
+foreach($current_teams as $t) {
+    foreach ($t->team_member as $member ) {
+        array_push($students_in_teams, $member->user_id);
+    }
+}
 
 $course_students = array();
 
@@ -37,13 +51,24 @@ foreach ($course_sections as $section) {
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
-}?>
+}
+
+$available_students = array();
+foreach ($course_students as $student) {
+    if (!in_array($student->id, $students_in_teams)){
+        array_push($available_students, $student);
+    }
+    
+}
+
+?>
 
 <h2>Teams</h2>
     <?php if ($teams && count($teams)) { ?>
     
         <?php foreach ($teams as $row) { ?>
            <h3><?php echo "Team # ".$row->id ?></h3>
+           <form method="post">
            <table>
                 <thead>
                     <tr>
@@ -63,14 +88,23 @@ foreach ($course_sections as $section) {
                     <td><?php echo escape($student->user->last_name); ?></td>
                     <td><?php echo escape($student->user->email); ?></td>
                     <td><?php echo escape($student->user->created_at);  ?> </td>
-                </tr>
+                    <td><input class="single-checkbox" type="checkbox" id="<?php echo $student->id; ?>" name="team_member_delete[]" value="<?php echo $student->id; ?>"> Remove from team</td>
                 <?php }?>
                 </tbody>
-                </table>
-
+            </table>
+            <!-- TODO ADD if statement to not display option to add student if team already has 4 members-->
+            <td>Add Student: 
+                    <select Name="student_selection" id="student_selection">
+                        <option value="">----Select----</option>
+                    <?php foreach ($available_students as $row) { ?>
+                        <option value="<?php echo $row->id; ?>">
+                        <?php echo $row->get_full_name()." Student ID ".$row->student_id; ?>
+                        </option>
+                            </tr>
+                    <?php } ?>
+                    </select>
+            </form>
         <?php } ?>
-        </tbody>
-    </table>
     <?php } else { ?>
         <blockquote>No teams found for this course.</blockquote>
     <?php }?>
