@@ -18,6 +18,7 @@ verify_logged_in();
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/email.css">
 
     <title>COMP 5531 Database App</title>
   </head>
@@ -40,7 +41,7 @@ verify_logged_in();
         </div>
       </li>
       <li class="navelem"><a href="account_settings.php">Account Settings</a></li>
-      <li class="navelem"><a href="#email">Email</a></li>
+      <li class="navelem"><a href="emails.php">Email</a></li>
       <?php if (get_current_role() == "admin") { ?>
       <li class="navelem"><a href="instructors_list.php">Instructors</a></li>
       <?php } ?>

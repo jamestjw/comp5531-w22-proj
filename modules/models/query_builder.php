@@ -10,6 +10,7 @@ class QueryBuilder
     protected ?int $limit = null;
     protected array $order_by = array();
 
+
     public function __construct(string $record_class_name)
     {
         $this->record_class = $record_class_name;

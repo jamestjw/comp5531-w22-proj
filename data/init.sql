@@ -170,6 +170,35 @@ CREATE TABLE IF NOT EXISTS comments(
 	FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
+CREATE TABLE IF NOT EXISTS emails(
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	subject TEXT,
+	content TEXT,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS inbox(
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	email_address VARCHAR(50) NOT NULL,
+	message_id INT(11) UNSIGNED,
+	read_flag BOOLEAN DEFAULT false,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP,
+	FOREIGN KEY(email_address) REFERENCES users(email),
+	FOREIGN KEY(message_id) REFERENCES emails(id)
+);
+
+CREATE TABLE IF NOT EXISTS sent(
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	email_address VARCHAR(50) NOT NULL,
+	message_id INT(11) UNSIGNED,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP,
+	FOREIGN KEY(email_address) REFERENCES users(email),
+	FOREIGN KEY(message_id) REFERENCES emails(id)
+);
+
 CREATE TABLE IF NOT EXISTS section_students(
 	user_id INT(11) UNSIGNED NOT NULL,
 	section_id INT(11) UNSIGNED,
@@ -221,3 +250,4 @@ CREATE TABLE IF NOT EXISTS meetings (
 	updated_at TIMESTAMP,
 	FOREIGN KEY (team_id) REFERENCES teams(id) 
 );
+
