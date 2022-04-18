@@ -59,17 +59,22 @@ foreach ($course_students as $student) {
 if (isset($_POST["submit"])) {
 
     $team_to_edit_id = $_POST['team'];
-    $students_to_remove = $_POST["team_member_delete"];
+    if (isset($_POST['team_member_delete'])){
+        $students_to_remove = $_POST['team_member_delete'];
+    }
+    else {
+        $students_to_remove = null;
+    }
+    
 
     if(!is_null($students_to_remove)){ 
         foreach($students_to_remove as $remove){
             $delete = TeamMember::find_by(array('user_id' => $remove, 'team_id' => $team_to_edit_id ));
-            //print_r($delete);
             $delete->delete();
         }
     }
 
-    if($_POST['student_selection'] != "----Select----"){
+    if($_POST['student_selection'] != null){
         $team_member = new TeamMember();
         $team_member->team_id = $team_to_edit_id;
         $team_member->user_id = $_POST['student_selection'];
