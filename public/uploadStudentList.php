@@ -26,9 +26,12 @@ try {
         $students = fopen($_POST["fileID"], "r");
         $headers = fgetcsv($students, 1000, ",");
         $count = 0;
+        $all_student_in_section = SectionStudent::includes('user')->where(array('section_id' => $_POST['sectionID']));
+
         while (($studentData = fgetcsv($students, 1000, ",")) !== false) {
 
             $existing_student = array_search($studentData[0], array_column($all_students, 'student_id'));
+            $student_section_exists = in_array($all_students[$existing_student]->id, array_column($all_student_in_section, 'user_id'));
 
             if(is_null($existing_student)){
                 $user = new User();
@@ -57,10 +60,14 @@ try {
                 } catch (PDOException $error) {
                     echo "<br>" . $error->getMessage();
                 }
-            } else {
+            } else if ($student_section_exists) { 
+                echo "Student with id ".$studentData[0]." is already registered in course section ".$_POST['sectionID']."<br>";
+                $section_success = true;
+            }else {
                 $section_student = new SectionStudent();
                 $section_student->user_id = $all_students[$existing_student]->id;
                 $section_student->section_id = $_POST['sectionID'];
+                $count++;
                 $section_success = true;
                 try {
                     $section_student->save();
@@ -80,9 +87,9 @@ try {
 
 
 <?php
-    if (isset($_POST['submit2']) && $create_success) {
+    if (isset($_POST['submit2']) && ($create_success Or $section_success)) {
         echo "<h3> $count Students added successfully</h3><br>";
-    } elseif (isset($_POST['submit2']) && (!$create_success Or !$section_success)) {
+    } elseif (isset($_POST['submit2'])) {
         echo "<h3> Student List upload failed </h3>";
     }
 ?>
