@@ -34,7 +34,7 @@ if ($result && count($result)) { ?>
                     <tr>
                         <td scope="row"><?php echo escape($row->id); ?></td>
                         <td><a href="marked_entity.php?id=<?php echo $row->id; ?>"><?php echo escape($row->title); ?></a></td>
-                        <td><?php echo escape($row->is_group_work); ?></td>
+                        <td><?php echo escape($row->is_team_work); ?></td>
                         <td><?php echo escape($row->due_at); ?></td>
                         <td><?php echo escape($row->created_at);  ?> </td>
                     </tr>
@@ -75,9 +75,9 @@ if ($result && count($result)) { ?>
         </div>
 
         <div class="form-group">
-            <label for="is_group_work">Group Work</label>
-            <input name="is_group_work" type="checkbox" value="true" class="form-check-input" />
-            <input name="is_group_work" type="hidden" value="false" />
+            <label for="is_team_work">Group Work</label>
+            <input name="is_team_work" type="checkbox" value="true" class="form-check-input" />
+            <input name="is_team_work" type="hidden" value="false" />
         </div>
 
         <div class="form-group">

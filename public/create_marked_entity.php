@@ -23,7 +23,7 @@ if (is_null(Lecture::find_by_id($lecture_id))) {
 $marked_entity = new MarkedEntity();
 $marked_entity->title = $_POST["title"];
 $marked_entity->description = $_POST["description"];
-$marked_entity->is_group_work = $_POST["is_group_work"];
+$marked_entity->is_team_work = $_POST["is_team_work"];
 // TODO: Fix this when courses are fully implemented
 $marked_entity->lecture_id = $lecture_id;
 $marked_entity->due_at = $_POST["due_at"];

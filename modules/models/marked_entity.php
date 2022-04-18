@@ -25,7 +25,7 @@ class MarkedEntity extends Record
     public string $title;
     public string $description;
     public int $lecture_id;
-    public bool $is_group_work;
+    public bool $is_team_work;
     public string $due_at;
     public string $created_at;
     public string $updated_at;
