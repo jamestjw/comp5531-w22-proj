@@ -19,12 +19,18 @@ and data entry. -->
         echo "Course Error: <br>" . $error->getMessage();
     }?>
 
+    <?php include "templates/header.php"?>
+
+    <?php if (!empty($_POST)) {
+        if (get_current_role() == "admin") {
+            ?>
+
 <!-- This section deals with submission of the entered data.-->
 
     <?php if (isset($_POST['submitCourse'])) {
-        $course = new Course();
-        $course->course_code = $_POST['course_code'];
-        $course->course_name = $_POST['course_name'];
+                $course = new Course();
+                $course->course_code = $_POST['course_code'];
+                $course->course_name = $_POST['course_name'];
 
         try {
             $course->save();
@@ -65,14 +71,20 @@ and data entry. -->
 
     <!-- Seemed like a good way to prevent form resubmission on refresh? -->
     <?php if ((
-        (
+                (
             isset($_POST['submitCourse']) ||
         isset($_POST['submitLecture']) ||
         isset($_POST['submitSection'])
         ) && isset($create_success)
-    ) && $create_success) {
-        header('location: course_list.php');
-    }?>
+            ) && $create_success) {
+                header('location: course_list.php');
+            } ?>
+
+    <?php
+        } else {?>
+        <p>You must be an  <strong>admin</strong> to modify the course list.</p>
+    <?php }
+    } ?>
 
     <body>
 
@@ -96,8 +108,6 @@ and data entry. -->
                 .ctb .tgNorm{background-color:#fafaf0;text-align:left;vertical-align:top}
     </style>
 
-
-        <?php include "templates/header.php"?>
         <h2>Class Creation Wizard!</h2>
         <br>
 
@@ -258,4 +268,5 @@ and data entry. -->
 
 
     </body>
+
 </html>
