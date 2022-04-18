@@ -23,6 +23,13 @@ if (isset($_POST['submit'])) {
     $marked_entity_file_change->file_name = basename($_FILES["file"]["name"]);
     $marked_entity_file_change->set_action("create");
 
+    $marked_entity_permission = new MarkedEntityFilePermissions();
+    $marked_entity_permission->user_id = $_POST['user_id'];
+    $marked_entity_permission->set_permission("read");
+    $marked_entity_permission->set_permission("write");
+    $marked_entity_permission->set_permission("delete");
+    $marked_entity_file->permissions = array($marked_entity_permission);
+
     // Uploads folder needs to be created in the public/ directory
     // TODO: Make this more convenient
     $target_dir = "uploads/";
@@ -59,7 +66,7 @@ if (isset($_POST['submit'])) {
 
 // TODO: Ensure that marked entity ID is valid.
 if (isset($marked_entity_id)) {
-    $files = MarkedEntityFile::includes(["attachment" => [], "comments" => "user"])->where(array("entity_id"=>$marked_entity_id)); ?>
+    $files = MarkedEntityFile::includes(["attachment" => [], "comments" => "user", "permissions" => []])->where(array("entity_id"=>$marked_entity_id)); ?>
     <div>Files for marked entity ID: <?php echo $marked_entity_id; ?> </div>
     <div>Number of files: <?php echo count($files); ?> </div>
 
@@ -70,6 +77,7 @@ if (isset($marked_entity_id)) {
                     <th>Title</th>
                     <th>Description</th>
                     <th>File name</th>
+                    <th>Your permissions</th>
                     <th>Created At</th>
                     <th>Comments</th>
                     <th></th> <!-- Download -->
@@ -83,6 +91,26 @@ if (isset($marked_entity_id)) {
                 <td><?php echo escape($row->title); ?></td>
                 <td><?php echo escape($row->description); ?></td>
                 <td><?php echo $row->attachment->file_filename; ?></td>
+                <td>
+                    <?php
+                    $found = false;
+                    foreach ($row->permissions as $permission) {
+                        if ($permission->user_id == $_SESSION["current_user"]->id) {
+                            echo $permission->stringify();
+                            $found = true;
+                            break;
+                        }
+                    }
+                    // Defaults to read for admins, TAs and instructors
+                    if (!$found) {
+                        if (get_current_role() != "student") {
+                            echo "Read";
+                        } else {
+                            echo "N/A";
+                        }
+                    }
+                    ?>
+                </td>
                 <td><?php echo escape($row->created_at);  ?> </td>
                 <td>
                     <?php
