@@ -169,7 +169,9 @@ class Record
         $conn = getConnection();
         execute_sql_query($sql, $new_obj, $conn);
 
-        $this->id = $conn->lastInsertId();
+        if (in_array("id", get_called_class()::getAttrs())) {
+            $this->id = $conn->lastInsertId();
+        }
         $this->is_new_record = false;
 
         // TODO: Fix n+1 saving
