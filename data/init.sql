@@ -225,13 +225,11 @@ CREATE TABLE IF NOT EXISTS teams (
 );
 
 CREATE TABLE IF NOT EXISTS team_members (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	team_id INT(11) UNSIGNED,
 	user_id INT(11) UNSIGNED,
-	lecture_id INT(11) UNSIGNED,
-	FOREIGN KEY(lecture_id) REFERENCES lectures(id) ON DELETE CASCADE,
 	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
 	FOREIGN KEY(team_id) REFERENCES teams(id) ON DELETE CASCADE,
-	PRIMARY KEY (user_id, lecture_id),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );
@@ -252,4 +250,6 @@ CREATE TABLE IF NOT EXISTS meetings (
 	updated_at TIMESTAMP,
 	FOREIGN KEY (team_id) REFERENCES teams(id) 
 );
+
+
 

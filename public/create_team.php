@@ -17,6 +17,20 @@ try {
     echo "<br>" . $error->getMessage();
 }
 
+try {
+    $current_teams = Team::includes('team_member')->where(array('lecture_id' => $lecture_id));
+
+} catch (PDOException $error) {
+    echo "<br>" . $error->getMessage();
+}
+
+$students_in_teams = array();
+foreach($current_teams as $t) {
+    foreach ($t->team_member as $member ) {
+        array_push($students_in_teams, $member->user_id);
+    }
+}
+
 $course_students = array();
 
 foreach ($course_sections as $section) {
@@ -59,6 +73,7 @@ foreach ($course_sections as $section) {
         }
 
         echo "<h5>New team created </h5>";
+        header("refresh: 1");
         
     }
 
@@ -69,7 +84,9 @@ foreach ($course_sections as $section) {
 <div class="student_choice">
     <form method="post">
         <?php foreach ($course_students as $student) { ?>
-            <input class="single-checkbox" type="checkbox" id="<?php echo $student->id; ?>" name="student[]" value="<?php echo $student->id; ?>"> <?php echo ($student->first_name." ".$student->last_name." ".$student->student_id) ?><br>
+            <?php if (!in_array($student->id, $students_in_teams)) { ?>
+                <input class="single-checkbox" type="checkbox" id="<?php echo $student->id; ?>" name="student[]" value="<?php echo $student->id; ?>"> <?php echo($student->first_name." ".$student->last_name." ".$student->student_id) ?><br>
+            <?php } ?>
         <?php } ?>
         <input type='submit' name='submit' value='submit'>
     </form>
