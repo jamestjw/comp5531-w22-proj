@@ -154,7 +154,7 @@ and data entry. -->
             <tr>
                 <td class="tgNorm"><?php echo($row->id);?></td>
                 <td class="tgNorm"><?php echo($row->course_id);?></td>
-                <td class="tgNorm"><?php echo($row->course->course_name);?></td>
+                <td class="tgNorm"><a href="course_lecture.php?id=<?php echo $row->id ?>"><?php echo($row->course->course_name);?></a></td>
                 <td class="tgNorm"><?php echo($row->lecture_code);?></td>
             
             </tr>

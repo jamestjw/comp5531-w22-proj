@@ -1,14 +1,14 @@
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
 <?php include "templates/header.php"; ?>
 
-<?php if(get_current_role() == 'instructor') {
+<?php 
+$lecture_id = $_GET['id'];
+if(get_current_role() == 'instructor') {
 
 require_once "../modules/models/user.php";
 require_once "../modules/models/section.php";
 require_once "../modules/models/section_student.php";
 require_once "../common.php";
-
-$lecture_id = $_GET['id'];
 
 try {
     $course_sections = Section::includes('section_students')->where(array('lecture_id' => $lecture_id));
@@ -73,8 +73,11 @@ foreach ($course_sections as $section) {
         <input type='submit' name='submit' value='submit'>
     </form>
 </div>
-<?php }
-?>
+<?php } else { ?>
+    <h2>You do not have the credentials to view this page.</h2>
+<?php } ?> 
+
+<a href="course_lecture.php?id=<?php echo $lecture_id ?>"> Return to Lecture page </a>
 
 <script type="text/JavaScript">
 var theCheckboxes = $(".student_choice input[type='checkbox']");
