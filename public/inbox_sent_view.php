@@ -12,9 +12,9 @@ $current_user = $_SESSION['current_user'];
 
 // Fetch either inbox or sent, depending on what user specified
 if ($_SESSION["email_view"] == "inbox") {
-    $messages = Inbox::includes("emails")->order_by("created_at", "desc")->where(array("email_address" => $current_user->email));
+    $messages = Inbox::includes("emails")->order(["created_at" => "desc"])->where(array("email_address" => $current_user->email));
 } elseif ($_SESSION["email_view"] == "sent") {
-    $messages = Sent::includes("emails")->order_by("created_at", "desc")->where(array("email_address" => $current_user->email));
+    $messages = Sent::includes("emails")->order(["created_at" => "desc"])->where(array("email_address" => $current_user->email));
 }
 
 if (!isset($_POST['clicked']) || is_null($_POST['clicked'])) {
