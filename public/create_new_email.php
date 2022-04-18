@@ -16,6 +16,7 @@ function delete_all($array)
 }
 
 if (isset($_POST["submit"])) {
+
     // Get the logged in user
     if (isset($_SESSION["current_user"])) {
         $current_user = $_SESSION["current_user"];
@@ -38,45 +39,48 @@ if (isset($_POST["submit"])) {
         }
     }
 
-    // Create new email object
-    $email = new Email();
-    $email->subject = $_POST["subject_box"];
-    $email->content = $_POST["content"];
-
-    try {
-        $email->save();
-    } catch (PDOException $error) {
-        echo "<br>" . $error->getMessage();
-    }
-
-    // Add entry in inbox table for each user in "To" field
-    $saved_inboxes = array(); // There needs to be a better way to undo transactions. Maybe update the record class.
-    foreach ($valid_emails as $val) {
-        $inbox = new Inbox();
-        $inbox->email_address = $val;
-        $inbox->message_id = $email->id;
+    if (!empty($valid_emails)) {
+        
+        // Create new email object
+        $email = new Email();
+        $email->subject = $_POST["subject_box"];
+        $email->content = $_POST["content"];
 
         try {
-            $inbox->save();
-            array_push($saved_inboxes, $inbox);
+            $email->save();
+        } catch (PDOException $error) {
+            echo "<br>" . $error->getMessage();
+        }
+    
+        // Add entry in inbox table for each user in "To" field
+        $saved_inboxes = array(); // There needs to be a better way to undo transactions. Maybe update the record class.
+        foreach ($valid_emails as $val) {
+            $inbox = new Inbox();
+            $inbox->email_address = $val;
+            $inbox->message_id = $email->id;
+
+            try {
+                $inbox->save();
+                array_push($saved_inboxes, $inbox);
+            } catch (PDOException $error) {
+                echo "<br>" . $error->getMessage();
+                $email->delete();
+                delete_all($saved_inboxes);
+            }
+        }
+
+        // Add entry in sent table for current_user->email
+        $sent = new Sent();
+        $sent->email_address = $current_user->email;
+        $sent->message_id = $email->id;
+
+        try {
+            $sent->save();
         } catch (PDOException $error) {
             echo "<br>" . $error->getMessage();
             $email->delete();
             delete_all($saved_inboxes);
         }
-    }
-
-    // Add entry in sent table for current_user->email
-    $sent = new Sent();
-    $sent->email_address = $current_user->email;
-    $sent->message_id = $email->id;
-
-    try {
-        $sent->save();
-    } catch (PDOException $error) {
-        echo "<br>" . $error->getMessage();
-        $email->delete();
-        delete_all($saved_inboxes);
     }
 
     // Tell user which emails could not be sent due to invalid addresses
