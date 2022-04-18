@@ -72,6 +72,11 @@ if (isset($_POST["submit"])) {
             $delete = TeamMember::find_by(array('user_id' => $remove, 'team_id' => $team_to_edit_id ));
             $delete->delete();
         }
+        $number_team_members = TeamMember::where(array('team_id' => $team_to_edit_id));
+        if(count($number_team_members)==0){
+            $delete_team = Team::find_by(array('id' => $team_to_edit_id));
+            $delete_team->delete();
+        }
     }
 
     if($_POST['student_selection'] != null){
@@ -86,7 +91,7 @@ if (isset($_POST["submit"])) {
         }
     }
     echo "<h5>Team updated succesfully </h5>";
-    //header("refresh : 1");
+    header("refresh : 1");
     
 }
 
