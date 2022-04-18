@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS users (
 	student_id INT UNSIGNED,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
-	UNIQUE (email)
+	UNIQUE (email, student_id)
 );
 
 CREATE TABLE IF NOT EXISTS loggedin (
@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS sent(
 CREATE TABLE IF NOT EXISTS section_students(
 	user_id INT(11) UNSIGNED NOT NULL,
 	section_id INT(11) UNSIGNED,
-	FOREIGN KEY (user_id) REFERENCES users(id),
+	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
 	FOREIGN KEY(section_id) REFERENCES sections(id) ON DELETE CASCADE,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,

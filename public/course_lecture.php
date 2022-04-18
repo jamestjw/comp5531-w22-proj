@@ -85,6 +85,8 @@ try {
         <blockquote>No Students found for this course.</blockquote>
     <?php }?>
 
+    <p><a href="#">Add existing students</a></p>
+
     <h2>Teams</h2>
     <p><a href="update_team.php?id=<?php echo $lecture_page_id?>">Update teams</a></p>
     <?php if ($teams && count($teams)) { ?>
