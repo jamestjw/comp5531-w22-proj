@@ -66,8 +66,8 @@ CREATE TABLE IF NOT EXISTS marked_entities (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	title VARCHAR(50),
 	description TEXT,
-	course_offering_id INT(11) UNSIGNED NOT NULL,
-	is_group_work BOOLEAN,
+	lecture_id INT(11) UNSIGNED NOT NULL,
+	is_team_work BOOLEAN,
 	due_at TIMESTAMP,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
@@ -84,23 +84,17 @@ CREATE TABLE IF NOT EXISTS marked_entity_files (
 	FOREIGN KEY (entity_id) REFERENCES marked_entities(id)
 );
 
-CREATE TABLE IF NOT EXISTS meetings (
+CREATE TABLE IF NOT EXISTS marked_entity_file_changes (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	group_id INT(11),
-	user_id INT(11),
-	title VARCHAR(60),
-	agenda VARCHAR(1000),
-	minutes VARCHAR(10000),
-	planned_date DATE, 
-	planned_time TIME,
-	has_passed BOOLEAN DEFAULT false,
-	start_at TIMESTAMP,
-	end_at TIMESTAMP,
+	entity_id INT(11) UNSIGNED NOT NULL,
+	user_id INT(11) NOT NULL,
+	action INT(11) UNSIGNED NOT NULL,
+	file_name TEXT,
 	created_at TIMESTAMP,
-	updated_at TIMESTAMP
-	-- TO DO add group_id as foreign key when table Groups is created (from course implementation)
-	-- FOREIGN KEY (group_id) REFERENCES groups(id) 
+	updated_at TIMESTAMP,
+	FOREIGN KEY (entity_id) REFERENCES marked_entities(id)
 );
+
 
 CREATE TABLE IF NOT EXISTS polls (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -137,34 +131,32 @@ CREATE TABLE IF NOT EXISTS courses (
 	updated_at TIMESTAMP
 ); 
 
-CREATE TABLE IF NOT EXISTS course_offerings(
+CREATE TABLE IF NOT EXISTS lectures (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	course_id INT(11) UNSIGNED,
 	FOREIGN KEY(course_id) REFERENCES courses(id) ON DELETE CASCADE,
-	course_offering_code VARCHAR(60),
-	course_offering_name VARCHAR(60),
+	lecture_code VARCHAR(60),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS course_sections(
+CREATE TABLE IF NOT EXISTS sections (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	offering_id INT(11) UNSIGNED,
-	FOREIGN KEY(offering_id) REFERENCES course_offerings(id) ON DELETE CASCADE,
-	course_section_code VARCHAR(60),
-	course_section_name VARCHAR(60),
+	lecture_id INT(11) UNSIGNED,
+	FOREIGN KEY(lecture_id) REFERENCES lectures(id) ON DELETE CASCADE,
+	section_code VARCHAR(60),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS course_offerings_instructors(
-	offering_id INT(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS lecture_instructors(
+	lecture_id INT(11) UNSIGNED NOT NULL,
 	user_id INT(11) UNSIGNED NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES users(id),
-	FOREIGN KEY(offering_id) REFERENCES course_offerings(id) ON DELETE CASCADE,
+	FOREIGN KEY(lecture_id) REFERENCES lectures(id) ON DELETE CASCADE,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
-	PRIMARY KEY (offering_id, user_id)
+	PRIMARY KEY (lecture_id, user_id)
 );
 
 CREATE TABLE IF NOT EXISTS comments(
@@ -207,21 +199,55 @@ CREATE TABLE IF NOT EXISTS sent(
 	FOREIGN KEY(message_id) REFERENCES emails(id)
 );
 
-CREATE TABLE IF NOT EXISTS course_section_students(
+CREATE TABLE IF NOT EXISTS section_students(
 	user_id INT(11) UNSIGNED NOT NULL,
 	section_id INT(11) UNSIGNED,
 	FOREIGN KEY (user_id) REFERENCES users(id),
-	FOREIGN KEY(section_id) REFERENCES course_sections(id) ON DELETE CASCADE,
+	FOREIGN KEY(section_id) REFERENCES sections(id) ON DELETE CASCADE,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
 	PRIMARY KEY (section_id, user_id)
 );
-
 
 CREATE TABLE IF NOT EXISTS announcements (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	announcement_text TEXT,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS teams (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	lecture_id INT(11) UNSIGNED,
+	FOREIGN KEY(lecture_id) REFERENCES lectures(id) ON DELETE CASCADE,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS team_members (
+	team_id INT(11) UNSIGNED,
+	user_id INT(11) UNSIGNED,
+	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+	FOREIGN KEY(team_id) REFERENCES teams(id) ON DELETE CASCADE,
+	PRIMARY KEY (team_id, user_id),
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS meetings (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	team_id INT(11) UNSIGNED,
+	user_id INT(11),
+	title VARCHAR(60),
+	agenda VARCHAR(1000),
+	minutes VARCHAR(10000),
+	planned_date DATE, 
+	planned_time TIME,
+	has_passed BOOLEAN DEFAULT false,
+	start_at TIMESTAMP,
+	end_at TIMESTAMP,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP,
+	FOREIGN KEY (team_id) REFERENCES teams(id) 
 );
 

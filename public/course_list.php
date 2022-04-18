@@ -7,14 +7,14 @@ and data entry. -->
     <?php
 
     require "../modules/models/course.php";
-    require "../modules/models/course_offering.php";
-    require "../modules/models/course_section.php";
+    require "../modules/models/lecture.php";
+    require "../modules/models/section.php";
     require_once "../common.php";
 
     try {
         $result_courses = Course::getAll();
-        $result_offerings = CourseOffering::getAll();
-        $result_sections = CourseSection::getAll();
+        $result_lectures = Lecture::getAll();
+        $result_sections = Section::getAll();
     } catch (PDOException $error) {
         echo "Course Error: <br>" . $error->getMessage();
     }?>
@@ -32,24 +32,22 @@ and data entry. -->
         } catch (PDOException $error) {
             echo "General Error: The course could not be added.<br>" . $error->getMessage();
         }
-    } elseif (isset($_POST["submitOffering"])) {
-        $offering = new CourseOffering();
-        $offering->course_id = $_POST['course_selection'];
-        $offering->course_offering_code = $_POST['course_offering_code'];
-        $offering->course_offering_name = $_POST['course_offering_name'];
+    } elseif (isset($_POST["submitLecture"])) {
+        $lecture = new Lecture();
+        $lecture->course_id = $_POST['course_selection'];
+        $lecture->lecture_code = $_POST['lecture_code'];
 
 
         try {
-            $offering->save();
+            $lecture->save();
             $create_success = true;
         } catch (PDOException $error) {
-            echo "General Error: The course offering could not be added.<br>" . $error->getMessage();
+            echo "General Error: The course lecture could not be added.<br>" . $error->getMessage();
         }
     } elseif (isset($_POST["submitSection"])) {
-        $section = new CourseSection();
-        $section->offering_id = $_POST['offering_selection'];
-        $section->course_section_code = $_POST['course_section_code'];
-        $section->course_section_name = $_POST['course_section_name'];
+        $section = new Section();
+        $section->lecture_id = $_POST['lecture_selection'];
+        $section->section_code = $_POST['section_code'];
 
         try {
             $section->save();
@@ -64,7 +62,7 @@ and data entry. -->
     <?php if ((
         (
             isset($_POST['submitCourse']) ||
-        isset($_POST['submitOffering']) ||
+        isset($_POST['submitLecture']) ||
         isset($_POST['submitSection'])
         ) && isset($create_success)
     ) && $create_success) {
@@ -136,37 +134,35 @@ and data entry. -->
             <input type="submit" name="submitCourse" value="Add">
         <?php endif;?>
 
-<!--Offerings-->
+<!--Lectures-->
 
         <br><br>
-        <b>Offerings</b>
+        <b>Lectures</b>
         <br>
-        <?php if (count($result_offerings) > 0): ?>
+        <?php if (count($result_lectures) > 0): ?>
             <table class="ctb">
                 <thead>
                     <tr>
-                        <th class="tgPurp">Offering ID</th>
+                        <th class="tgPurp">Lecture ID</th>
                         <th class="tgPurp">Course ID</th>
                         <th class="tgPurp">Course Name</th>
-                        <th class="tgPurp">Offering Code</th>
-                        <th class="tgPurp">Offering Name</th>
+                        <th class="tgPurp">Lecture Code</th>
                     </tr>
         </thead>
         <tbody>
-            <?php foreach ($result_offerings as $row):;?>
+            <?php foreach ($result_lectures as $row):;?>
             <tr>
                 <td class="tgNorm"><?php echo($row->id);?></td>
                 <td class="tgNorm"><?php echo($row->course_id);?></td>
                 <td class="tgNorm"><?php echo($row->course->course_name);?></td>
-                <td class="tgNorm"><?php echo($row->course_offering_code);?></td>
-                <td class="tgNorm"><?php echo($row->course_offering_name);?></td>
+                <td class="tgNorm"><?php echo($row->lecture_code);?></td>
             
             </tr>
             <?php endforeach;?>
             <tr>
                 <td class="tgNorm"></td>
                 <form method="post">
-                <td class="tgNorm">            
+                <td class="tgNorm">
                     <select name = "course_selection" id="course_selection">
                     <option value = "">--Select Course--</option>
                     <?php foreach ($result_courses as $selectop):;?>
@@ -174,14 +170,13 @@ and data entry. -->
                     <?php endforeach;?>
                 </td>
                 <td class="tgNorm"></td>
-                <td class="tgNorm"><input type="text" value="Offering Code" name="course_offering_code" id="course_offering_code"></td>
-                <td class="tgNorm"><input type="text" value="Offering Name" name="course_offering_name" id="course_offering_name"></td>
-                <td class="tgNorm"><input type="submit" name="submitOffering" value="Add"></td>
+                <td class="tgNorm"><input type="text" value="Lecture Code" name="lecture_code" id="lecture_code"></td>
+                <td class="tgNorm"><input type="submit" name="submitLecture" value="Add"></td>
             </tr>
         </tbody>
         </table>
         <?php elseif (count($result_courses) > 0):?>
-            <b>No offerings found. Add a course offering:</b>
+            <b>No lectures found. Add a course lecture:</b>
             <br>
             <form method="post">
 
@@ -190,11 +185,10 @@ and data entry. -->
             <?php foreach ($result_courses as $selectop):;?>
                 <option value = <?php echo($selectop->id);?>><?php echo($selectop->course_name);?></option>
             <?php endforeach;?>
-            <input type="text" value="Offering Code" name="course_offering_code" id="course_offering_code">
-            <input type="text" value="Offering Name" name="course_offering_name" id="course_offering_name">
-            <input type="submit" name="submitOffering" value="Add">
+            <input type="text" value="Lecture Code" name="lecture_code" id="lecture_code">
+            <input type="submit" name="submitLecture" value="Add">
         <?php else:?>
-            <b>Please add a course before adding an offering.</b>
+            <b>Please add a course before adding an lecture.</b>
         <?php endif?>
 
 <!-- Sections -->
@@ -206,54 +200,50 @@ and data entry. -->
                 <thead>
                     <tr>
                         <th class="tgPurp">Section ID</th>
-                        <th class="tgPurp">Course ID-Offering ID</td>
-                        <th class="tgPurp">Course Name-Offering Name</td>
+                        <th class="tgPurp">Course ID-Lecture ID</td>
+                        <th class="tgPurp">Course Name</td>
                         <th class="tgPurp">Section Code</th>
-                        <th class="tgPurp">Section Name</th>
                     </tr>
         </thead>
         <tbody>
             <?php foreach ($result_sections as $row):;?>
             <tr>
                 <td class="tgNorm"><?php echo($row->id);?></td>
-                <td class="tgNorm"><?php echo($row->course_offering->course_id), " - ",($row->offering_id);?></td>
-                <td class="tgNorm"><?php echo($row->course_offering->course->course_name), " - ",($row->course_offering->course_offering_name);?></td>
-                <td class="tgNorm"><?php echo($row->course_section_code);?></td>
-                <td class="tgNorm"><a href="course_section.php?id=<?php echo $row->id?>"><?php echo($row->course_section_name);?></a></td>
+                <td class="tgNorm"><?php echo($row->lecture->course_id), ".",($row->lecture_id), ": ", ($row->lecture->course->course_name), " - ", ($row->lecture->lecture_code) ;?></td>
+                <td class="tgNorm"><?php echo($row->lecture->course->course_name);?></td>
+                <td class="tgNorm"><?php echo($row->section_code);?></td>
             </tr>
             <?php endforeach;?>
             <tr>
                 <td class="tgNorm"></td>
                 <form method="post">
                 <td class="tgNorm">            
-                    <select name = "offering_selection" id="offering_selection">
+                    <select name = "lecture_selection" id="lecture_selection">
                     <option value = "">--Select Course--</option>
-                    <?php foreach ($result_offerings as $selectop):;?>
-                        <option value = <?php echo($selectop->id);?>><?php echo($selectop->course_offering_name);?></option>
+                    <?php foreach ($result_lectures as $selectop):;?>
+                        <option value = <?php echo($selectop->id);?>><?php echo($selectop->course->id), ".", ($selectop->id), ": ", ($selectop->course->course_name), " - ", ($selectop->lecture_code);?></option>
                     <?php endforeach;?>
                 </td>
                 <td class="tgNorm"></td>
-                <td class="tgNorm"><input type="text" value="Section Code" name="course_section_code" id="course_section_code"></td>
-                <td class="tgNorm"><input type="text" value="Section Name" name="course_section_name" id="course_section_name"></td>
+                <td class="tgNorm"><input type="text" value="Section Code" name="section_code" id="section_code"></td>
                 <td class="tgNorm"><input type="submit" name="submitSection" value="Add"></td>
             </tr>
         </tbody>
         </table>
         <?php elseif (count($result_courses) > 0):?>
-            <b>No offering found. Add a course offering:</b>
+            <b>No lecture found. Add a lecture.</b>
             <br>
             <form method="post">
 
-            <select name = "offering_selection" id="offering_selection">
+            <select name = "lecture_selection" id="lecture_selection">
             <option value = "">--Select Course--</option>
-            <?php foreach ($result_offerings as $selectop):;?>
-                <option value = <?php echo($selectop->id);?>><?php echo($selectop->course_offering_name);?></option>
+            <?php foreach ($result_lectures as $selectop):;?>
+                <option value = <?php echo($selectop->id);?>><?php echo($selectop->course->id), ".", ($selectop->id), ": ", ($selectop->course->course_name), " - ", ($selectop->lecture_code);?></option>
             <?php endforeach;?>
-            <input type="text" value="Section Code" name="course_section_code" id="course_section_code">
-            <input type="text" value="Section Name" name="course_section_name" id="course_section_name">
+            <input type="text" value="Section Code" name="section_code" id="section_code">
             <input type="submit" name="submitSection" value="Add">
         <?php else:?>
-            <b>Please add a course before adding an offering.</b>
+            <b>Please add a lecture before adding a section</b>
         <?php endif?>
 
 

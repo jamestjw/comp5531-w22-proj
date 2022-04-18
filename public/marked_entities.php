@@ -1,12 +1,10 @@
+<?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
 <?php include "templates/header.php"; ?>
 
 <?php
 
 require_once "../modules/models/marked_entity.php";
 require_once "../common.php";
-
-// TODO: Require ensure_logged_in.php instead
-ensure_logged_in();
 
 try {
     // TODO: Get different marked entities based on roles
@@ -63,15 +61,15 @@ if ($result && count($result)) { ?>
             <textarea class="form-control" id="description" name="description"  rows="3"></textarea>
         </div>
     
-        <!-- TODO: Figure out a better way of getting the course offering ID -->
+        <!-- TODO: Figure out a better way of getting the course lecture ID -->
         <div class="form-group">
-            <label for="course_offering_id">Course Offering</label>
+            <label for="lecture_id">Course Lecture</label>
 
-            <select name="course_offering_id" id="course_offering_id">
-                <option value="" disabled selected>Select course offering</option>
-                <!-- TODO: Get only the course offerings that the instructor teaches -->
-                <?php foreach (CourseOffering::getAll() as $course_offering):;?>
-                    <option value = <?php echo($course_offering->id);?>><?php echo($course_offering->course_offering_name);?></option>
+            <select name="lecture_id" id="lecture_id">
+                <option value="" disabled selected>Select course lecture</option>
+                <!-- TODO: Get only the course lectures that the instructor teaches -->
+                <?php foreach (Lecture::getAll() as $lecture):;?>
+                    <option value = <?php echo($lecture->id);?>><?php echo($lecture->id);?></option>
                 <?php endforeach;?>
             </select>
         </div>
