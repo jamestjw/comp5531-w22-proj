@@ -157,7 +157,7 @@ if ($marked_entities && count($marked_entities)) { ?>
     <?php }
 ?> 
 
-
+<?php if(get_current_role() == 'instructor') { ?>
 <div class="container">
     <h2>Add a marked entity for this lecture</h2>
 
@@ -205,3 +205,4 @@ if ($marked_entities && count($marked_entities)) { ?>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+<?php } ?>
