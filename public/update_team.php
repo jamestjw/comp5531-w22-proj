@@ -126,8 +126,8 @@ if (isset($_POST["submit"])) {
                 <?php }?>
                 </tbody>
             </table>
-            <!-- TODO ADD if statement to not display option to add student if team already has 4 members-->
-            Add Student: 
+            <?php if (count($students_in_team)<4){ ?>
+                Add Student: 
                 <select Name="student_selection" id="student_selection">
                     <option value="">----Select----</option>
                     <?php foreach ($available_students as $av_st) { ?>
@@ -137,6 +137,7 @@ if (isset($_POST["submit"])) {
                             </tr>
                     <?php } ?>
                 </select>
+            <?php } ?>
             <br>
             <input type='hidden' name='team' value='<?php echo $row->id?>'>
             <input type='submit' name='submit' value='submit'>
