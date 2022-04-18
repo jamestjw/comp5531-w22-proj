@@ -73,7 +73,7 @@ foreach ($course_sections as $section) {
         }
 
         echo "<h5>New team created </h5>";
-        header("refresh: 1");
+        header("refresh");
         
     }
 
