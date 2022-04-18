@@ -195,7 +195,7 @@ class Record
         }
 
         foreach (get_called_class()::$has_one as $association_name => $association_values) {
-            $foreign_key = $association_values['foreign_key'];
+            $foreign_key = array_key_exists('foreign_key', $association_values) ? $association_values['foreign_key'] : $association_values['as'].'_id' ;
 
             if (array_key_exists($association_name, $this->associations)) {
                 $this->associations[$association_name]->$foreign_key = $this->id;
@@ -493,6 +493,12 @@ class Record
     {
         $query_builder = new QueryBuilder(get_called_class());
         return $query_builder->limit($l);
+    }
+
+    public static function joins(array $assocs)
+    {
+        $query_builder = new QueryBuilder(get_called_class());
+        return $query_builder->joins($assocs);
     }
 }
 

@@ -9,6 +9,12 @@ require_once "../common.php";
 ensure_logged_in();
 
 $marked_entity_id = $_GET["marked_entity_id"] ?? $_POST["marked_entity_id"] ?? null;
+// This shouldn't be null
+$marked_entity = MarkedEntity::find_by_id($marked_entity_id);
+
+if (is_null($marked_entity)) {
+    die("Invalid marked entity");
+}
 
 if (isset($_POST['submit'])) {
     $marked_entity_file = new MarkedEntityFile();
@@ -23,12 +29,19 @@ if (isset($_POST['submit'])) {
     $marked_entity_file_change->file_name = basename($_FILES["file"]["name"]);
     $marked_entity_file_change->set_action("create");
 
-    $marked_entity_permission = new MarkedEntityFilePermissions();
-    $marked_entity_permission->user_id = $_POST['user_id'];
-    $marked_entity_permission->set_permission("read");
-    $marked_entity_permission->set_permission("write");
-    $marked_entity_permission->set_permission("delete");
-    $marked_entity_file->permissions = array($marked_entity_permission);
+    $permissions_arr = array();
+
+    foreach ($_POST['permissions'] as $user_id => $permissions) {
+        $marked_entity_permission = new MarkedEntityFilePermissions();
+        $marked_entity_permission->user_id = $user_id;
+        foreach ($permissions as $permission) {
+            $marked_entity_permission->set_permission($permission);
+        }
+
+        array_push($permissions_arr, $marked_entity_permission);
+    }
+
+    $marked_entity_file->permissions = $permissions_arr;
 
     // Uploads folder needs to be created in the public/ directory
     // TODO: Make this more convenient
@@ -153,6 +166,11 @@ if (isset($marked_entity_id)) {
         </tbody>
     </table>
 
+    <?php if (get_current_role() == "student") { 
+        $current_users_team = Team::joins(["team_members"])->find_by(["lecture_id" => $marked_entity->lecture_id, "user_id"=>$_SESSION["current_user"]->id]);
+        $current_user_team_members = is_null($current_users_team) ? null : TeamMember::includes("user")->where(["team_id"=>$current_users_team->id]);
+        ?>
+
     <div>Add new file:</div>
     <form method="post" action="marked_entity_files.php" enctype="multipart/form-data">
         <label for="title">Title</label>
@@ -162,8 +180,24 @@ if (isset($marked_entity_id)) {
         <input type="hidden" id="user_id" name="user_id" value="<?php echo $_SESSION["current_user_id"]; ?>">
         <input type="hidden" id="marked_entity_id" name="marked_entity_id" value="<?php echo $marked_entity_id; ?>">
         <input type="file" name="file" id="file">
+        <div>
+        <label for="permissions">Permissions</label>
+        <?php foreach($current_user_team_members as $member) { ?>
+            <div>
+                <?php echo $member->user->get_full_name(); ?>
+                <input type="checkbox" name="permissions[<?php echo $member->user_id; ?>][]" value="read">
+                <label for="permissions[<?php echo $member->user_id; ?>]">Read</label>
+                <input type="checkbox" name="permissions[<?php echo $member->user_id; ?>][]" value="write">
+                <label for="permissions[<?php echo $member->user_id; ?>]">Write</label>
+                <input type="checkbox" name="permissions[<?php echo $member->user_id; ?>][]" value="delete">
+                <label for="permissions[<?php echo $member->user_id; ?>]">Delete</label>           
+            </div>
+        <?php } ?>
+        </div>
         <input type="submit" name="submit" value="Submit">
     </form>
+
+    <?php } ?>
 
     <div id="fileHistory">
         <?php

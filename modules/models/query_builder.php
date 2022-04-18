@@ -9,7 +9,7 @@ class QueryBuilder
     protected array $includes = array();
     protected ?int $limit = null;
     protected array $order_by = array();
-
+    protected array $joins = array();
 
     public function __construct(string $record_class_name)
     {
@@ -70,7 +70,26 @@ class QueryBuilder
 
     public function where(array $attrs)
     {
-        $sql = "SELECT * FROM {$this->table_name()}";
+        $sql = "SELECT {$this->table_name()}.* FROM {$this->table_name()}";
+
+        if (!empty($this->joins)) {
+            foreach ($this->joins as $association) {
+                $association_type = $this->record_class::getAssociationType($association);
+                $association_foreign_key = $this->record_class::getAssociationForeignKey($association);
+                $association_class_name = $this->record_class::getAssociationClassName($association);
+                $association_table_name = $association_class_name::get_table_name();
+                switch ($association_type) {
+                    case "has_one":
+                    case "has_many":
+                        $sql .= " JOIN $association_table_name on {$this->table_name()}.id = $association_table_name.$association_foreign_key";
+                        break;
+                    case "belongs_to":
+                        // TODO: Implement this when necessary
+                        break;
+                }
+            }
+        }
+
         if (!empty($attrs)) {
             $sql_wheres = array();
             $null_keys = array();
@@ -162,6 +181,13 @@ class QueryBuilder
         }
 
         return $res;
+    }
+
+    public function joins(array $assocs) 
+    {
+        $this->joins = array_merge($this->joins, $assocs);
+        $this->joins = array_unique($this->joins);
+        return $this;
     }
 
     public function find_by(array $attrs)
