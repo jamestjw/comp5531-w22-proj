@@ -86,6 +86,7 @@ try {
     <?php }?>
 
     <h2>Teams</h2>
+    <p><a href="update_team.php?id=<?php echo $lecture_page_id?>">Update teams</a></p>
     <?php if ($teams && count($teams)) { ?>
     
         <?php foreach ($teams as $row) { ?>

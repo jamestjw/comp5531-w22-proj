@@ -226,10 +226,9 @@ CREATE TABLE IF NOT EXISTS teams (
 
 CREATE TABLE IF NOT EXISTS team_members (
 	team_id INT(11) UNSIGNED,
-	user_id INT(11) UNSIGNED,
+	user_id INT(11) UNSIGNED PRIMARY KEY,
 	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
 	FOREIGN KEY(team_id) REFERENCES teams(id) ON DELETE CASCADE,
-	PRIMARY KEY (team_id, user_id),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );
