@@ -20,10 +20,9 @@ class TeamMember extends Record
             "foreign_key" => "lecture_id"
         )
         );
-
+    public $id;
     public $team_id;
     public $user_id;
-    public $lecture_id;
     public $created_at;
     public $updated_at;
 }
