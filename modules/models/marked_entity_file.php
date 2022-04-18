@@ -25,6 +25,10 @@ class MarkedEntityFile extends Record
         "comments" => array(
             "class_name" => "Comment",
             "as" => "commentable",
+        ),
+        "permissions" => array(
+            "class_name" => "MarkedEntityFilePermissions",
+            "foreign_key" => "file_id",
         )
     );
 
