@@ -72,7 +72,9 @@ if (isset($_POST["submit"])) {
     
     foreach($students_to_remove as $remove){
         $delete = TeamMember::find_by(array('user_id' => $remove, 'team_id' => $team_to_edit_id ));
-        $delete->delete();
+        if (!is_null($delete)){
+            $delete->delete();
+        }  
     }
     $number_team_members = TeamMember::where(array('team_id' => $team_to_edit_id));
     if(count($number_team_members)==0){
