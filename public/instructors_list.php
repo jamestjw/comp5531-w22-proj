@@ -14,7 +14,7 @@ try {
 }
 
 try {
-    $lecture = Lecture::getAll();
+    $lecture = Lecture::includes('course')->getAll();
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
@@ -24,6 +24,10 @@ try {
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
+
+$assigned_lectures = array_map(fn($a) => $a->lecture, $course_assignment);
+
+$unassigned_lectures = array_udiff($lecture, $assigned_lectures, fn($lec_a, $lec_b) => $lec_a->id <=> $lec_b->id );
 
 if (isset($_POST['submit'])) {
     $user = new User();
@@ -153,9 +157,9 @@ if ($instructors && count($instructors)) { ?>
         Course Lecture: 
         <select Name="lecture_selection" id="lecture_selection">
             <option value="">----Select----</option>
-        <?php foreach($lecture as $row) { ?>
+        <?php foreach($unassigned_lectures as $row) { ?>
             <option value="<?php echo $row->id; ?>">
-            <?php echo $row->id; ?>
+            <?php echo $row->course->course_name." ".$row->lecture_code; ?>
             </option>
         <?php } ?>
         </select>
