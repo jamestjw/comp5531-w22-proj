@@ -25,6 +25,16 @@ try {
     echo "<br>" . $error->getMessage();
 }
 
+$assigned_lectures = array(); 
+
+foreach($course_assignment as $assigned){
+    array_push($assigned_lectures, $assigned->lecture);
+} 
+
+$unassigned_lectures = array_udiff($lecture, $assigned_lectures, function ($lec_a, $lec_b) {
+    return $lec_a->id <=> $lec_b->id;
+  } );
+
 if (isset($_POST['submit'])) {
     $user = new User();
     $user->first_name = $_POST['first_name'];
@@ -153,7 +163,7 @@ if ($instructors && count($instructors)) { ?>
         Course Lecture: 
         <select Name="lecture_selection" id="lecture_selection">
             <option value="">----Select----</option>
-        <?php foreach($lecture as $row) { ?>
+        <?php foreach($unassigned_lectures as $row) { ?>
             <option value="<?php echo $row->lecture_code; ?>">
             <?php echo $row->course->course_name." ".$row->lecture_code; ?>
             </option>
