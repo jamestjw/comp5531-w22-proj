@@ -11,15 +11,14 @@ CREATE TABLE IF NOT EXISTS users (
 
 	first_name VARCHAR(30) NOT NULL,
 	last_name VARCHAR(30) NOT NULL,
-	email VARCHAR(50) NOT NULL,
+	email VARCHAR(50) NOT NULL UNIQUE,
 	is_admin BOOLEAN NOT NULL,
 	is_instructor BOOLEAN NOT NULL DEFAULT 0,
 	is_ta BOOLEAN NOT NULL DEFAULT 0,
 	password_digest VARCHAR(60) NOT NULL,
-	student_id INT UNSIGNED,
+	student_id INT UNSIGNED UNIQUE,
 	created_at TIMESTAMP,
-	updated_at TIMESTAMP,
-	UNIQUE (email, student_id)
+	updated_at TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS loggedin (
