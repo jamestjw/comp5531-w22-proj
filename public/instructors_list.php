@@ -20,7 +20,7 @@ try {
 }
 
 try {
-    $course_assignment = LectureInstructor::includes(["user", "lecture"])->getAll();
+    $course_assignment = LectureInstructor::includes('user')->includes(['lecture' => 'course'])->getAll();
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
@@ -57,6 +57,11 @@ if (isset($_POST['lecture_submit']) && LectureInstructor::where(array("lecture_i
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
+    header("refresh: 1");
+}
+
+if (isset($_POST['delete_association']) && LectureInstructor::find_by(array('lecture_id' => $_POST['lecture_id'], 'user_id' => $_POST['instructor_id'])) != null) {
+    LectureInstructor::find_by(array('lecture_id' => $_POST['lecture_id'], 'user_id' => $_POST['instructor_id']))->deleteWhere('user_id', 'lecture_id');
     header("refresh: 1");
 }
 
@@ -124,14 +129,18 @@ if ($instructors && count($instructors)) { ?>
                     <th>Course Lecture</th>
                     <th>Instructor</th>
                     <th>Created At</th>
+                    <th>Delete association</th>
                 </tr>
             </thead>
             <tbody>
         <?php foreach ($course_assignment as $row) {?>
             <tr>
-                <td><?php echo $row->lecture->id; ?></td>
+                <td><?php echo $row->lecture->course->course_name." ".$row->lecture->lecture_code; ?></td>
                 <td><?php echo $row->user->get_full_name(); ?></td>
                 <td><?php echo escape($row->created_at);  ?> </td>
+                <td><form method="post"><input type="checkbox" name='lecture_id' value="<?php echo$row->lecture->id; ?>"><input type="submit" name="delete_association" value="delete">
+                    <input type="hidden" name='instructor_id' value="<?php echo $row->user->id;?>">
+                    </form></td>
             </tr>
         <?php } ?>
         </tbody>
