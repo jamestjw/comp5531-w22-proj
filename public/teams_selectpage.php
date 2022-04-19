@@ -17,31 +17,40 @@ require_once "../modules/models/section.php";
 // Get the current user
 $current_user = $_SESSION["current_user"];
 
-// user->team_members->teams->lectures
-// If the current user is an instructor, admin or ta, they should be able to 
-// see all team in the relevant classes in read only (admin having modification privileges)
-
 // Get current user role
 $role = get_current_role();
 
 // TODO: Once tas are added, handle team selection here
 if ($role == "instructor" && !$current_user->is_admin) {
-    $all_info = LectureInstructor::includes(["lecture" => "teams"])->where(array("user_id" => $current_user->id));
-    print_r($all_info);
-    $lecture_teams = array();
+    $all_info = Lecture::joins_raw_sql("
+        JOIN lecture_instructors li on
+        li.lecture_id = lectures.id
+    ")->includes(["teams", "course"])->where(array("user_id" => $current_user->id));
 } elseif ($role == "student" && !$current_user->is_admin) {
-    $all_info = SectionStudent::includes(["section" => ["lecture" => "teams"]])->where(array("user_id" => $current_user->id));
+    $all_info = Lecture::joins_raw_sql("
+        JOIN sections s on
+        s.lecture_id = lectures.id
+        JOIN section_students ss on
+        ss.section_id = s.id
+    ")->includes(["teams", "course"])->where(array("user_id" => $current_user->id));
 } elseif ($role == "admin" || $current_user->is_admin) {
-    $all_info = Lecture::includes("teams")->getAll();
+    $all_info = Lecture::includes(["teams", "course"])->getAll();
     $lecture_teams = $all_info;
-
 }
-
-
 ?>
 
-
-    <h2></h2>
-
+<?php
+foreach ($all_info as $lecture) {
+    $header = $lecture->course->course_code." ".$lecture->lecture_code;
+    echo "<h3>{$header}</h3>";
+    ?>
+    <ul>
+        <?php
+        foreach ($lecture->teams as $team) {
+            echo "<li><a href='team_page.php?id={$team->id}'>Team Number {$team->id}</a></li>";
+        }
+        ?>
+    </ul>
+<?php } ?>
 
 <?php include "templates/footer.php"; ?>
