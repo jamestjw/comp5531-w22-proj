@@ -25,15 +25,9 @@ try {
     echo "<br>" . $error->getMessage();
 }
 
-$assigned_lectures = array(); 
+$assigned_lectures = array_map(fn($a) => $a->lecture, $course_assignment);
 
-foreach($course_assignment as $assigned){
-    array_push($assigned_lectures, $assigned->lecture);
-} 
-
-$unassigned_lectures = array_udiff($lecture, $assigned_lectures, function ($lec_a, $lec_b) {
-    return $lec_a->id <=> $lec_b->id;
-  } );
+$unassigned_lectures = array_udiff($lecture, $assigned_lectures, fn($lec_a, $lec_b) => $lec_a->id <=> $lec_b->id );
 
 if (isset($_POST['submit'])) {
     $user = new User();
