@@ -18,8 +18,6 @@ verify_logged_in();
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/course_lecture.css">
-    <link rel="stylesheet" href="css/email.css">
 
     <title>COMP 5531 Database App</title>
   </head>

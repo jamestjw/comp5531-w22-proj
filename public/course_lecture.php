@@ -52,6 +52,8 @@ try {
 
 <?php include "templates/header.php"; ?>
 
+<link rel="stylesheet" href="css/course_lecture.css">
+
 <div class="menubar">
     <label for="menuform" class="menu_form_label"><?php echo $course_lecture[0]->lecture_code?></label>
     <form name="menuform" method="post" class="menu_form">
