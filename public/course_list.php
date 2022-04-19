@@ -36,13 +36,18 @@ and data entry. -->
         $lecture = new Lecture();
         $lecture->course_id = $_POST['course_selection'];
         $lecture->lecture_code = $_POST['lecture_code'];
-
+        $lecture->starting_date = $_POST['starting_date'];
+        $lecture->ending_date = $_POST['ending_date'];;
 
         try {
+            if ($lecture->starting_date > $lecture->ending_date)
+            {
+                throw new PDOException("The ending date cannot be before the beginning.");
+            }
             $lecture->save();
             $create_success = true;
         } catch (PDOException $error) {
-            echo "General Error: The course lecture could not be added.<br>" . $error->getMessage();
+            echo "The Lecture could not be added!<br>Error: " . $error->getMessage();
         }
     } elseif (isset($_POST["submitSection"])) {
         $section = new Section();
@@ -147,6 +152,7 @@ and data entry. -->
                         <th class="tgPurp">Course ID</th>
                         <th class="tgPurp">Course Name</th>
                         <th class="tgPurp">Lecture Code</th>
+                        <th class="tgPurp">Lecture Duration</th>
                     </tr>
         </thead>
         <tbody>
@@ -156,7 +162,8 @@ and data entry. -->
                 <td class="tgNorm"><?php echo($row->course_id);?></td>
                 <td class="tgNorm"><?php echo($row->course->course_name);?></td>
                 <td class="tgNorm"><?php echo($row->lecture_code);?></td>
-            
+                <td class="tgNorm"><?php echo($row->starting_date), " - ", ($row->ending_date);?></td>
+        
             </tr>
             <?php endforeach;?>
             <tr>
@@ -171,10 +178,12 @@ and data entry. -->
                 </td>
                 <td class="tgNorm"></td>
                 <td class="tgNorm"><input type="text" value="Lecture Code" name="lecture_code" id="lecture_code"></td>
+                <td class="tgNorm"><input type ="date" name = "starting_date" id="starting_date"> - <input type ="date" name = "ending_date" id="ending_date"></td>
                 <td class="tgNorm"><input type="submit" name="submitLecture" value="Add"></td>
             </tr>
         </tbody>
         </table>
+
         <?php elseif (count($result_courses) > 0):?>
             <b>No lectures found. Add a course lecture:</b>
             <br>
