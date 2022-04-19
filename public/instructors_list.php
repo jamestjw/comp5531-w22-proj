@@ -138,7 +138,7 @@ if ($instructors && count($instructors)) { ?>
                 <td><?php echo $row->lecture->course->course_name." ".$row->lecture->lecture_code; ?></td>
                 <td><?php echo $row->user->get_full_name(); ?></td>
                 <td><?php echo escape($row->created_at);  ?> </td>
-                <td><form method="post"><input type="checkbox" name='lecture_id' value="<?php echo$row->lecture->id; ?>"><input type="submit" name="delete_association" value="delete">
+                <td><form method="post"><input type="hidden" name='lecture_id' value="<?php echo$row->lecture->id; ?>"><input type="submit" name="delete_association" value="delete">
                     <input type="hidden" name='instructor_id' value="<?php echo $row->user->id;?>">
                     </form></td>
             </tr>
