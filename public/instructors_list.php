@@ -97,7 +97,7 @@ if ($instructors && count($instructors)) { ?>
 
 <?php if (isset($_POST['submit']) && $create_success) { ?>
     <blockquote><?php echo $_POST['first_name']; ?> successfully added.</blockquote>
-    <?php //header("refresh: 1")?>
+    <?php header("refresh: 1")?>
 <?php } ?>
 
 <h2>Add instructor</h2>
