@@ -22,8 +22,11 @@ verify_logged_in();
     <title>COMP 5531 Database App</title>
   </head>
 
-  <?php include "get_user_associated_lectures.php"; ?>
 
+  <?php if(verify_logged_in()){
+  include "get_user_associated_lectures.php"; 
+  }?>
+  
   <body>
     <h1>COMP 5531 Database App</h1>
     <ul class="topnav">
