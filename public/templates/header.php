@@ -35,7 +35,7 @@ verify_logged_in();
         <div class="dropdown-content">
           <a href="course_list.php">Course List</a>
           <?php foreach($lectures as $lecture){ ?>
-              <a href="course_list.php"><?php echo $lecture->lecture_code?></a>
+              <a href="course_lecture.php?id=<?php echo $lecture->id;?>"><?php echo $lecture->lecture_code?></a>
           <?php }?>
           <a href="marked_entities.php">Marked Entities</a>
           <?php if(get_current_role() == "instructor") {?> 
