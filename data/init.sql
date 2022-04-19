@@ -135,6 +135,8 @@ CREATE TABLE IF NOT EXISTS lectures (
 	course_id INT(11) UNSIGNED,
 	FOREIGN KEY(course_id) REFERENCES courses(id) ON DELETE CASCADE,
 	lecture_code VARCHAR(60),
+	starting_date DATE NOT NULL,
+	ending_date DATE NOT NULL,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );
