@@ -74,7 +74,8 @@ if (isset($_POST["submit"])) {
         $delete = TeamMember::find_by(array('user_id' => $remove, 'team_id' => $team_to_edit_id ));
         if (!is_null($delete)){
             $delete->delete();
-        }  
+        }
+  
     }
     $number_team_members = TeamMember::where(array('team_id' => $team_to_edit_id));
     if(count($number_team_members)==0){
@@ -154,3 +155,5 @@ if (isset($_POST["submit"])) {
 <?php } else { ?>
     <h2>You do not have the credentials to view this page.</h2>
 <?php } ?>
+
+<a href="course_lecture.php?id=<?php echo $lecture_id ?>"> Return to Lecture page </a>
