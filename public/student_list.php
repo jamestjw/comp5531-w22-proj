@@ -16,7 +16,7 @@ try {
 }
 
 try {
-    $sections = Section::includes('lecture')->getAll();
+    $sections = Section::includes(['lecture' => ['course']])->getAll();
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
@@ -67,7 +67,7 @@ if ($students && count($students)) { ?>
 
         <?php foreach($sections as $section) { ?>
             
-            <h3>Lecture: <?php echo $section->lecture->lecture_code?> Section: <?php echo $section->section_code?> </h3>
+            <h3> Course: <?php echo $section->lecture->course->course_name; ?> Lecture: <?php echo $section->lecture->lecture_code; ?> Section: <?php echo $section->id?> </h3>
             <table>
                 <thead>
                     <tr>
