@@ -155,7 +155,7 @@ if ($instructors && count($instructors)) { ?>
             <option value="">----Select----</option>
         <?php foreach($lecture as $row) { ?>
             <option value="<?php echo $row->id; ?>">
-            <?php echo $row->id; ?>
+            <?php echo $row->course_id; ?>
             </option>
         <?php } ?>
         </select>
