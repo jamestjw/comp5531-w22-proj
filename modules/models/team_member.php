@@ -14,9 +14,9 @@ class TeamMember extends Record
         "teams"=> array(
             "class_name" => "Team",
             "foreign_key" => "team_id"
-            )
+        )
         );
-
+    public $id;
     public $team_id;
     public $user_id;
     public $created_at;

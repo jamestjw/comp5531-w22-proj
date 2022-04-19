@@ -14,39 +14,66 @@ try {
     echo "<br>" . $error->getMessage();
 }
 
+try {
+    $all_students = User::where(array('is_instructor' => '0', 'is_admin' => '0'));
+} catch (PDOException $error) {
+    echo "<br>" . $error->getMessage();
+}
 
     $create_success = false;
-
 
     if (isset($_POST['submit2'])) {
         $students = fopen($_POST["fileID"], "r");
         $headers = fgetcsv($students, 1000, ",");
         $count = 0;
-        while (($studentData = fgetcsv($students, 1000, ",")) !== false) {
-            $user = new User();
-            $user->student_id = $studentData[0];
-            $user->first_name = $studentData[1];
-            $user->last_name = $studentData[2];
-            $user->email = $studentData[3];
-            $user->is_admin = 0;
-            $user->is_instructor = 0;
-            $user->is_ta = 0;
-            $user->password_digest = password_hash("welcome", PASSWORD_DEFAULT);
+        $all_student_in_section = SectionStudent::includes('user')->where(array('section_id' => $_POST['sectionID']));
 
-            try {
-                $user->save();
+        while (($studentData = fgetcsv($students, 1000, ",")) !== false) {
+
+            $existing_student = array_search($studentData[0], array_column($all_students, 'student_id'));
+            $student_section_exists = in_array($all_students[$existing_student]->id, array_column($all_student_in_section, 'user_id'));
+
+            if($existing_student === false){
+                $user = new User();
+                $user->student_id = $studentData[0];
+                $user->first_name = $studentData[1];
+                $user->last_name = $studentData[2];
+                $user->email = $studentData[3];
+                $user->is_admin = 0;
+                $user->is_instructor = 0;
+                $user->is_ta = 0;
+                $user->password_digest = password_hash("welcome", PASSWORD_DEFAULT);
+
+                try {
+                    $user->save();
+                    $count++;
+                    $create_success = true;
+                } catch (PDOException $error) {
+                    echo "<br>" . $error->getMessage();
+                }
+                $section_student = new SectionStudent();
+                $section_student->user_id = $user->id;
+                $section_student->section_id = $_POST['sectionID'];
+                $section_success = true;
+                try {
+                    $section_student->save();
+                } catch (PDOException $error) {
+                    echo "<br>" . $error->getMessage();
+                }
+            } else if ($student_section_exists) { 
+                echo "Student with id ".$studentData[0]." is already registered in course section ".$_POST['sectionID']."<br>";
+                $section_success = true;
+            }else {
+                $section_student = new SectionStudent();
+                $section_student->user_id = $all_students[$existing_student]->id;
+                $section_student->section_id = $_POST['sectionID'];
                 $count++;
-                $create_success = true;
-            } catch (PDOException $error) {
-                echo "<br>" . $error->getMessage();
-            }
-            $section_student = new SectionStudent();
-            $section_student->user_id = $user->id;
-            $section_student->section_id = $_POST['sectionID'];
-            try {
-                $section_student->save();
-            } catch (PDOException $error) {
-                echo "<br>" . $error->getMessage();
+                $section_success = true;
+                try {
+                    $section_student->save();
+                } catch (PDOException $error) {
+                    echo "<br>" . $error->getMessage();
+                }
             }
 
         }
@@ -60,9 +87,9 @@ try {
 
 
 <?php
-    if (isset($_POST['submit2']) && $create_success) {
+    if (isset($_POST['submit2']) && ($create_success || $section_success)) {
         echo "<h3> $count Students added successfully</h3><br>";
-    } elseif (isset($_POST['submit2']) && !$create_success) {
+    } elseif (isset($_POST['submit2'])) {
         echo "<h3> Student List upload failed </h3>";
     }
 ?>

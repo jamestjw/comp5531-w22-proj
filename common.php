@@ -63,7 +63,6 @@ function get_users_id()
     }
 }
 
-
 function verify_logged_in()
 {
     if (isset($_SESSION) && array_key_exists("AuthKey", $_SESSION)) { // Session is started and authentication key exists
