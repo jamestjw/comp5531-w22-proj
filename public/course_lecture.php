@@ -52,7 +52,7 @@ try {
 
 <?php include "templates/header.php"; ?>
 
-<?php if(get_current_role() == 'instructor' && get_users_id() == $lecture_instructor->user_id) { ?>
+<?php if(get_current_role() == 'instructor' && get_users_id() == $lecture_instructor[0]->user_id) { ?>
     <h2>Student List </h2>
     <?php
     $course_students = array();
@@ -165,7 +165,7 @@ if ($marked_entities && count($marked_entities)) { ?>
     <?php }
 ?> 
 
-<?php if(get_current_role() == 'instructor' && get_users_id() == $lecture_instructor->user_id) { ?>
+<?php if(get_current_role() == 'instructor' && get_users_id() == $lecture_instructor[0]->user_id) { ?>
 <div class="container">
     <h2>Add a marked entity for this lecture</h2>
 
