@@ -21,9 +21,9 @@ switch ($user_role) {
         break;
 
     case 'student':
-        $student_sections = SectionStudent::includes(['section'=> ['lecture']])->where(array('user_id' => $user_id));
-        foreach($student_sections as $section){
-            array_push($lectures, $section->section->lecture);
+        $student_sections = SectionStudent::includes(['student_section'=> ['lecture']])->where(array('user_id' => $user_id));
+        foreach($student_sections as $student_section){
+            array_push($lectures, $student_section->student_section->lecture);
         }
         break;
 
