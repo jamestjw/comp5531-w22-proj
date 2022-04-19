@@ -194,8 +194,9 @@ and data entry. -->
             <?php foreach ($result_courses as $selectop):;?>
                 <option value = <?php echo($selectop->id);?>><?php echo($selectop->course_name);?></option>
             <?php endforeach;?>
-            <input type="text" value="Lecture Code" name="lecture_code" id="lecture_code">
-            <input type="submit" name="submitLecture" value="Add">
+            <td class="tgNorm"><input type="text" value="Lecture Code" name="lecture_code" id="lecture_code"></td>
+            <td class="tgNorm"><input type ="date" name = "starting_date" id="starting_date"> - <input type ="date" name = "ending_date" id="ending_date"></td>
+            <td class="tgNorm"><input type="submit" name="submitLecture" value="Add"></td>
         <?php else:?>
             <b>Please add a course before adding an lecture.</b>
         <?php endif?>
