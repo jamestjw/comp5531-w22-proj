@@ -39,4 +39,16 @@ class MarkedEntityFile extends Record
     public $description;
     public $created_at;
     public $updated_at;
+
+    public function get_permission_for_user(int $user_id, string $permission): bool
+    {
+        $res = array_filter($this->permissions, fn ($p) => $p->user_id == $user_id);
+
+        if (empty($res)) {
+            // If the user id was not valid, just return false.
+            return false;
+        } else {
+            return array_pop($res)->get_permission($permission);
+        }
+    }
 }

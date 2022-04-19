@@ -154,11 +154,23 @@ if (isset($marked_entity_id)) {
                 </td>
 
                 <!-- TODO: Should we apply some sort of transformation to the file ID -->
-                <td><a href='<?php echo "download.php?file_id={$row->attachment->file_id}" ?>'>Download</a></td>
                 <td>
+                    <?php
+                        $may_read = $row->get_permission_for_user($_SESSION["current_user"]->id, "read");
+                    ?>
+                    <button onclick="location.href='<?php echo "download.php?file_id={$row->attachment->file_id}" ?>'" type="button" <?php if (!$may_read) {
+                        echo "disabled";
+                    } ?>>Download</button>
+                </td>
+                <td>
+                    <?php
+                        $may_delete = $row->get_permission_for_user($_SESSION["current_user"]->id, "delete");
+                    ?>
                     <form method="post" action="marked_entities/delete_student_file.php">
                         <input type="hidden" id="marked_entity_file_id" name="marked_entity_file_id" value="<?php echo $row->id; ?>">
-                        <input type="submit" name="submit" value="Delete">
+                        <input type="submit" name="submit" value="Delete" <?php if (!$may_delete) {
+                        echo "disabled";
+                    } ?>>
                     </form>
                 </td>
             </tr>
@@ -166,10 +178,9 @@ if (isset($marked_entity_id)) {
         </tbody>
     </table>
 
-    <?php if (get_current_role() == "student") { 
-        $current_users_team = Team::joins(["team_members"])->find_by(["lecture_id" => $marked_entity->lecture_id, "user_id"=>$_SESSION["current_user"]->id]);
-        $current_user_team_members = is_null($current_users_team) ? null : TeamMember::includes("user")->where(["team_id"=>$current_users_team->id]);
-        ?>
+    <?php if (get_current_role() == "student") {
+                        $current_users_team = Team::joins(["team_members"])->find_by(["lecture_id" => $marked_entity->lecture_id, "user_id"=>$_SESSION["current_user"]->id]);
+                        $current_user_team_members = is_null($current_users_team) ? null : TeamMember::includes("user")->where(["team_id"=>$current_users_team->id]); ?>
 
     <div>Add new file:</div>
     <form method="post" action="marked_entity_files.php" enctype="multipart/form-data">
@@ -182,7 +193,7 @@ if (isset($marked_entity_id)) {
         <input type="file" name="file" id="file">
         <div>
         <label for="permissions">Permissions</label>
-        <?php foreach($current_user_team_members as $member) { ?>
+        <?php foreach ($current_user_team_members as $member) { ?>
             <div>
                 <?php echo $member->user->get_full_name(); ?>
                 <input type="checkbox" name="permissions[<?php echo $member->user_id; ?>][]" value="read">
@@ -197,7 +208,8 @@ if (isset($marked_entity_id)) {
         <input type="submit" name="submit" value="Submit">
     </form>
 
-    <?php } ?>
+    <?php
+                    } ?>
 
     <div id="fileHistory">
         <?php
