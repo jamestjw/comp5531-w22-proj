@@ -182,7 +182,7 @@ and data entry. -->
                 <form method="post">
                 <td class="tgNorm">
                     <select name = "course_selection" id="course_selection">
-                    <option value = "" disabled seleted>--Select Course--</option>
+                    <option value = "" disabled selected>--Select Course--</option>
                     <?php foreach ($result_courses as $selectop):;?>
                         <option value = <?php echo($selectop->id);?>><?php echo($selectop->course_name);?></option>
                     <?php endforeach;?>
@@ -200,7 +200,7 @@ and data entry. -->
             <form method="post">
 
             <select name = "course_selection" id="course_selection">
-            <option value = "" disabled seleted>--Select Course--</option>
+            <option value = "" disabled selected>--Select Course--</option>
             <?php foreach ($result_courses as $selectop):;?>
                 <option value = <?php echo($selectop->id);?>><?php echo($selectop->course_name);?></option>
             <?php endforeach;?>
