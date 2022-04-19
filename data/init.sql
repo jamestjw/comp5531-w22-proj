@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS marked_entity_file_permissions (
 	file_id INT(11) UNSIGNED NOT NULL,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
-	FOREIGN KEY (file_id) REFERENCES marked_entity_files(id)
+	FOREIGN KEY (file_id) REFERENCES marked_entity_files(id) ON DELETE CASCADE
 );
 
 

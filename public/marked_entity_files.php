@@ -180,7 +180,7 @@ if (isset($marked_entity_id)) {
 
     <?php if (get_current_role() == "student") {
                         $current_users_team = Team::joins(["team_members"])->find_by(["lecture_id" => $marked_entity->lecture_id, "user_id"=>$_SESSION["current_user"]->id]);
-                        $current_user_team_members = is_null($current_users_team) ? null : TeamMember::includes("user")->where(["team_id"=>$current_users_team->id]); ?>
+                        $current_user_team_members = is_null($current_users_team) ? [] : TeamMember::includes("user")->where(["team_id"=>$current_users_team->id]); ?>
 
     <div>Add new file:</div>
     <form method="post" action="marked_entity_files.php" enctype="multipart/form-data">
