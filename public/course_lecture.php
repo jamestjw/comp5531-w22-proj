@@ -101,7 +101,7 @@ try {
                     </tr>
                 </thead>
                 <tbody>
-                <?php $students_in_team = $row->team_member; 
+                <?php $students_in_team = $row->team_members; 
                 foreach ($students_in_team as $student) {?>
                 <tr>
                     <td><?php echo escape($student->user_id); ?></td>

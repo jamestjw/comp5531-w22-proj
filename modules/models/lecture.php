@@ -17,6 +17,10 @@ class Lecture extends Record
         "teams" => array(
             "class_name" => "Team",
             "foreign_key" => "lecture_id"
+        ),
+        "marked_entities" => array(
+            "class_name" => "MarkedEntity",
+            "foreign_key" => "lecture_id"
         )
         );
 
