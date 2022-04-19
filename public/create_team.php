@@ -3,7 +3,15 @@
 
 <?php 
 $lecture_id = $_GET['id'];
-if(get_current_role() == 'instructor') {
+
+try {
+    $lecture_instructor = LectureInstructor::find_by(array('lecture_id' => $lecture_id));
+
+} catch (PDOException $error) {
+    echo "<br>" . $error->getMessage();
+}
+
+if(get_current_role() == 'instructor' && get_users_id() == $lecture_instructor->user_id) {
 
 require_once "../modules/models/user.php";
 require_once "../modules/models/section.php";
