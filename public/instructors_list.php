@@ -103,7 +103,7 @@ if ($instructors && count($instructors)) { ?>
 
 <?php if (isset($_POST['submit']) && $create_success) { ?>
     <blockquote><?php echo $_POST['first_name']; ?> successfully added.</blockquote>
-    <?php header("refresh: 1")?>
+    <?php //header("refresh: 1")?>
 <?php } ?>
 
 <h2>Add instructor</h2>
@@ -164,7 +164,7 @@ if ($instructors && count($instructors)) { ?>
         <select Name="lecture_selection" id="lecture_selection">
             <option value="">----Select----</option>
         <?php foreach($unassigned_lectures as $row) { ?>
-            <option value="<?php echo $row->lecture_code; ?>">
+            <option value="<?php echo $row->id; ?>">
             <?php echo $row->course->course_name." ".$row->lecture_code; ?>
             </option>
         <?php } ?>
