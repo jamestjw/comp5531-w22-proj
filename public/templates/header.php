@@ -23,6 +23,8 @@ verify_logged_in();
     <title>COMP 5531 Database App</title>
   </head>
 
+  <?php include "get_user_associated_lectures.php"; ?>
+
   <body>
     <h1>COMP 5531 Database App</h1>
     <ul class="topnav">
@@ -32,12 +34,14 @@ verify_logged_in();
         <button class="dropbtn">Courses</button>
         <div class="dropdown-content">
           <a href="course_list.php">Course List</a>
+          <?php foreach($lectures as $lecture){ ?>
+              <a href="course_lecture.php?id=<?php echo $lecture->id;?>"><?php echo $lecture->lecture_code?></a>
+          <?php }?>
           <a href="marked_entities.php">Marked Entities</a>
           <?php if(get_current_role() == "instructor") {?> 
             <a href="student_list.php">Student List</a> 
           <?php }?>
           <a href="discussions.php">Discussions</a>
-          <a href="meetings.php">Meetings</a>
         </div>
       </li>
       <li class="navelem"><a href="account_settings.php">Account Settings</a></li>
@@ -45,6 +49,7 @@ verify_logged_in();
       <?php if (get_current_role() == "admin") { ?>
       <li class="navelem"><a href="instructors_list.php">Instructors</a></li>
       <?php } ?>
+      <li class="navelem"><a href="meetings.php">Meetings</a></li>
 
       <?php
         if (is_logged_in()) {
