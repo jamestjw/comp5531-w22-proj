@@ -10,6 +10,7 @@ class QueryBuilder
     protected ?int $limit = null;
     protected array $order_by = array();
     protected array $joins = array();
+    protected array $joins_raw_sql = array();
 
     public function __construct(string $record_class_name)
     {
@@ -87,6 +88,12 @@ class QueryBuilder
                         // TODO: Implement this when necessary
                         break;
                 }
+            }
+        }
+
+        if (!empty($this->joins_raw_sql)) {
+            foreach ($this->joins_raw_sql as $join_sql) {
+                $sql .= " $join_sql";
             }
         }
 
@@ -191,6 +198,12 @@ class QueryBuilder
     {
         $this->joins = array_merge($this->joins, $assocs);
         $this->joins = array_unique($this->joins);
+        return $this;
+    }
+
+    public function joins_raw_sql(string $sql)
+    {
+        array_push($this->joins_raw_sql, $sql);
         return $this;
     }
 

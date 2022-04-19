@@ -500,6 +500,23 @@ class Record
         $query_builder = new QueryBuilder(get_called_class());
         return $query_builder->joins($assocs);
     }
+    
+    /*
+    Example:
+        If we want to find discussions that have recent messages
+        Discussion::join_raw_sql("
+            JOIN discussion_messages on
+                discussion_messages.discussion_id = discussions.id AND 
+                discussions.created_at > now() - INTERVAL 8 HOUR");
+
+        Note: For the above use case, we would need a distinct clause
+        for it to work as expected, but the idea is clear.
+    */
+    public static function joins_raw_sql(string $join_sql)
+    {
+        $query_builder = new QueryBuilder(get_called_class());
+        return $query_builder->joins_raw_sql($join_sql);
+    }
 }
 
 spl_autoload_register(function ($class_name) {
