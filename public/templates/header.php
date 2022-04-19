@@ -37,7 +37,6 @@ verify_logged_in();
             <a href="student_list.php">Student List</a> 
           <?php }?>
           <a href="discussions.php">Discussions</a>
-          <a href="meetings.php">Meetings</a>
         </div>
       </li>
       <li class="navelem"><a href="account_settings.php">Account Settings</a></li>
@@ -45,6 +44,7 @@ verify_logged_in();
       <?php if (get_current_role() == "admin") { ?>
       <li class="navelem"><a href="instructors_list.php">Instructors</a></li>
       <?php } ?>
+      <li class="navelem"><a href="meetings.php">Meetings</a></li>
 
       <?php
         if (is_logged_in()) {
