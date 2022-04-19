@@ -53,7 +53,7 @@ try {
 <?php include "templates/header.php"; ?>
 
 <div class="menubar">
-    <label for="menuform" class="menu_form_label">Course : <?php echo $course_lecture[0]->lecture_code?></label>
+    <label for="menuform" class="menu_form_label"><?php echo $course_lecture[0]->lecture_code?></label>
     <form name="menuform" method="post" class="menu_form">
         <button name="students" class="menu_item">Students</button>
         <button name="team" class="menu_item"><?php if(get_current_role() == 'student') { echo "Team";} else { echo "Teams";} ?></button>
@@ -66,9 +66,9 @@ try {
     <?php
     // Set the default view of the course page to ??
     if (!isset($_SESSION["course_view"])) {
-        $_SESSION["email_view"] = "inbox";
+        $_SESSION["course_view"] = "students";
     }
-    // Set the email view depending on which menu item is pressed
+    // Set the course view depending on which menu item is pressed
     if (isset($_POST["students"])) {
         $_SESSION["course_view"] = "students";
     } elseif (isset($_POST["team"])) {

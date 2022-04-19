@@ -43,7 +43,7 @@ try {
 
 ?>
 
-<h2>Marked entities</h2>
+<h2 class="container">Marked entities</h2>
 <?php
 if ($marked_entities && count($marked_entities)) { ?>
         <div class="container">
