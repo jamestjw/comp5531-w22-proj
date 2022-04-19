@@ -87,7 +87,7 @@ try {
 
 
 <?php
-    if (isset($_POST['submit2']) && ($create_success Or $section_success)) {
+    if (isset($_POST['submit2']) && ($create_success || $section_success)) {
         echo "<h3> $count Students added successfully</h3><br>";
     } elseif (isset($_POST['submit2'])) {
         echo "<h3> Student List upload failed </h3>";
