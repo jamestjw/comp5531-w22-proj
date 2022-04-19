@@ -23,6 +23,8 @@ verify_logged_in();
     <title>COMP 5531 Database App</title>
   </head>
 
+  <?php include "get_user_associated_lectures.php"; ?>
+
   <body>
     <h1>COMP 5531 Database App</h1>
     <ul class="topnav">
@@ -32,6 +34,9 @@ verify_logged_in();
         <button class="dropbtn">Courses</button>
         <div class="dropdown-content">
           <a href="course_list.php">Course List</a>
+          <?php foreach($lectures as $lecture){ ?>
+              <a href="course_list.php"><?php echo $lecture->lecture_code?></a>
+          <?php }?>
           <a href="marked_entities.php">Marked Entities</a>
           <?php if(get_current_role() == "instructor") {?> 
             <a href="student_list.php">Student List</a> 

@@ -52,6 +52,18 @@ function get_users_name()
     }
 }
 
+function get_users_id()
+{
+    // Gets the user id of the logged in user
+    if (isset($_SESSION)) {
+        $user_id = $_SESSION["current_user"];
+        return $user_id->id;
+    } else {
+        return '';
+    }
+}
+
+
 function verify_logged_in()
 {
     if (isset($_SESSION) && array_key_exists("AuthKey", $_SESSION)) { // Session is started and authentication key exists
