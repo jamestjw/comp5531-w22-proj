@@ -41,11 +41,18 @@ try {
     echo "<br>" . $error->getMessage();
 }
 
+try {
+    $lecture_instructor = LectureInstructor::includes(['user'])->find_by(array('lecture_id' => $lecture_page_id));
+
+} catch (PDOException $error) {
+    echo "<br>" . $error->getMessage();
+}
+
 ?>
 
 <?php include "templates/header.php"; ?>
 
-<?php if(get_current_role() == 'instructor') { ?>
+<?php if(get_current_role() == 'instructor' && get_users_id() == $lecture_instructor->user_id) { ?>
     <h2>Student List </h2>
     <?php
     $course_students = array();
@@ -158,7 +165,7 @@ if ($marked_entities && count($marked_entities)) { ?>
     <?php }
 ?> 
 
-<?php if(get_current_role() == 'instructor') { ?>
+<?php if(get_current_role() == 'instructor' && get_users_id() == $lecture_instructor->user_id)) { ?>
 <div class="container">
     <h2>Add a marked entity for this lecture</h2>
 

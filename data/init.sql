@@ -250,6 +250,3 @@ CREATE TABLE IF NOT EXISTS meetings (
 	updated_at TIMESTAMP,
 	FOREIGN KEY (team_id) REFERENCES teams(id) 
 );
-
-
-
