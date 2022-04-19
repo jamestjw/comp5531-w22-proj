@@ -14,7 +14,7 @@ try {
 }
 
 try {
-    $lecture = Lecture::getAll();
+    $lecture = Lecture::includes('course')->getAll();
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
@@ -154,8 +154,8 @@ if ($instructors && count($instructors)) { ?>
         <select Name="lecture_selection" id="lecture_selection">
             <option value="">----Select----</option>
         <?php foreach($lecture as $row) { ?>
-            <option value="<?php echo $row->id; ?>">
-            <?php echo $row->id; ?>
+            <option value="<?php echo $row->lecture_code; ?>">
+            <?php echo $row->course->course_name." ".$row->lecture_code; ?>
             </option>
         <?php } ?>
         </select>
