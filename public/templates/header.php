@@ -72,18 +72,24 @@ verify_logged_in();
         <?php
         }
         ?>
+        
+        <?php if (is_logged_in()) { $name = get_users_name();
+            echo "<span style = 'float:right;vertical-align:middle;line-height: 45px;margin-right: 10px;'>
+            You are logged in as {$name}. <a href=\"logout.php\">Logout</a>
+            </span>";
+        } else {
+            echo "<span style = 'float:right;vertical-align:middle;line-height: 45px;margin-right: 10px;'>
+            You are not logged in. <a href=\"login.php\">Login</a>
+            </span>";
+        }
+        ?>
+
+
     </ul>
     
     <?php
     if (isset($_SESSION["alert_message"]) && $_SESSION["alert_message"]!="") {
         echo $_SESSION["alert_message"];
-    }
-
-    if (is_logged_in()) {
-        $name = get_users_name();
-        echo "<p>You are logged in as {$name}. <a href=\"logout.php\">Logout</a></p>";
-    } else {
-        echo "<p>You are not logged in. <a href=\"login.php\">Login</a></p>";
     }
     ?>
     
