@@ -10,7 +10,7 @@ $required_attrs = ["section_id", "first_name", "last_name", "password", "email"]
 
 foreach ($required_attrs as $attr) {
     if (!array_key_exists($attr, $_POST)) {
-        die("Invalid $$attr");
+        die("Invalid $attr");
     }
 }
 

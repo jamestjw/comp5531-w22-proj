@@ -19,7 +19,7 @@ try {
 <?php
 
 foreach ($course_sections as $course_section) {
-    echo "<h4>{$course_section->lecture->lecture_code} - {$course_section->section_code}</h3>";
+    echo "<h4>{$course_section->lecture->lecture_code} - {$course_section->section_code}</h4>";
 
     if ($course_section->section_ta != null) {
         echo "<p>{$course_section->section_ta->user->get_full_name()} - {$course_section->section_ta->user->email}</p>";
@@ -72,19 +72,19 @@ $existing_tas = User::where(["is_ta" => true]);
     <div>
         <div>
             <label for="first_name">First Name</label>
-            <input type="text" name="first_name" id="first_name">
+            <input type="text" name="first_name" id="first_name" required>
         </div>
         <div>
             <label for="last_name">Last Name</label>
-            <input type="text" name="last_name" id="last_name">
+            <input type="text" name="last_name" id="last_name" required>
         </div>
         <div>
             <label for="password">Password</label>
-            <input type="password" name="password" id="password">
+            <input type="password" name="password" id="password" required>
         </div>
         <div>
             <label for="email">Email Address</label>
-            <input type="text" name="email" id="email">
+            <input type="text" name="email" id="email" required>
         </div>
     </div>
     <input type="submit" name="submit" value="Submit">
