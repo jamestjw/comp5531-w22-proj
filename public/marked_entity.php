@@ -47,9 +47,6 @@ if (isset($_GET["id"]) && ($marked_entity = MarkedEntity::find_by_id($_GET["id"]
     $discussable_type = "MarkedEntity";
     include "discussion_list.php"
         ?>
-
-        <h5>Progress:</h5>
-        <p>TODO</p>
     </div>
 
     <button type="button" id="displayUpdateForm">Toggle update</button>
