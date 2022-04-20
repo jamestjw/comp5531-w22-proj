@@ -22,7 +22,10 @@ verify_logged_in();
 =======
     <link rel="stylesheet" href="css/email.css">
     <link rel="stylesheet" href="css/table_style.css">
+<<<<<<< HEAD
 >>>>>>> 1e0f066 (Refactoring of Course List into three pages.)
+=======
+>>>>>>> 1e0f066c888fc82e9083a5492057b6c641a92a64
 
     <title>COMP 5531 Database App</title>
   </head>
