@@ -39,7 +39,6 @@ verify_logged_in();
           <?php foreach($lectures as $lecture){ ?>
               <a href="course_lecture.php?id=<?php echo $lecture->id;?>"><?php echo $lecture->lecture_code?></a>
           <?php }?>
-          <a href="marked_entities.php">Marked Entities</a>
           <?php if(get_current_role() == "instructor") {?> 
             <a href="student_list.php">Student List</a> 
           <?php }?>
