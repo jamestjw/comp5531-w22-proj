@@ -33,7 +33,7 @@ try {
 }
 
 try {
-    $teams = Team::includes(['team_member'])->where(array('lecture_id' => $lecture_page_id));
+    $teams = Team::includes(['team_members'])->where(array('lecture_id' => $lecture_page_id));
 
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();

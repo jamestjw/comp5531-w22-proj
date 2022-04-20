@@ -19,7 +19,7 @@ require_once "../modules/models/section_student.php";
 require_once "../common.php";
 
 try {
-    $teams = Team::includes('team_member')->where(array('lecture_id' => $lecture_id));
+    $teams = Team::includes('team_members')->where(array('lecture_id' => $lecture_id));
 
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
@@ -36,7 +36,7 @@ try {
 $students_in_teams = array();
 
 foreach($teams as $t) {
-    foreach ($t->team_member as $member ) {
+    foreach ($t->team_members as $member ) {
         array_push($students_in_teams, $member->user_id);
     }
 }
@@ -119,7 +119,7 @@ if (isset($_POST["submit"])) {
                     </tr>
                 </thead>
                 <tbody>
-                <?php $students_in_team = $row->team_member; 
+                <?php $students_in_team = $row->team_members;
                 foreach ($students_in_team as $student) {?>
                 <tr>
                     <td><?php echo escape($student->user_id); ?></td>

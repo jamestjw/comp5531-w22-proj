@@ -33,7 +33,7 @@ try {
 }
 
 try {
-    $teams = Team::includes(['team_member'])->where(array('lecture_id' => $lecture_page_id));
+    $teams = Team::includes(['team_members'])->where(array('lecture_id' => $lecture_page_id));
 
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
@@ -58,7 +58,7 @@ try {
                     </tr>
                 </thead>
                 <tbody>
-                <?php $students_in_team = $row->team_member;
+                <?php $students_in_team = $row->team_members;
                 foreach ($students_in_team as $student) {?>
                 <tr>
                     <td><?php echo escape($student->user_id); ?></td>

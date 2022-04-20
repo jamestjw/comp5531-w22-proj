@@ -52,11 +52,11 @@ li    { display: table-row;}
   </li>
   <li>
     <label for="password">Change Password: </label>
-    <input type="text" id="msg" name="password"></input>
+    <input type="password" id="msg" name="password"></input>
   </li>
   <li>
     <label for="password_conf">Confirm Password: </label>
-    <input type="text" id="msg" name="password_conf"></input>
+    <input type="password" id="msg" name="password_conf"></input>
   </li>
  </ul>
  <input type="submit" name="submit" value="Submit">
