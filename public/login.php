@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 require_once "../modules/models/user.php";
 require_once "../common.php";
@@ -26,6 +26,7 @@ if (count($_POST) > 0) {
 
     if ($is_success == 0) {
         $_SESSION["alert_message"] = "Invalid email or Password!";
+        echo $_SESSION["alert_message"];
     } else {
         // Create user login token
         $loginToken = new Loggedin();
@@ -61,9 +62,10 @@ if (count($_POST) > 0) {
 }
 ?>
 
-<?php include "templates/header.php"; ?>
+<link rel="stylesheet" href="css/login.css">
 
-<form name="frmUser" method="post" action="">
+
+<form class="loginForm" name="frmUser" method="post" action="">
 	<table border="0" cellpadding="10" cellspacing="1" width="500" align="center" class="tblLogin">
 		<tr class="tableheader">
 		<td align="center" colspan="2">Enter Login Details</td>
