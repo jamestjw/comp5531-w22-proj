@@ -37,6 +37,9 @@ $admin->is_instructor = 0;
 $admin->password_digest = password_hash('root', PASSWORD_DEFAULT);
 $admin->save();
 
+
+include 'seed.php';
+
 if (!file_exists('public/uploads')) {
     mkdir('public/uploads', 0755, true);
 }
