@@ -20,6 +20,13 @@ try {
     echo "<br>" . $error->getMessage();
 }
 
+// check if you where directed here through a specific lecture page 
+$lecture_id = $_GET['id'] ?? 0;
+
+if($lecture_id > 0){
+    $section = Section::includes(['lecture' => 'course'])->where(array('lecture_id' => $lecture_id));
+}
+
     $create_success = false;
 
     if (isset($_POST['submit2'])) {
@@ -109,7 +116,6 @@ try {
     <input size='50' type='file' name='filename' accept=".csv">
     </br>
 
-    <!-- TO DO change to add info on section name as well -->
     <label for="section">Select Section</label>
     <select Name="section" id="section">
         <option value="" disabled selected>----Select----</option>
