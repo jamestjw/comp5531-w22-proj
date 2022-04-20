@@ -47,7 +47,7 @@ foreach ($lectures as $lecture) {
     <ul>
         <?php
         foreach ($lecture->teams as $team) {
-            echo "<li><a href='team_page.php?id={$team->id}'>Team Number {$team->id}</a></li>";
+            echo "<li><a href='course_lecture.php?id={$lecture->id}&view={$team->id}'>Team Number {$team->id}</a></li>";
         }
         ?>
     </ul>

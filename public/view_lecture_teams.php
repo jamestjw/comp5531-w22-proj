@@ -80,7 +80,6 @@ try {
 <?php }else {
     try {
         $all_student_team = TeamMember::includes(['teams' => 'lectures'])->where(array('user_id' => get_users_id(),));
-    
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
@@ -97,6 +96,10 @@ try {
         $student_team_id = null;
     }
     
+    if(isset($_GET["view"])){
+        $student_team_id = $_GET["view"];
+    }
+
     if(is_null($student_team_id)) {
         echo "You are not part of a team for this lecture";
     } else {

@@ -70,6 +70,12 @@ try {
     if (!isset($_SESSION["course_view"])) {
         $_SESSION["course_view"] = "students";
     }
+
+    if(isset($_GET["view"])){
+        $_SESSION["course_view"] = "team";
+
+    }
+
     // Set the course view depending on which menu item is pressed
     if (isset($_POST["students"])) {
         $_SESSION["course_view"] = "students";
