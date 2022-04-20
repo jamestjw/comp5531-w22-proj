@@ -60,7 +60,7 @@ try {
     <table>
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>Student ID</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email Address</th>
@@ -70,7 +70,7 @@ try {
             <tbody>
         <?php foreach ($course_students as $row) { ?>
             <tr>
-                <td><?php echo escape($row->id); ?></td>
+                <td><?php echo escape($row->student_id); ?></td>
                 <td><?php echo escape($row->first_name); ?></td>
                 <td><?php echo escape($row->last_name); ?></td>
                 <td><?php echo escape($row->email); ?></td>

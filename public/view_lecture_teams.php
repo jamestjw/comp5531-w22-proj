@@ -107,7 +107,7 @@ try {
                <table>
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>Student id</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email Address</th>
@@ -116,7 +116,7 @@ try {
                     <tbody>
                     <?php foreach ($team_members as $student) {?>
                     <tr>
-                        <td><?php echo escape($student->user_id); ?></td>
+                        <td><?php echo escape($student->user->student_id); ?></td>
                         <td><?php echo escape($student->user->first_name); ?></td>
                         <td><?php echo escape($student->user->last_name); ?></td>
                         <td><?php echo escape($student->user->email); ?></td>
