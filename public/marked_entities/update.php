@@ -54,6 +54,12 @@ if (isset($_FILES['marked_entity_file']) && $_FILES['marked_entity_file']['size'
     $attachment->save();
 }
 
+foreach ($UPDATABLE_FIELDS as $field) {
+    if (array_key_exists($field, $_POST)) {
+        $marked_entity->$field = $_POST[$field];
+    }
+}
+
 $marked_entity->save();
 
 // // Go back to the previous page
