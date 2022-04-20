@@ -21,7 +21,7 @@ if (count($_POST) > 0) {
     }
 
     if ($is_success == 0) {
-        $_SESSION["error_message"] = "Invalid email or Password!";
+        $_SESSION["alert_message"] = "Invalid email or Password!";
     } else {
         // Create user login token
         $loginToken = new Loggedin();
@@ -46,7 +46,13 @@ if (count($_POST) > 0) {
         $_SESSION["current_user_id"] = $user->id;
         set_current_role(current_user_possible_roles()[0] ?? null);
 
-        header("Location:  ./index.php");
+        // Force user to change password during initial login
+        if (!$user->is_password_changed) {
+            $_SESSION["alert_message"] = "Please change your password.";
+            header("Location:  ./account_settings.php");
+        } else {
+            header("Location:  ./index.php");
+        }
     }
 }
 ?>
