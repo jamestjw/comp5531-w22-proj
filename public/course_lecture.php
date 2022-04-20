@@ -55,7 +55,7 @@ try {
 <link rel="stylesheet" href="css/course_lecture.css">
 
 <div class="menubar">
-    <label for="menuform" class="menu_form_label"><?php echo $course_lecture[0]->lecture_code?></label>
+    <label for="menuform" class="menu_form_label"><?php echo $course_lecture[0]->course->course_name." ".$course_lecture[0]->lecture_code?></label>
     <form name="menuform" method="post" class="menu_form">
         <button name="students" class="menu_item">Students</button>
         <button name="team" class="menu_item"><?php if(get_current_role() == 'student') { echo "Team";} else { echo "Teams";} ?></button>
