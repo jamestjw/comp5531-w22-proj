@@ -120,6 +120,8 @@ if ($marked_entities && count($marked_entities)) { ?>
             </script>
         </div>
 
+        <input type="hidden" id="lecture_id" name="lecture_id" value="<?php echo $lecture_page_id; ?>">
+
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
