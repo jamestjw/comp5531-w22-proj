@@ -62,51 +62,6 @@ CREATE TABLE IF NOT EXISTS attachments (
 	updated_at TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS marked_entities (
-	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	title VARCHAR(50),
-	description TEXT,
-	lecture_id INT(11) UNSIGNED NOT NULL,
-	is_team_work BOOLEAN,
-	due_at TIMESTAMP,
-	created_at TIMESTAMP,
-	updated_at TIMESTAMP,
-	FOREIGN KEY (lecture_id) REFERENCES lectures(id)
-);
-
-CREATE TABLE IF NOT EXISTS marked_entity_files (
-	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	entity_id INT(11) UNSIGNED NOT NULL,
-	user_id INT(11) NOT NULL,
-	title VARCHAR(50),
-	description TEXT,
-	created_at TIMESTAMP,
-	updated_at TIMESTAMP,
-	FOREIGN KEY (entity_id) REFERENCES marked_entities(id)
-);
-
-CREATE TABLE IF NOT EXISTS marked_entity_file_changes (
-	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	entity_id INT(11) UNSIGNED NOT NULL,
-	user_id INT(11) NOT NULL,
-	action INT(11) UNSIGNED NOT NULL,
-	file_name TEXT,
-	created_at TIMESTAMP,
-	updated_at TIMESTAMP,
-	FOREIGN KEY (entity_id) REFERENCES marked_entities(id)
-);
-
-CREATE TABLE IF NOT EXISTS marked_entity_file_permissions (
-	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	permissions INT(11) UNSIGNED NOT NULL DEFAULT 0,
-	user_id INT(11) NOT NULL,
-	file_id INT(11) UNSIGNED NOT NULL,
-	created_at TIMESTAMP,
-	updated_at TIMESTAMP,
-	FOREIGN KEY (file_id) REFERENCES marked_entity_files(id) ON DELETE CASCADE
-);
-
-
 CREATE TABLE IF NOT EXISTS polls (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	parent_id INT(11) UNSIGNED NOT NULL,
@@ -160,6 +115,51 @@ CREATE TABLE IF NOT EXISTS sections (
 	section_code VARCHAR(60),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
+);
+
+
+CREATE TABLE IF NOT EXISTS marked_entities (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	title VARCHAR(50),
+	description TEXT,
+	lecture_id INT(11) UNSIGNED NOT NULL,
+	is_team_work BOOLEAN,
+	due_at TIMESTAMP,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP,
+	FOREIGN KEY (lecture_id) REFERENCES lectures(id)
+);
+
+CREATE TABLE IF NOT EXISTS marked_entity_files (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	entity_id INT(11) UNSIGNED NOT NULL,
+	user_id INT(11) NOT NULL,
+	title VARCHAR(50),
+	description TEXT,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP,
+	FOREIGN KEY (entity_id) REFERENCES marked_entities(id)
+);
+
+CREATE TABLE IF NOT EXISTS marked_entity_file_changes (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	entity_id INT(11) UNSIGNED NOT NULL,
+	user_id INT(11) NOT NULL,
+	action INT(11) UNSIGNED NOT NULL,
+	file_name TEXT,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP,
+	FOREIGN KEY (entity_id) REFERENCES marked_entities(id)
+);
+
+CREATE TABLE IF NOT EXISTS marked_entity_file_permissions (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	permissions INT(11) UNSIGNED NOT NULL DEFAULT 0,
+	user_id INT(11) NOT NULL,
+	file_id INT(11) UNSIGNED NOT NULL,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP,
+	FOREIGN KEY (file_id) REFERENCES marked_entity_files(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS lecture_instructors(
