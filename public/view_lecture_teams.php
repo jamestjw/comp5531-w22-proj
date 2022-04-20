@@ -78,23 +78,16 @@ try {
 
     <br><a href="create_team.php?id=<?php echo $lecture_page_id ?>">Create new teams</a> 
 <?php }else {
-    try {
-        $all_student_team = TeamMember::includes(['teams' => 'lectures'])->where(array('user_id' => get_users_id(),));
-    } catch (PDOException $error) {
-        echo "<br>" . $error->getMessage();
-    }
     
-    if(count($all_student_team)>0){
-        foreach($all_student_team as $st_team){
-            if ($st_team->teams->lectures->id == $lecture_page_id){
-                $student_team_id = $st_team->teams->id;
-            } else {
-                $student_team_id = null;
-            }
-        } 
+    $student_team = Team::joins(["team_members"])->find_by(["user_id"=>get_users_id(), "lecture_id"=>$lecture_page_id]);
+
+    if(!is_null($student_team)){
+        $student_team_id = $student_team->id;
     } else {
-        $student_team_id = null;
+        $student_team_id= null;
     }
+
+
     
     if(isset($_GET["view"])){
         $student_team_id = $_GET["view"];
