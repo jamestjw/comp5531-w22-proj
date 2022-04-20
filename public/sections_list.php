@@ -9,13 +9,13 @@
     $lecture_id = $_GET['lid'];
 
     try {
-        $section_course = Course::where(array('id' => $course_id));
+        $section_course = Course::find_by(array('id' => $course_id));
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
 
     try {
-        $section_lecture = Lecture::where(array('id' => $lecture_id));
+        $section_lecture = Lecture::find_by(array('id' => $lecture_id));
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
@@ -51,9 +51,9 @@
 
 <?php include "templates/header.php"; ?>
 
-
+<?php if (isset($section_course) && isset($section_lecture)): ?>
 <html>
-<h2>Sections for <?php echo($section_course[0]->course_code), " - ", ($section_course[0]->course_name), ", Lecture ", ($section_lecture[0]->lecture_code);?> </h2>
+<h2>Sections for <?php echo($section_course->course_code), " - ", ($section_course->course_name), ", Lecture ", ($section_lecture->lecture_code);?> </h2>
 
         <?php if (count($existing_sections) > 0): ?>
             <table class="ctb">
@@ -97,3 +97,9 @@
 
     <p><a href="lectures_list.php?id=<?php echo $course_id;?>"> Return to Lecture List</a></p>
 </html>
+
+<?php else: ?>
+    <html>
+        <h1> Error: The parent lecture or course do not exist.
+    </html>
+<?php endif;?>
