@@ -7,7 +7,7 @@ class Team extends Record
     protected static $table_name = "teams";
 
     protected static $has_many = array(
-        "team_member" => array(
+        'team_members' => array(
             "class_name" => "TeamMember",
             "foreign_key" => "team_id",
         )

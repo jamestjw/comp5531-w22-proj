@@ -9,6 +9,12 @@ require_once "../common.php";
 ensure_logged_in();
 
 $marked_entity_id = $_GET["marked_entity_id"] ?? $_POST["marked_entity_id"] ?? null;
+// This shouldn't be null
+$marked_entity = MarkedEntity::find_by_id($marked_entity_id);
+
+if (is_null($marked_entity)) {
+    die("Invalid marked entity");
+}
 
 if (isset($_POST['submit'])) {
     $marked_entity_file = new MarkedEntityFile();
@@ -22,6 +28,20 @@ if (isset($_POST['submit'])) {
     $marked_entity_file_change->entity_id = $_POST['marked_entity_id'];
     $marked_entity_file_change->file_name = basename($_FILES["file"]["name"]);
     $marked_entity_file_change->set_action("create");
+
+    $permissions_arr = array();
+
+    foreach ($_POST['permissions'] as $user_id => $permissions) {
+        $marked_entity_permission = new MarkedEntityFilePermissions();
+        $marked_entity_permission->user_id = $user_id;
+        foreach ($permissions as $permission) {
+            $marked_entity_permission->set_permission($permission);
+        }
+
+        array_push($permissions_arr, $marked_entity_permission);
+    }
+
+    $marked_entity_file->permissions = $permissions_arr;
 
     // Uploads folder needs to be created in the public/ directory
     // TODO: Make this more convenient
@@ -59,7 +79,7 @@ if (isset($_POST['submit'])) {
 
 // TODO: Ensure that marked entity ID is valid.
 if (isset($marked_entity_id)) {
-    $files = MarkedEntityFile::includes(["attachment" => [], "comments" => "user"])->where(array("entity_id"=>$marked_entity_id)); ?>
+    $files = MarkedEntityFile::includes(["attachment" => [], "comments" => "user", "permissions" => []])->where(array("entity_id"=>$marked_entity_id)); ?>
     <div>Files for marked entity ID: <?php echo $marked_entity_id; ?> </div>
     <div>Number of files: <?php echo count($files); ?> </div>
 
@@ -70,6 +90,7 @@ if (isset($marked_entity_id)) {
                     <th>Title</th>
                     <th>Description</th>
                     <th>File name</th>
+                    <th>Your permissions</th>
                     <th>Created At</th>
                     <th>Comments</th>
                     <th></th> <!-- Download -->
@@ -83,6 +104,26 @@ if (isset($marked_entity_id)) {
                 <td><?php echo escape($row->title); ?></td>
                 <td><?php echo escape($row->description); ?></td>
                 <td><?php echo $row->attachment->file_filename; ?></td>
+                <td>
+                    <?php
+                    $found = false;
+                    foreach ($row->permissions as $permission) {
+                        if ($permission->user_id == $_SESSION["current_user"]->id) {
+                            echo $permission->stringify();
+                            $found = true;
+                            break;
+                        }
+                    }
+                    // Defaults to read for admins, TAs and instructors
+                    if (!$found) {
+                        if (get_current_role() != "student") {
+                            echo "Read";
+                        } else {
+                            echo "N/A";
+                        }
+                    }
+                    ?>
+                </td>
                 <td><?php echo escape($row->created_at);  ?> </td>
                 <td>
                     <?php
@@ -113,17 +154,33 @@ if (isset($marked_entity_id)) {
                 </td>
 
                 <!-- TODO: Should we apply some sort of transformation to the file ID -->
-                <td><a href='<?php echo "download.php?file_id={$row->attachment->file_id}" ?>'>Download</a></td>
                 <td>
+                    <?php
+                        $may_read = $row->get_permission_for_user($_SESSION["current_user"]->id, "read");
+                    ?>
+                    <button onclick="location.href='<?php echo "download.php?file_id={$row->attachment->file_id}" ?>'" type="button" <?php if (!$may_read) {
+                        echo "disabled";
+                    } ?>>Download</button>
+                </td>
+                <td>
+                    <?php
+                        $may_delete = $row->get_permission_for_user($_SESSION["current_user"]->id, "delete");
+                    ?>
                     <form method="post" action="marked_entities/delete_student_file.php">
                         <input type="hidden" id="marked_entity_file_id" name="marked_entity_file_id" value="<?php echo $row->id; ?>">
-                        <input type="submit" name="submit" value="Delete">
+                        <input type="submit" name="submit" value="Delete" <?php if (!$may_delete) {
+                        echo "disabled";
+                    } ?>>
                     </form>
                 </td>
             </tr>
         <?php } ?>
         </tbody>
     </table>
+
+    <?php if (get_current_role() == "student") {
+                        $current_users_team = Team::joins(["team_members"])->find_by(["lecture_id" => $marked_entity->lecture_id, "user_id"=>$_SESSION["current_user"]->id]);
+                        $current_user_team_members = is_null($current_users_team) ? [] : TeamMember::includes("user")->where(["team_id"=>$current_users_team->id]); ?>
 
     <div>Add new file:</div>
     <form method="post" action="marked_entity_files.php" enctype="multipart/form-data">
@@ -134,8 +191,25 @@ if (isset($marked_entity_id)) {
         <input type="hidden" id="user_id" name="user_id" value="<?php echo $_SESSION["current_user_id"]; ?>">
         <input type="hidden" id="marked_entity_id" name="marked_entity_id" value="<?php echo $marked_entity_id; ?>">
         <input type="file" name="file" id="file">
+        <div>
+        <label for="permissions">Permissions</label>
+        <?php foreach ($current_user_team_members as $member) { ?>
+            <div>
+                <?php echo $member->user->get_full_name(); ?>
+                <input type="checkbox" name="permissions[<?php echo $member->user_id; ?>][]" value="read">
+                <label for="permissions[<?php echo $member->user_id; ?>]">Read</label>
+                <input type="checkbox" name="permissions[<?php echo $member->user_id; ?>][]" value="write">
+                <label for="permissions[<?php echo $member->user_id; ?>]">Write</label>
+                <input type="checkbox" name="permissions[<?php echo $member->user_id; ?>][]" value="delete">
+                <label for="permissions[<?php echo $member->user_id; ?>]">Delete</label>           
+            </div>
+        <?php } ?>
+        </div>
         <input type="submit" name="submit" value="Submit">
     </form>
+
+    <?php
+                    } ?>
 
     <div id="fileHistory">
         <?php
