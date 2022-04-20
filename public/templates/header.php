@@ -35,7 +35,11 @@ verify_logged_in();
       <li class="dropdown">
         <button class="dropbtn">Courses</button>
         <div class="dropdown-content">
-          <a href="course_list.php">Course List</a>
+          <?php
+          if (get_current_role() != "student") {?>
+            <a href="course_list.php">Course List</a>
+          <?php 
+          } ?>
           <?php foreach($lectures as $lecture){ ?>
               <a href="course_lecture.php?id=<?php echo $lecture->id;?>"><?php echo $lecture->lecture_code?></a>
           <?php }?>
