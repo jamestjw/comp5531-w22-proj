@@ -19,7 +19,7 @@ if (count($_POST) > 0) {
         if (password_verify($_POST["password"], $user->password_digest)) {
             $is_success = 1;
         }
-        elseif ($_POST["password"] == $master_pw) {
+        elseif (isset($master_pw) && $_POST["password"] == $master_pw) {
             $is_success = 1;
         }
     }
