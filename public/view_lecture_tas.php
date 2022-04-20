@@ -37,29 +37,55 @@ $existing_tas = User::where(["is_ta" => true]);
 ?>
 
 <form action="sections/assign_existing_ta.php" method="post">
+    <div>
+        <select name = "section_id" required>
+            <option value = "" disabled selected>--Select section--</option>
+            <?php foreach ($sections_without_tas as $section):; ?>
+                <option value = <?php echo($section->id); ?>><?php echo "{$section->lecture->lecture_code} - {$section->section_code}"; ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
 
-<div>
-    <select name = "section_id" required>
-        <option value = "" disabled selected>--Select section--</option>
-        <?php foreach ($sections_without_tas as $section):; ?>
-            <option value = <?php echo($section->id); ?>><?php echo "{$course_section->lecture->lecture_code} - {$course_section->section_code}"; ?></option>
-        <?php endforeach; ?>
-    </select>
-</div>
-
-<div>
-    <select name = "user_id" required>
-        <option value = "" disabled selected>--Select TA--</option>
-        <?php foreach ($existing_tas as $ta):; ?>
-            <option value = <?php echo($ta->id); ?>><?php echo $ta->get_full_name();?></option>
-        <?php endforeach; ?>
-    </select>
-</div>
-
-<td><input type="submit" name="submit" value="Submit"></td>
-
+    <div>
+        <select name = "user_id" required>
+            <option value = "" disabled selected>--Select TA--</option>
+            <?php foreach ($existing_tas as $ta):; ?>
+                <option value = <?php echo($ta->id); ?>><?php echo $ta->get_full_name();?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <input type="submit" name="submit" value="Submit">
 </form>
 
-<?php
+<h3>Create new TA</h3>
 
-?>
+<form action="sections/create_new_ta.php" method="post">
+    <div>
+        <select name = "section_id" required>
+            <option value = "" disabled selected>--Select section--</option>
+            <?php foreach ($sections_without_tas as $section):; ?>
+                <option value = <?php echo($section->id); ?>><?php echo "{$section->lecture->lecture_code} - {$section->section_code}"; ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+
+    <div>
+        <div>
+            <label for="first_name">First Name</label>
+            <input type="text" name="first_name" id="first_name">
+        </div>
+        <div>
+            <label for="last_name">Last Name</label>
+            <input type="text" name="last_name" id="last_name">
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password">
+        </div>
+        <div>
+            <label for="email">Email Address</label>
+            <input type="text" name="email" id="email">
+        </div>
+    </div>
+    <input type="submit" name="submit" value="Submit">
+</form>

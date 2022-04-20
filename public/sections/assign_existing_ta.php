@@ -6,12 +6,12 @@ require_once "../../modules/models/section_ta.php";
 require_once "../../modules/models/section.php";
 require_once "../../common.php";
 
-if (!array_key_exists("section_id", $_POST)) {
-    die("Invalid section_id");
-}
+$required_attrs = ["section_id", "user_id"];
 
-if (!array_key_exists("user_id", $_POST)) {
-    die("Invalid user_id");
+foreach ($required_attrs as $attr) {
+    if (!array_key_exists($attr, $_POST)) {
+        die("Invalid $$attr");
+    }
 }
 
 if (is_null($section = Section::find_by_id($_POST["section_id"]))) {
@@ -32,7 +32,7 @@ if (!is_null(SectionTA::find_by(["section_id" => $_POST["section_id"]]))) {
     die("This section already has a TA.");
 }
 
-// Check that the section has no TAs
+// Check that the user is a valid TA
 if (is_null(User::find_by(["id" => $_POST["user_id"], "is_ta"=> true]))) {
     die("This user is not a valid TA.");
 }
