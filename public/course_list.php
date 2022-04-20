@@ -1,3 +1,4 @@
+<?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
 <!--This works for now but should probably be refactored into separate html/php files.
 It was mostly to try mixed php/html and get something working with basic styling
 and data entry. -->

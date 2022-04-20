@@ -1,3 +1,5 @@
+<?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
+
 <!-- TODO: Only allow TA's of this course to do this  -->
 <?php
 require_once "../modules/models/comment.php";
