@@ -1,5 +1,7 @@
 <?php
 include "templates/header.php";
+
+ensure_logged_in();
 ?>
  <link rel="stylesheet" href="css/email.css">
 

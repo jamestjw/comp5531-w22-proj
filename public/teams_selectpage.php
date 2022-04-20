@@ -6,6 +6,8 @@ require_once "../modules/models/team_member.php";
 require_once "../modules/models/lecture.php";
 require_once "../modules/models/section_student.php";
 require_once "../modules/models/section.php";
+
+ensure_logged_in();
 ?>
 
 <?php include "templates/header.php"; ?>
