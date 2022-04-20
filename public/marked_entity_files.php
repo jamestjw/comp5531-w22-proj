@@ -97,7 +97,9 @@ if (isset($marked_entity_id)) {
     } else {
         $files = MarkedEntityFile::includes(["attachment" => [], "comments" => "user", "permissions" => []])->where(array("entity_id"=>$marked_entity_id));
     }
-    $is_ta_for_course = $_SESSION["current_user"]->is_ta && User::joins_raw_sql("JOIN section_tas on section_tas.user_id = users.id JOIN sections on sections.id = section_tas.section_id AND sections.lecture_id = {$marked_entity->lecture_id}")->find_by([]) != null;
+
+    $current_user_may_comment = ($_SESSION["current_user"]->is_ta && User::joins_raw_sql("JOIN section_tas on section_tas.user_id = users.id JOIN sections on sections.id = section_tas.section_id AND sections.lecture_id = {$marked_entity->lecture_id}")->find_by(["is_ta" => 1, "users.id"=>$_SESSION["current_user_id"]]) != null)
+    || ($_SESSION["current_user"]->is_instructor && User::joins_raw_sql("JOIN lecture_instructors on lecture_instructors.user_id = users.id AND lecture_instructors.lecture_id = {$marked_entity->lecture_id}")->find_by(["is_instructor" => 1, "users.id"=>$_SESSION["current_user_id"]]) != null);
     ?>
 
     <div>Files for marked entity ID: <?php echo $marked_entity_id; ?> </div>
@@ -163,7 +165,7 @@ if (isset($marked_entity_id)) {
                     ?>
 
                     <?php
-                        if ($is_ta_for_course) {
+                        if ($current_user_may_comment) {
                             $user_id = $_SESSION["current_user"]->id;
                             $commentable_id = $row->id;
                             $commentable_type = "MarkedEntityFile";
