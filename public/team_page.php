@@ -16,13 +16,14 @@ $team_id = $_GET["id"];
 
 $team_members = TeamMember::includes("user")->where(array("team_id" => $team_id));
 $meetings = Meeting::where(array("team_id" => $team_id));
-$marked_entities = Lecture::joins_raw_sql("
-    JOIN teams t on
-    t.lecture_id = lectures.id AND
-    t.id = {$team_id}
-")->includes("marked_entities")->getAll()[0]->marked_entities;
+$marked_entities = MarkedEntity::joins_raw_sql("
+    JOIN lectures ON
+    marked_entities.lecture_id = lectures.id
+    JOIN teams ON
+    teams.id = {$team_id} AND teams.lecture_id = lectures.id
+")->getAll();
 
-if (isset($team_members) && !empty($team_members)) {
+if (!empty($team_members)) {
 ?>
 
 <div>
@@ -57,7 +58,7 @@ if (isset($team_members) && !empty($team_members)) {
             <?php
             if (!empty($marked_entities) && !is_null($marked_entities)) {
                 foreach ($marked_entities as $me) {
-                    echo "<li><a href='meeting.php?id={$me->id}'>{$me->title} Due at: 
+                    echo "<li><a href='marked_entity.php?id={$me->id}'>{$me->title} Due at: 
                     {$me->due_at}</a></li>";
                 }
             }

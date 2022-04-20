@@ -22,25 +22,24 @@ $role = get_current_role();
 
 // TODO: Once tas are added, handle team selection here
 if ($role == "instructor" && !$current_user->is_admin) {
-    $all_info = Lecture::joins_raw_sql("
+    $lectures = Lecture::joins_raw_sql("
         JOIN lecture_instructors li on
         li.lecture_id = lectures.id
     ")->includes(["teams", "course"])->where(array("user_id" => $current_user->id));
 } elseif ($role == "student" && !$current_user->is_admin) {
-    $all_info = Lecture::joins_raw_sql("
+    $lectures = Lecture::joins_raw_sql("
         JOIN sections s on
         s.lecture_id = lectures.id
         JOIN section_students ss on
         ss.section_id = s.id
     ")->includes(["teams", "course"])->where(array("user_id" => $current_user->id));
 } elseif ($role == "admin" || $current_user->is_admin) {
-    $all_info = Lecture::includes(["teams", "course"])->getAll();
-    $lecture_teams = $all_info;
+    $lectures = Lecture::includes(["teams", "course"])->getAll();
 }
 ?>
 
 <?php
-foreach ($all_info as $lecture) {
+foreach ($lectures as $lecture) {
     $header = $lecture->course->course_code." ".$lecture->lecture_code;
     echo "<h3>{$header}</h3>";
     ?>

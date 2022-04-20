@@ -15,7 +15,6 @@ if (isset($_POST["submit"])) {
     $meeting->planned_time = $_POST["time"];
     $meeting->has_passed = '0';
     if (isset($_POST["team"])) {
-        echo "here";
         echo $_POST["team"];
         $meeting->team_id = $_POST["team"];
     }
@@ -48,24 +47,25 @@ if (isset($_POST["submit"])) {
     // Get the team number of the user creating the meeting
     if (get_current_role() == "student") {
         $current_user = $_SESSION["current_user"];
-        $team_options = array();
-        $team_member = TeamMember::where(["user_id" => $current_user->id]);
-        if (isset($team_member) && !empty($team_member)) {
-            foreach ($team_member as $tm) {
-                array_push($team_options, $tm->team_id);
-            }
-        }
+        $team_members = TeamMember::where(["user_id" => $current_user->id]);
+        $team_options = array_map(fn($tm) => $tm->team_id, $team_members);
     } 
-    if (!empty($team_options)) {
+
     ?>
+    <label for="team">Team #:</label>
     <select name = "team" id="team">
-        <option value = "">--Select Team--</option>
+        <option disabled value = "">--Select Team--</option>
         <?php foreach ($team_options as $tid):;?>
             <option value = <?php echo($tid);?>><?php echo($tid);?></option>
         <?php endforeach;?>
     </select>
-    <?php } ?>
+    <?php 
+    if (!empty($team_options)) { ?>
     <input type="submit" name="submit" value="Submit">
+    <?php
+    } else { 
+        echo "Disabled - only students in a team can schedule meetings.";
+    }?>
 </form>
 
 

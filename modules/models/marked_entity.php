@@ -22,7 +22,7 @@ class MarkedEntity extends Record
     );
 
     protected static $belongs_to = array(
-        "lectures" => array(
+        "lecture" => array(
             "class_name" => "lectures",
             "foreign_key" => "lecture_id"
         )
