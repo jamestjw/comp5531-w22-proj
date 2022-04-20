@@ -33,23 +33,36 @@
                     throw new PDOException("The ending date cannot be before the beginning.");
                 }
                 $new_lecture->save();
-                $create_success = true;
+                header('location:lectures_list.php?id='.$course_id);
             } catch (PDOException $error) {
                 echo "The Lecture could not be added!<br>Error: " . $error->getMessage();
                 }
             } 
-        }
-    }
 
-    if (isset($_POST['submitLecture']) && isset($create_success) && $create_success) {
-            header('location:lectures_list.php?id='.$course_id);
+            elseif(isset($_POST['deleteLecture'])){
+                try{
+                    Lecture::find_by(array('id' => $_POST['key']))->delete("id");
+                    header('location:lectures_list.php?id='.$course_id);
+                }
+                catch(PDOException $error){
+                    echo "The Lecture could not be deleted.<br>Error: " . $error->getMessage();
+                }
+            }
         }
+        else {?>
+            <p>You must be an <strong>admin</strong> to modify the section list.</p>
+            <?php }
+    }
 ?>
 
 <?php include "templates/header.php"; ?>
 
 <?php if (isset($specific_course)): ?>
 <html>
+<head>
+<link rel="stylesheet" href="css/table_style.css">
+</head>
+
         <h2>Lectures for <?php echo($specific_course->course_code), " - ", ($specific_course->course_name);?></h2>
         <?php if (count($existing_lectures) > 0): ?>
             <table class="ctb">
@@ -69,11 +82,19 @@
                 <td class="tgNorm"><?php echo($row->lecture_code);?></td>
                 <td class="tgNorm"><?php echo($row->starting_date);?></td>
                 <td class="tgNorm"><?php echo($row->ending_date);?></td>
-                <td class = "tgAct">                    
+                <td class = "tgAct"> 
+
                     <a href="sections_list.php?cid=<?php echo $course_id;?>&lid=<?php echo $row->id;?>">
-                    View Sections
-                    </a><br>
-                    <a href="course_lecture.php?id=<?php echo $row->id ?>">View Lecture Page </a>
+                    <button type="button" style="margin:5px";>View Sections</button>
+                    </a>
+                    <br>
+                    <a href="course_lecture.php?id=<?php echo $row->id ?>">
+                    <button type="button"style="margin:5px";>View Lecture Page</button>
+                    </a>
+                    <form method="post">
+                    <input type="hidden" id="key" name="key" value="<?=$row->id?>">
+                    <input type="submit" name="deleteLecture" value = "Delete Lecture" style="margin:5px">
+                    </form>
                 </td>
             </tr>
             <?php endforeach;?>

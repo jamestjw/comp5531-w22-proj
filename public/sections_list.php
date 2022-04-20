@@ -35,24 +35,35 @@
 
             try {
                 $new_section->save();
-                $create_success = true;
+                header('location:sections_list.php?cid='.$course_id."&lid=".$lecture_id);
             } catch (PDOException $error) {
-                echo "The section could not be added!<br>Error: " . $error->getMessage();
+                echo "The section could not be added!<br>Error:" . $error->getMessage();
+                }
+            }
+            elseif (isset($_POST['deleteSection'])){
+                try {
+                    Section::find_by(array('id' => $_POST['key']))->delete("id");
+                    header('location:sections_list.php?cid='.$course_id."&lid=".$lecture_id);
+                }
+                catch (PDOException $error) {
+                    echo "The course could not be deleted!" . $error->getMessage();
                 }
             } 
         }
+
+        else {?>
+            <p>You must be an <strong>admin</strong> to modify the section list.</p>
+    <?php }
     }
-
-    if (isset($_POST['submitSection']) && isset($create_success) && $create_success) {
-            header('location:sections_list.php?cid='.$course_id."&lid=".$lecture_id);
-        }
-
 ?>
 
 <?php include "templates/header.php"; ?>
 
 <?php if (isset($section_course) && isset($section_lecture)): ?>
 <html>
+<head>
+<link rel="stylesheet" href="css/table_style.css">
+</head>
 <h2>Sections for <?php echo($section_course->course_code), " - ", ($section_course->course_name), ", Lecture ", ($section_lecture->lecture_code);?> </h2>
 
         <?php if (count($existing_sections) > 0): ?>
@@ -69,7 +80,12 @@
             <tr>
                 <td class="tgNorm"><?php echo($row->id);?></td>
                 <td class="tgNorm"><?php echo($row->section_code);?></td>
-                <td class="tgNorm"></td>
+                <td class="tgNorm">                    
+                    <form method="post">
+                    <input type="hidden" id="key" name="key" value="<?=$row->id?>">
+                    <input type="submit" name="deleteSection" value = "Delete Section" style="margin:5px">
+                    </form>
+                </td>
             </tr>
             <?php endforeach;?>
 

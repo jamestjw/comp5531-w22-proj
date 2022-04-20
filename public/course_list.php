@@ -12,29 +12,40 @@ try {
 <?php include "templates/header.php"?>
 
 <?php if (!empty($_POST)) {
-    if (get_current_role() == "admin" && isset($_POST['submitCourse'])) {
-        $course = new Course();
-        $course->course_code = $_POST['course_code'];
-        $course->course_name = $_POST['course_name'];
-        try {
-            $course->save();
-            $create_success = true;
-        } catch (PDOException $error) {
-            echo "General Error: The course could not be added.<br>" . $error->getMessage();
-        }  
+    if (get_current_role() == "admin"){
+        if (isset($_POST['submitCourse'])) {
+            $course = new Course();
+            $course->course_code = $_POST['course_code'];
+            $course->course_name = $_POST['course_name'];
+            try {
+                $course->save();
+                $create_success = true;
+                if (isset($create_success)&& $create_success) {
+                    header('location: course_list.php');
+                }
+            } 
+            catch (PDOException $error) {
+                echo "General Error: The course could not be added.<br>" . $error->getMessage();
+            }
+        }
 
-    if (isset($_POST['submitCourse']) && isset($create_success)&& $create_success) 
-    {
-            header('location: course_list.php');
-    }
+        elseif (isset($_POST['deleteCourse'])){
+            try {
+                Course::find_by(array('id' => $_POST['key']))->delete("id");
+                header('location: course_list.php');
+            }
+            catch (PDOException $error) {
+                echo "The course could not be deleted!" . $error->getMessage();
+            }
+        }
     } 
     
-    else {?>
-    <p>You must be an <strong>admin</strong> to modify the course list.</p>
-    <?php }
 } ?>
 
 <html>
+<head>
+<link rel="stylesheet" href="css/table_style.css">
+</head>
     <body>
         <h2>Courses</h2>
         <?php if (count($result_courses) > 0): ?>
@@ -56,8 +67,13 @@ try {
                 <td class="tgNorm"><?php echo($row->course_name);?></td>
                 <td class = "tgAct">                    
                     <a href="lectures_list.php?id=<?php echo $row->id;?>">
-                    View Lectures
+                    <button type="button"style="margin:5px";>View Lectures</button>
                     </a>
+                    <br>
+                    <form method="post">
+                    <input type="hidden" id="key" name="key" value="<?=$row->id?>">
+                    <input type="submit" name="deleteCourse" value = "Delete Course" style="margin:5px">
+                    </form>
                 </td>
 
             </tr>
