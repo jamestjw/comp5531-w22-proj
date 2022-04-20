@@ -98,9 +98,8 @@ if (isset($marked_entity_id)) {
         $files = MarkedEntityFile::includes(["attachment" => [], "comments" => "user", "permissions" => []])->where(array("entity_id"=>$marked_entity_id));
     }
     $is_ta_for_course = $_SESSION["current_user"]->is_ta && User::joins_raw_sql("JOIN section_tas on section_tas.user_id = users.id JOIN sections on sections.id = section_tas.section_id AND sections.lecture_id = {$marked_entity->lecture_id}")->find_by([]) != null;
-    // print_r(User::joins_raw_sql("JOIN section_tas on section_tas.user_id = users.id JOIN sections on sections.id = section_tas.id AND sections.lecture_id = {$marked_entity->lecture_id}"));
-    // print_r($is_ta_for_course);
     ?>
+
     <div>Files for marked entity ID: <?php echo $marked_entity_id; ?> </div>
     <div>Number of files: <?php echo count($files); ?> </div>
 

@@ -47,7 +47,8 @@ if (isset($_POST['submit'])) {
 <?php
 
 if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messages" => ["poll"=>"poll_options", "user"=>[], "comments" => "user"]])->find_by_id($_GET["id"]))) {
-    $discussion_messages = $discussion->discussion_messages; ?>
+    $discussion_messages = $discussion->discussion_messages;
+    $is_ta_for_course = $_SESSION["current_user"]->is_ta && User::joins_raw_sql("JOIN section_tas on section_tas.user_id = users.id JOIN sections on sections.id = section_tas.section_id AND sections.lecture_id = {$marked_entity->lecture_id}")->find_by([]) != null; ?>
 
     <div>Title: <?php echo $discussion->title; ?> (#<?php echo $discussion->id ?>) </div>
     <div>Number of posts: <?php echo count($discussion_messages); ?> </div>
@@ -122,7 +123,7 @@ if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messa
                 ?>
                 <?php
                     // TODO: Only display this to TA's of this course!
-                    if (true) {
+                    if ($is_ta_for_course) {
                         $user_id = $_SESSION["current_user"]->id;
                         $commentable_id = $discussion_message->id;
                         $commentable_type = "DiscussionMessage";
