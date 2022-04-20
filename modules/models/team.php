@@ -13,6 +13,13 @@ class Team extends Record
         )
     );
 
+    protected static $belongs_to = array(
+        "lectures" => array(
+            "class_name" => "Lecture",
+            "foreign_key" => "lecture_id"
+        )
+    );
+
     public $id;
     public $lecture_id;
     public $created_at;

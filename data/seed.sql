@@ -5,3 +5,4 @@ INSERT INTO marked_entities (title, description, lecture_id, is_team_work, due_a
 INSERT INTO users (first_name, last_name, email, is_admin, is_instructor, is_ta, student_id, password_digest, created_at, updated_at) values ('Lea', 'Moreau', 'lea@concordia.ca', 0, 0, 0, 123456789, 'asqwerwer123', now(), now());
 INSERT INTO teams (id, lecture_id) values (1,1);
 INSERT INTO team_members (team_id, user_id) values (1,1);
+

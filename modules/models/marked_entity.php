@@ -21,6 +21,13 @@ class MarkedEntity extends Record
         )
     );
 
+    protected static $belongs_to = array(
+        "lecture" => array(
+            "class_name" => "lectures",
+            "foreign_key" => "lecture_id"
+        )
+    );
+
     public int $id;
     public string $title;
     public string $description;

@@ -43,6 +43,7 @@ verify_logged_in();
           <a href="discussions.php">Discussions</a>
         </div>
       </li>
+      <li class="navelem"><a href="teams_selectpage.php">My Teams</a></li>
       <li class="navelem"><a href="account_settings.php">Account Settings</a></li>
       <li class="navelem"><a href="emails.php">Email</a></li>
       <?php if (get_current_role() == "admin") { ?>

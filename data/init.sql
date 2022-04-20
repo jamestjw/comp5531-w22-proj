@@ -70,7 +70,8 @@ CREATE TABLE IF NOT EXISTS marked_entities (
 	is_team_work BOOLEAN,
 	due_at TIMESTAMP,
 	created_at TIMESTAMP,
-	updated_at TIMESTAMP
+	updated_at TIMESTAMP,
+	FOREIGN KEY (lecture_id) REFERENCES lectures(id)
 );
 
 CREATE TABLE IF NOT EXISTS marked_entity_files (

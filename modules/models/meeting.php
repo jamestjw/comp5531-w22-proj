@@ -7,7 +7,7 @@ class Meeting extends Record
     protected static $table_name = "meetings";
 
     public $id;
-    public $group_id;
+    public $team_id;
     public $user_id;
     public $title;
     public $agenda;
