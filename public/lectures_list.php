@@ -7,7 +7,7 @@
     $course_id = $_GET['id'];
 
     try {
-        $specific_course = Course::where(array('id' => $course_id));
+        $specific_course = Course::find_by(array('id' => $course_id));
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
@@ -48,8 +48,9 @@
 
 <?php include "templates/header.php"; ?>
 
+<?php if (isset($specific_course)): ?>
 <html>
-        <h2>Lectures for <?php echo($specific_course[0]->course_code), " - ", ($specific_course[0]->course_name);?></h2>
+        <h2>Lectures for <?php echo($specific_course->course_code), " - ", ($specific_course->course_name);?></h2>
         <?php if (count($existing_lectures) > 0): ?>
             <table class="ctb">
                 <thead>
@@ -106,3 +107,9 @@
 
         <p><a href="course_list.php"> Return to Course List</a></p>
 </html>
+
+<?php else: ?>
+    <html>
+        <h1> Error: The parent course does not exist.
+    </html>
+<?php endif;?>
