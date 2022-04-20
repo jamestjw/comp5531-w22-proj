@@ -1,0 +1,54 @@
+.menubar {
+    left: 0;
+    width: 25%;
+    background-color:#33cccc;
+    position:fixed;
+    height: 100%;
+}
+
+.lecturedisplay {
+    right:0;
+    width: 75%;
+    background-color: #faf0e6;
+    border-style: solid;
+    border-width: 0px;
+    position:fixed;
+    height: 100%;
+}
+
+.menu_form_label {
+    color:white;
+    font-size:xx-large;
+}
+
+.menu_form {
+    height:100%;
+}
+
+.menu_item{
+    -webkit-appearance: none;
+    background-color:#33cccc;  
+    width: 100%;
+    height: 10%;
+    position: relative;
+    border: none;
+    padding: 0;
+    background: none;
+}
+
+.menu_item:hover {
+    background-color: #ffc0cb;
+}
+
+.header_labels {
+    display:inline-block;
+    width: 5%;
+    text-align: right;
+}
+.header_fields {
+    width:100%;
+}
+
+/*.lecturedisplay{
+    float: right; 
+}*/
