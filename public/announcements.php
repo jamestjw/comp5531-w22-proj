@@ -19,10 +19,9 @@ if (isset($_POST['submit']) && get_current_role() == "admin") {
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
-} elseif (get_current_role() != "admin") {
+} elseif (isset($_POST['submit']) && get_current_role() != "admin") {
     echo "Invalid access, you are not an admin.";
 }
-
 ?>
 
 <?php include "templates/header.php"; ?>
