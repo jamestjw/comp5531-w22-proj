@@ -17,6 +17,7 @@ class User extends Record
     public $is_instructor;
     public $is_ta;
     public $password_digest;
+    public $is_password_changed;
     public $created_at;
     public $updated_at;
 

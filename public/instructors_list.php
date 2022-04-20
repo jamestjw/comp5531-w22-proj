@@ -14,16 +14,20 @@ try {
 }
 
 try {
-    $lecture = Lecture::getAll();
+    $lecture = Lecture::includes('course')->getAll();
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
 
 try {
-    $course_assignment = LectureInstructor::includes(["user", "lecture"])->getAll();
+    $course_assignment = LectureInstructor::includes('user')->includes(['lecture' => 'course'])->getAll();
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
+
+$assigned_lectures = array_map(fn($a) => $a->lecture, $course_assignment);
+
+$unassigned_lectures = array_udiff($lecture, $assigned_lectures, fn($lec_a, $lec_b) => $lec_a->id <=> $lec_b->id );
 
 if (isset($_POST['submit'])) {
     $user = new User();
@@ -53,6 +57,11 @@ if (isset($_POST['lecture_submit']) && LectureInstructor::where(array("lecture_i
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
     }
+    header("refresh: 1");
+}
+
+if (isset($_POST['delete_association']) && LectureInstructor::find_by(array('lecture_id' => $_POST['lecture_id'], 'user_id' => $_POST['instructor_id'])) != null) {
+    LectureInstructor::find_by(array('lecture_id' => $_POST['lecture_id'], 'user_id' => $_POST['instructor_id']))->deleteWhere('user_id', 'lecture_id');
     header("refresh: 1");
 }
 
@@ -120,14 +129,18 @@ if ($instructors && count($instructors)) { ?>
                     <th>Course Lecture</th>
                     <th>Instructor</th>
                     <th>Created At</th>
+                    <th>Delete association</th>
                 </tr>
             </thead>
             <tbody>
         <?php foreach ($course_assignment as $row) {?>
             <tr>
-                <td><?php echo $row->lecture->id; ?></td>
+                <td><?php echo $row->lecture->course->course_name." ".$row->lecture->lecture_code; ?></td>
                 <td><?php echo $row->user->get_full_name(); ?></td>
                 <td><?php echo escape($row->created_at);  ?> </td>
+                <td><form method="post"><input type="hidden" name='lecture_id' value="<?php echo$row->lecture->id; ?>"><input type="submit" name="delete_association" value="delete">
+                    <input type="hidden" name='instructor_id' value="<?php echo $row->user->id;?>">
+                    </form></td>
             </tr>
         <?php } ?>
         </tbody>
@@ -153,9 +166,9 @@ if ($instructors && count($instructors)) { ?>
         Course Lecture: 
         <select Name="lecture_selection" id="lecture_selection">
             <option value="">----Select----</option>
-        <?php foreach($lecture as $row) { ?>
+        <?php foreach($unassigned_lectures as $row) { ?>
             <option value="<?php echo $row->id; ?>">
-            <?php echo $row->course_id; ?>
+            <?php echo $row->course->course_name." ".$row->lecture_code; ?>
             </option>
         <?php } ?>
         </select>

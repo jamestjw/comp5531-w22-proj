@@ -18,7 +18,9 @@ if (is_null($marked_entity_file = MarkedEntityFile::find_by_id($id))) {
     die("Invalid Marked Entity file");
 }
 
-// TODO: Check if the user is indeed a member of this team
+if (!$marked_entity_file->get_permission_for_user($_SESSION["current_user_id"], "delete")) {
+    die("You do not have permission to delete this file");
+}
 
 if ($marked_entity_file->marked_entity->due_date_passed()) {
     die("Unable to update marked entity pass its due date.");

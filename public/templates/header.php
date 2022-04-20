@@ -18,7 +18,6 @@ verify_logged_in();
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/email.css">
 
     <title>COMP 5531 Database App</title>
   </head>
@@ -72,8 +71,8 @@ verify_logged_in();
     </ul>
     
     <?php
-    if (isset($_SESSION["error_message"]) && $_SESSION["error_message"]!="") {
-        echo $_SESSION["error_message"];
+    if (isset($_SESSION["alert_message"]) && $_SESSION["alert_message"]!="") {
+        echo $_SESSION["alert_message"];
     }
 
     if (is_logged_in()) {

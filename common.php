@@ -27,6 +27,9 @@ function ensure_logged_in()
 
     if (!isset($_SESSION["current_user"])) {
         header("Location: login.php");
+    } elseif (!$_SESSION["current_user"]->is_password_changed) {
+        $_SESSION["alert_message"] = "Please change your password.";
+        header("Location: account_settings.php");
     }
 }
 
@@ -62,7 +65,6 @@ function get_users_id()
         return '';
     }
 }
-
 
 function verify_logged_in()
 {

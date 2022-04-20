@@ -27,6 +27,8 @@ class Lecture extends Record
     public $id;
     public $course_id;
     public $lecture_code;
+    public $starting_date;
+    public $ending_date;
     public $created_at;
     public $updated_at;
 }

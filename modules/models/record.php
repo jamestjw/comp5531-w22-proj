@@ -123,6 +123,36 @@ class Record
         return;
     }
 
+    public function deleteWhere($pk, $pk2) // Deletes from tables where pk is compound key
+    {
+        // Check to see if we are deleting a record that has not been saved yet.
+        if ($this->is_new_record) {
+            throw new ErrorException("Cannot delete an object that is not yet in a table. Please set the object to null instead.");
+        }
+
+        $attrs = $this->getAttrs();
+
+        // Ensure that the pk exists
+        if (!in_array($pk, $attrs) || !in_array($pk2, $attrs)) {
+            throw new ErrorException("Record trying to delete using a primary key that does not exist: ".$pk);
+        }
+
+        $result = get_called_class()::where(array($pk=>$this->$pk, $pk2=>$this->$pk2));
+        // Make sure that only one record with the supplied key exists in the table
+        if (count($result) > 1) {
+            throw new ErrorException("Primary key specified is not valid as it returns more than one record. PK: ".$pk);
+        }
+
+        $sql = sprintf(
+            "DELETE FROM %s WHERE %s = ? AND %s = ?",
+            get_called_class()::$table_name,
+            $pk, $pk2
+        );
+
+        execute_sql_query($sql, array($pk => $this->$pk, $pk2=>$this->$pk2));
+        return;
+    }
+
     public static function getAttrs()
     {
         $class = get_called_class();
@@ -169,7 +199,9 @@ class Record
         $conn = getConnection();
         execute_sql_query($sql, $new_obj, $conn);
 
-        $this->id = $conn->lastInsertId();
+        if (in_array("id", get_called_class()::getAttrs())) {
+            $this->id = $conn->lastInsertId();
+        }
         $this->is_new_record = false;
 
         // TODO: Fix n+1 saving

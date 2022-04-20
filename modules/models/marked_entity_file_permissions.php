@@ -57,7 +57,8 @@ class MarkedEntityFilePermissions extends Record
         }
     }
 
-    public function get_permission(string $inp): ?bool
+    public function get_permission(string $inp): bool
+
     {
         switch ($inp) {
             case "read":
@@ -67,6 +68,9 @@ class MarkedEntityFilePermissions extends Record
             case "delete":
                 return boolval($this->permissions & bindec('100'));
         }
+
+        return false;
+
     }
 
     public function stringify(): string

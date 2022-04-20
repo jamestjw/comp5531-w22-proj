@@ -11,15 +11,15 @@ CREATE TABLE IF NOT EXISTS users (
 
 	first_name VARCHAR(30) NOT NULL,
 	last_name VARCHAR(30) NOT NULL,
-	email VARCHAR(50) NOT NULL,
+	email VARCHAR(50) NOT NULL UNIQUE,
 	is_admin BOOLEAN NOT NULL,
 	is_instructor BOOLEAN NOT NULL DEFAULT 0,
 	is_ta BOOLEAN NOT NULL DEFAULT 0,
 	password_digest VARCHAR(60) NOT NULL,
-	student_id INT UNSIGNED,
+	student_id INT UNSIGNED UNIQUE,
+	is_password_changed BOOLEAN NOT NULL DEFAULT 0,
 	created_at TIMESTAMP,
-	updated_at TIMESTAMP,
-	UNIQUE (email)
+	updated_at TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS loggedin (
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS marked_entity_file_permissions (
 	file_id INT(11) UNSIGNED NOT NULL,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
-	FOREIGN KEY (file_id) REFERENCES marked_entity_files(id)
+	FOREIGN KEY (file_id) REFERENCES marked_entity_files(id) ON DELETE CASCADE
 );
 
 
@@ -147,6 +147,8 @@ CREATE TABLE IF NOT EXISTS lectures (
 	course_id INT(11) UNSIGNED,
 	FOREIGN KEY(course_id) REFERENCES courses(id) ON DELETE CASCADE,
 	lecture_code VARCHAR(60),
+	starting_date DATE NOT NULL,
+	ending_date DATE NOT NULL,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );
@@ -213,7 +215,7 @@ CREATE TABLE IF NOT EXISTS sent(
 CREATE TABLE IF NOT EXISTS section_students(
 	user_id INT(11) UNSIGNED NOT NULL,
 	section_id INT(11) UNSIGNED,
-	FOREIGN KEY (user_id) REFERENCES users(id),
+	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
 	FOREIGN KEY(section_id) REFERENCES sections(id) ON DELETE CASCADE,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
@@ -236,11 +238,11 @@ CREATE TABLE IF NOT EXISTS teams (
 );
 
 CREATE TABLE IF NOT EXISTS team_members (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	team_id INT(11) UNSIGNED,
 	user_id INT(11) UNSIGNED,
 	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
 	FOREIGN KEY(team_id) REFERENCES teams(id) ON DELETE CASCADE,
-	PRIMARY KEY (team_id, user_id),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );
@@ -261,4 +263,3 @@ CREATE TABLE IF NOT EXISTS meetings (
 	updated_at TIMESTAMP,
 	FOREIGN KEY (team_id) REFERENCES teams(id) 
 );
-

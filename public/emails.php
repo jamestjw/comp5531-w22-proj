@@ -1,6 +1,7 @@
 <?php
 include "templates/header.php";
 ?>
+ <link rel="stylesheet" href="css/email.css">
 
 <div class="menubar">
     <label for="menuform" class="menu_form_label">Folders</label>

@@ -1,20 +1,42 @@
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
 <?php include "templates/header.php"; ?>
 
-<?php if(get_current_role() == 'instructor') {
+<?php 
+$lecture_id = $_GET['id'];
+
+try {
+    $lecture_instructor = LectureInstructor::find_by(array('lecture_id' => $lecture_id));
+
+} catch (PDOException $error) {
+    echo "<br>" . $error->getMessage();
+}
+
+if(get_current_role() == 'instructor' && get_users_id() == $lecture_instructor->user_id) {
 
 require_once "../modules/models/user.php";
 require_once "../modules/models/section.php";
 require_once "../modules/models/section_student.php";
 require_once "../common.php";
 
-$lecture_id = $_GET['id'];
-
 try {
     $course_sections = Section::includes('section_students')->where(array('lecture_id' => $lecture_id));
 
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
+}
+
+try {
+    $current_teams = Team::includes('team_member')->where(array('lecture_id' => $lecture_id));
+
+} catch (PDOException $error) {
+    echo "<br>" . $error->getMessage();
+}
+
+$students_in_teams = array();
+foreach($current_teams as $t) {
+    foreach ($t->team_member as $member ) {
+        array_push($students_in_teams, $member->user_id);
+    }
 }
 
 $course_students = array();
@@ -58,6 +80,7 @@ foreach ($course_sections as $section) {
         }
 
         echo "<h5>New team created </h5>";
+        header("refresh : 1");
         
     }
 
@@ -68,13 +91,18 @@ foreach ($course_sections as $section) {
 <div class="student_choice">
     <form method="post">
         <?php foreach ($course_students as $student) { ?>
-            <input class="single-checkbox" type="checkbox" id="<?php echo $student->id; ?>" name="student[]" value="<?php echo $student->id; ?>"> <?php echo ($student->first_name." ".$student->last_name." ".$student->student_id) ?><br>
+            <?php if (!in_array($student->id, $students_in_teams)) { ?>
+                <input class="single-checkbox" type="checkbox" id="<?php echo $student->id; ?>" name="student[]" value="<?php echo $student->id; ?>"> <?php echo($student->first_name." ".$student->last_name." ".$student->student_id) ?><br>
+            <?php } ?>
         <?php } ?>
         <input type='submit' name='submit' value='submit'>
     </form>
 </div>
-<?php }
-?>
+<?php } else { ?>
+    <h2>You do not have the credentials to view this page.</h2>
+<?php } ?> 
+
+<a href="course_lecture.php?id=<?php echo $lecture_id ?>"> Return to Lecture page </a>
 
 <script type="text/JavaScript">
 var theCheckboxes = $(".student_choice input[type='checkbox']");
