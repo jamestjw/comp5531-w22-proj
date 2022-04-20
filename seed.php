@@ -1,6 +1,7 @@
 <?php
 require "modules/models/section_student.php";
 require "modules/models/lecture_instructor.php";
+require "modules/models/announcement.php";
 
 // Insert Instructors 
 $instructor = new User();
@@ -163,5 +164,9 @@ for ($id = 9; $id <=49; $id++){
     }
 }
 
+// Create welcome announcement (first announcement)
+$announcement = new Announcement();
+$announcement->announcement_text = "Welcome to Course Manager group assistant!";
+$announcement->save();
 
 ?>
