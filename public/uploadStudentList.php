@@ -102,7 +102,7 @@ try {
     <br>
     <p> 
         File should have a Header row and the columns should be as follows : Student ID, First Name, Last Name, Email 
-        <br>All new users have the default password: "Welcome"
+        <br>All new users have the default password: "welcome"
     </p>
     
     <label for="filename">Select File</label>
