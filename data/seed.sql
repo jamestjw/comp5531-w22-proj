@@ -13,3 +13,9 @@ INSERT INTO sections (lecture_id, section_code, created_at, updated_at) values (
 INSERT INTO sections (lecture_id, section_code, created_at, updated_at) values ( 2 ,  'AAI',  now() ,  now() );
 INSERT INTO sections (lecture_id, section_code, created_at, updated_at) values ( 2 ,  'AAK',  now() ,  now() );
 INSERT INTO sections (lecture_id, section_code, created_at, updated_at) values ( 3 ,  'CCI',  now() ,  now() );
+
+-- Marked Entities --
+INSERT INTO marked_entities (title, description, lecture_id, is_team_work, due_at, created_at, updated_at) VALUES
+( "Assignment 1" ,  'Assignment 1 Description',  1 ,  0, now() + interval 20 DAY, now(), now() ),
+( "Assignment 1" ,  'Assignment 1 Description',  2 ,  0, now() + interval 20 DAY, now(), now() ),
+( "Assignment 1" ,  'Assignment 1 Description',  3 ,  0, now() + interval 20 DAY, now(), now() );
