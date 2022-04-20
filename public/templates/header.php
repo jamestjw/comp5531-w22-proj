@@ -19,6 +19,7 @@ verify_logged_in();
 
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/email.css">
+    <link rel="stylesheet" href="css/table_style.css">
 
     <title>COMP 5531 Database App</title>
   </head>
