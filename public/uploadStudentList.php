@@ -9,7 +9,7 @@ require_once "../common.php";
 require_once "../modules/models/section.php";
 
 try {
-    $section = Section::getAll();
+    $section = Section::includes(['lecture' => 'course'])->getAll();
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
@@ -114,8 +114,8 @@ try {
     <select Name="section" id="section">
         <option value="" disabled selected>----Select----</option>
         <?php foreach($section as $row) { ?>
-            <option value="<?php echo $row->id; ?>">
-            <?php echo $row->id; ?>
+            <option value="<?php echo $row->id;?>">
+            <?php echo $row->lecture->course->course_name." ".$row->section_code; ?>
             </option>
         <?php } ?>
         </select>
