@@ -77,35 +77,53 @@ try {
     <?php }?>
 
     <br><a href="create_team.php?id=<?php echo $lecture_page_id ?>">Create new teams</a> 
-<?php } else {
+<?php }else {
     try {
-        $student_team_id = TeamMember::where(array('user_id' => get_users_id()))->team_id;
-        $team_members = TeamMember::where(array('team_id' => $student_team_id));
+        $all_student_team = TeamMember::includes(['teams' => 'lectures'])->where(array('user_id' => get_users_id(),));
     
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
-    }?>
-
-    <h3><?php echo "Team # ".$student_team_id ?></h3>
-           <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email Address</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php foreach ($team_members as $student) {?>
-                <tr>
-                    <td><?php echo escape($student->user_id); ?></td>
-                    <td><?php echo escape($student->user->first_name); ?></td>
-                    <td><?php echo escape($student->user->last_name); ?></td>
-                    <td><?php echo escape($student->user->email); ?></td>
-                </tr>
-                <?php }?>
-                </tbody>
-                </table>
+    }
     
+    if(count($all_student_team)>0){
+        foreach($all_student_team as $st_team){
+            if ($st_team->teams->lectures->id == $lecture_page_id){
+                $student_team_id = $st_team->teams->id;
+            } else {
+                $student_team_id = null;
+            }
+        } 
+    } else {
+        $student_team_id = null;
+    }
+    
+    if(is_null($student_team_id)) {
+        echo "You are not part of a team for this lecture";
+    } else {
+        $team_members = TeamMember::where(array('team_id' => $student_team_id));
+        ?>
+    
+        <h3><?php echo "Team # ".$student_team_id ?></h3>
+               <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($team_members as $student) {?>
+                    <tr>
+                        <td><?php echo escape($student->user_id); ?></td>
+                        <td><?php echo escape($student->user->first_name); ?></td>
+                        <td><?php echo escape($student->user->last_name); ?></td>
+                        <td><?php echo escape($student->user->email); ?></td>
+                    </tr>
+                    <?php }?>
+                    </tbody>
+                    </table>
+    
+    <?php } ?>   
 <?php }?>
