@@ -15,7 +15,6 @@ if (isset($_POST["submit"])) {
     $meeting->planned_time = $_POST["time"];
     $meeting->has_passed = '0';
     if (isset($_POST["team"])) {
-        echo $_POST["team"];
         $meeting->team_id = $_POST["team"];
     }
 
