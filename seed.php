@@ -1,9 +1,10 @@
 <?php
+
 require "modules/models/section_student.php";
 require "modules/models/lecture_instructor.php";
 require "modules/models/announcement.php";
 
-// Insert Instructors 
+// Insert Instructors
 $instructor = new User();
 $instructor->first_name = "Bipin";
 $instructor->last_name = "Desai";
@@ -97,60 +98,54 @@ $headers = fgetcsv($students, 1000, ",");
 $count = 0;
 
 while (($studentData = fgetcsv($students, 1000, ",")) !== false) {
+    $user = new User();
+    $user->student_id = $studentData[0];
+    $user->first_name = $studentData[1];
+    $user->last_name = $studentData[2];
+    $user->email = $studentData[3];
+    $user->is_admin = 0;
+    $user->is_instructor = 0;
+    $user->is_ta = 0;
+    $user->password_digest = password_hash("welcome", PASSWORD_DEFAULT);
+    $count++;
 
-        $user = new User();
-        $user->student_id = $studentData[0];
-        $user->first_name = $studentData[1];
-        $user->last_name = $studentData[2];
-        $user->email = $studentData[3];
-        $user->is_admin = 0;
-        $user->is_instructor = 0;
-        $user->is_ta = 0;
-        $user->password_digest = password_hash("welcome", PASSWORD_DEFAULT);
-        $count++;
-
-        try {
-            $user->save();
-            $create_success = true;
-        } catch (PDOException $error) {
-            echo "<br>" . $error->getMessage();
-        }
-
+    try {
+        $user->save();
+        $create_success = true;
+    } catch (PDOException $error) {
+        echo "<br>" . $error->getMessage();
+    }
 }
 
 fclose($students);
 
-if ($create_success){
+if ($create_success) {
     echo $count." students added to database";
-}
-else{
+} else {
     echo "student list upload failed";
 }
 
 
 // Associate Students to sections
-for ($id = 9; $id <=49; $id++){
-    if($id<=29){
+for ($id = 9; $id <=49; $id++) {
+    if ($id<=29) {
         $section_student = new SectionStudent();
         $section_student->user_id = $id;
         $section_student->section_id = 1;
         $section_student->save();
 
-        if($id<19){
+        if ($id<19) {
             $section_student = new SectionStudent();
             $section_student->user_id = $id;
             $section_student->section_id = 3;
             $section_student->save();
-        }
-        else{
+        } else {
             $section_student = new SectionStudent();
             $section_student->user_id = $id;
             $section_student->section_id = 4;
             $section_student->save();
         }
-
-    }
-    else{
+    } else {
         $section_student = new SectionStudent();
         $section_student->user_id = $id;
         $section_student->section_id = 2;
@@ -160,13 +155,23 @@ for ($id = 9; $id <=49; $id++){
         $section_student->user_id = $id;
         $section_student->section_id = 5;
         $section_student->save();
-
     }
 }
+
+// Create a new team
+$team = new Team();
+$team->lecture_id = 1;
+$new_team_members = array();
+// Take 4 students who are in the same course and put them in a team
+for ($id = 26; $id <=29; $id++) {
+    $team_member = new TeamMember();
+    $team_member->user_id = $id;
+    array_push($new_team_members, $team_member);
+}
+$team->team_members = $new_team_members;
+$team->save();
 
 // Create welcome announcement (first announcement)
 $announcement = new Announcement();
 $announcement->announcement_text = "Welcome to Course Manager group assistant!";
 $announcement->save();
-
-?>
