@@ -10,7 +10,15 @@ require_once "../common.php";
 </h3>
 
 <?php if (isset($_SESSION["current_user"])) {
-    $user = $_SESSION["current_user"] ?>
+    $user = $_SESSION["current_user"];
+
+    if (!$user->is_password_changed) {
+      ?>
+      <h3>Please change your password.</h3>
+      <?php
+    }
+
+    ?>
 
 <style>
 label { display: table-cell; }
@@ -86,6 +94,7 @@ if (isset($_POST['submit'])) {
 
         try {
             $user->save();
+            header("refresh: 0");
         } catch (PDOException $error) {
             echo "<br>" . $error->getMessage();
         }
