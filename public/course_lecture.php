@@ -64,7 +64,6 @@ try {
     </form>
 </div>
 
-   
 <div class="lecturedisplay">
     <?php
     // Set the default view of the course page to ??

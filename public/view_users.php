@@ -1,5 +1,5 @@
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
-
+<link rel="stylesheet" href="css/crsmgr_table_style.css">
 <?php
 
 require_once "../modules/models/user.php";
@@ -24,11 +24,11 @@ if ($result && count($result)) { ?>
         <table>
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email Address</th>
-                    <th>Hashed Password</th>
+                    <th>Instructor</th>
+                    <th>TA</th>
                     <th>Student ID</th>
                     <th>Created At</th>
                 </tr>
@@ -36,11 +36,11 @@ if ($result && count($result)) { ?>
             <tbody>
         <?php foreach ($result as $row) { ?>
             <tr>
-                <td><?php echo escape($row->id); ?></td>
                 <td><?php echo escape($row->first_name); ?></td>
                 <td><?php echo escape($row->last_name); ?></td>
                 <td><?php echo escape($row->email); ?></td>
-                <td><?php echo escape($row->password_digest); ?></td>
+                <td><?php echo ( $row->is_instructor ? "yes" : "no"); ?></td>
+                <td><?php echo ( $row->is_ta == true ? "yes" : "no"); ?></td>
                 <td><?php echo escape($row->student_id); ?></td>
                 <td><?php echo escape($row->created_at);  ?> </td>
             </tr>

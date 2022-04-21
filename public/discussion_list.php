@@ -7,18 +7,16 @@ if ($discussions && count($discussions)) { ?>
         <table>
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>Title</th>
-                    <th>User ID</th>
+                    <th>Author</th>
                     <th>Created At</th>
                 </tr>
             </thead>
             <tbody>
         <?php foreach ($discussions as $row) { ?>
             <tr>
-                <td><?php echo escape($row->id); ?></td>
                 <td><a href="discussion.php?id=<?php echo $row->id; ?>"><?php echo escape($row->title); ?></a></td>
-                <td><?php echo escape($row->user_id); ?></td>
+                <td><?php echo escape($row->user->get_full_name()); ?></td>
                 <td><?php echo escape($row->created_at);  ?> </td>
             </tr>
         <?php } ?>

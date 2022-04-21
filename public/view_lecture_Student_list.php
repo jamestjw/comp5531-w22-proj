@@ -45,7 +45,7 @@ try {
     <?php
 
     if(get_current_role() == 'instructor' || get_current_role() == 'admin' ) {?>
-    <br><a href="uploadStudentList.php?id=<?php echo $lecture_page_id ?>">Upload Student list </a>
+    <br><a href="uploadStudentList.php?id=<?php echo $lecture_page_id ?>">Upload Student list </a><br>
     <?php }
     $course_students = array();
 
@@ -57,7 +57,7 @@ try {
     }
 
     if ($course_students && count($course_students)>0) { ?>
-    <table>
+    <br><table>
             <thead>
                 <tr>
                     <th>Student ID</th>

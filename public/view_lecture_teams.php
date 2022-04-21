@@ -33,7 +33,7 @@ try {
 }
 
 try {
-    $teams = Team::includes(['team_members'])->where(array('lecture_id' => $lecture_page_id));
+    $teams = Team::includes(['team_members' => 'user'])->where(array('lecture_id' => $lecture_page_id));
 
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
@@ -50,22 +50,20 @@ try {
            <table>
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>Student ID</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email Address</th>
-                        <th>Created At</th>
                     </tr>
                 </thead>
                 <tbody>
                 <?php $students_in_team = $row->team_members;
                 foreach ($students_in_team as $student) {?>
                 <tr>
-                    <td><?php echo escape($student->user_id); ?></td>
+                    <td><?php echo escape($student->user->student_id); ?></td>
                     <td><?php echo escape($student->user->first_name); ?></td>
                     <td><?php echo escape($student->user->last_name); ?></td>
                     <td><?php echo escape($student->user->email); ?></td>
-                    <td><?php echo escape($student->user->created_at);  ?> </td>
                 </tr>
                 <?php }?>
                 </tbody>
