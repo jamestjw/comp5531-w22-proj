@@ -58,7 +58,9 @@ try {
         <button name="team" class="menu_item"><?php if(get_current_role() == 'student') { echo "My Team";} else { echo "Teams";} ?></button>
         <button name="marked_entities" class="menu_item">Marked Entities</button>
         <button name="discussion" class="menu_item">Lecture Discussion</button>
-        <button name="tas" class="menu_item">TAs</button>
+        <?php if (get_current_role() == 'instructor' || get_current_role() == 'admin') { ?>
+            <button name="tas" class="menu_item">TAs</button>
+        <?php } ?>
     </form>
 </div>
 
