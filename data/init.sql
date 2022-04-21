@@ -222,6 +222,17 @@ CREATE TABLE IF NOT EXISTS section_students(
 	PRIMARY KEY (section_id, user_id)
 );
 
+CREATE TABLE IF NOT EXISTS section_tas(
+	user_id INT(11) UNSIGNED NOT NULL,
+	section_id INT(11) UNSIGNED,
+	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+	FOREIGN KEY(section_id) REFERENCES sections(id) ON DELETE CASCADE,
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP,
+	PRIMARY KEY (section_id, user_id),
+	UNIQUE (section_id)
+);
+
 CREATE TABLE IF NOT EXISTS announcements (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	announcement_text TEXT,

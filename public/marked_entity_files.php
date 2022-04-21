@@ -97,7 +97,9 @@ if (isset($marked_entity_id)) {
     } else {
         $files = MarkedEntityFile::includes(["attachment" => [], "comments" => "user", "permissions" => []])->where(array("entity_id"=>$marked_entity_id));
     }
-    ?>
+
+    $user_is_ta_or_instructor = ($_SESSION["current_user"]->is_ta && User::joins_raw_sql("JOIN section_tas on section_tas.user_id = users.id JOIN sections on sections.id = section_tas.section_id AND sections.lecture_id = {$marked_entity->lecture_id}")->find_by(["is_ta" => 1, "users.id"=>$_SESSION["current_user_id"]]) != null)
+    || ($_SESSION["current_user"]->is_instructor && User::joins_raw_sql("JOIN lecture_instructors on lecture_instructors.user_id = users.id AND lecture_instructors.lecture_id = {$marked_entity->lecture_id}")->find_by(["is_instructor" => 1, "users.id"=>$_SESSION["current_user_id"]]) != null); ?>
     <div>Files for marked entity ID: <?php echo $marked_entity_id; ?> </div>
     <div>Number of files: <?php echo count($files); ?> </div>
 
@@ -161,8 +163,7 @@ if (isset($marked_entity_id)) {
                     ?>
 
                     <?php
-                        // TODO: Only display this to TA's of this course!
-                        if (true) {
+                        if ($user_is_ta_or_instructor) {
                             $user_id = $_SESSION["current_user"]->id;
                             $commentable_id = $row->id;
                             $commentable_type = "MarkedEntityFile";
@@ -174,7 +175,7 @@ if (isset($marked_entity_id)) {
                 <!-- TODO: Should we apply some sort of transformation to the file ID -->
                 <td>
                     <?php
-                        $may_read = $row->get_permission_for_user($_SESSION["current_user"]->id, "read");
+                        $may_read = $user_is_ta_or_instructor || $row->get_permission_for_user($_SESSION["current_user"]->id, "read");
                     ?>
                     <button onclick="location.href='<?php echo "download.php?file_id={$row->attachment->file_id}" ?>'" type="button" <?php if (!$may_read) {
                         echo "disabled";

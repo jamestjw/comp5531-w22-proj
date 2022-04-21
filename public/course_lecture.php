@@ -29,21 +29,18 @@ try {
 
 try {
     $course_sections = Section::includes(["section_students"])->where(array('lecture_id' => $lecture_page_id));
-
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
 
 try {
     $teams = Team::includes(['team_members'])->where(array('lecture_id' => $lecture_page_id));
-
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
 
 try {
     $lecture_instructor = LectureInstructor::includes(['user'])->find_by(array('lecture_id' => $lecture_page_id));
-
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
@@ -61,6 +58,7 @@ try {
         <button name="team" class="menu_item"><?php if(get_current_role() == 'student') { echo "My Team";} else { echo "Teams";} ?></button>
         <button name="marked_entities" class="menu_item">Marked Entities</button>
         <button name="discussion" class="menu_item">Lecture Discussion</button>
+        <button name="tas" class="menu_item">TAs</button>
     </form>
 </div>
 
@@ -84,8 +82,10 @@ try {
         $_SESSION["course_view"] = "team";
     } elseif (isset($_POST["marked_entities"])) {
         $_SESSION["course_view"] = "marked_entities";
-    }elseif (isset($_POST["discussion"])) {
+    } elseif (isset($_POST["discussion"])) {
         $_SESSION["course_view"] = "discussion";
+    } elseif (isset($_POST["tas"])) {
+        $_SESSION["course_view"] = "tas";
     }
     // Modify contents of page depending on which button was pressed
     if ($_SESSION["course_view"] == "students") {
@@ -96,6 +96,8 @@ try {
         include "view_lecture_marked_entities.php";
     } elseif ($_SESSION["course_view"] == "discussion") {
         include "view_lecture_discussions.php";
+    } elseif ($_SESSION["course_view"] == "tas") {
+        include "view_lecture_tas.php";
     }
     ?>
 </div>
