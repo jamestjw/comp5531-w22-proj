@@ -44,7 +44,8 @@ try {
 
 <html>
 <head>
-<link rel="stylesheet" href="css/table_style.css">
+<!--<link rel="stylesheet" href="css/table_style.css">-->
+<link rel="stylesheet" href="css/crsmgr_table_style.css">
 </head>
     <body>
         <h2>Courses</h2>
