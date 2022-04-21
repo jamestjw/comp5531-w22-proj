@@ -549,6 +549,11 @@ class Record
         $query_builder = new QueryBuilder(get_called_class());
         return $query_builder->joins_raw_sql($join_sql);
     }
+
+    public static function from_raw_sql(string $sql) {
+        $res = execute_sql_query($sql, []);
+        return array_map([get_called_class(), 'loadRecordFromData'], $res);
+    }
 }
 
 spl_autoload_register(function ($class_name) {
