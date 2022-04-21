@@ -56,12 +56,3 @@ body, html{
 .header_fields {
     width:100%;
 }
-
-table, th, td {
-    border: 1px solid;
-    text-align: center;
-}
-
-th {
-    background-color: #ffc0cb;
-}
