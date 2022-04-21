@@ -41,9 +41,12 @@ try {
 
 ?>
 
-<?php if(get_current_role() == 'instructor') { ?>
     <h2>Student List </h2>
     <?php
+
+    if(get_current_role() == 'instructor' || get_current_role() == 'admin' ) {?>
+    <br><a href="uploadStudentList.php?id=<?php echo $lecture_page_id ?>">Upload Student list </a>
+    <?php }
     $course_students = array();
 
     foreach ($course_sections as $section) {
@@ -53,11 +56,11 @@ try {
         }
     }
 
-    if ($course_students && count($course_students)) { ?>
+    if ($course_students && count($course_students)>0) { ?>
     <table>
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>Student ID</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email Address</th>
@@ -67,7 +70,7 @@ try {
             <tbody>
         <?php foreach ($course_students as $row) { ?>
             <tr>
-                <td><?php echo escape($row->id); ?></td>
+                <td><?php echo escape($row->student_id); ?></td>
                 <td><?php echo escape($row->first_name); ?></td>
                 <td><?php echo escape($row->last_name); ?></td>
                 <td><?php echo escape($row->email); ?></td>
@@ -79,4 +82,3 @@ try {
     <?php } else { ?>
         <blockquote>No Students found for this course.</blockquote>
     <?php }?>
-<?php } ?>

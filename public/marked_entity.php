@@ -1,3 +1,4 @@
+<?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
 <?php include "templates/header.php"; ?>
 
 <?php

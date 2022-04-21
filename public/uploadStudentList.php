@@ -9,7 +9,7 @@ require_once "../common.php";
 require_once "../modules/models/section.php";
 
 try {
-    $section = Section::getAll();
+    $section = Section::includes(['lecture' => 'course'])->getAll();
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
@@ -18,6 +18,13 @@ try {
     $all_students = User::where(array('is_instructor' => '0', 'is_admin' => '0'));
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
+}
+
+// check if you where directed here through a specific lecture page 
+$lecture_id = $_GET['id'] ?? 0;
+
+if($lecture_id > 0){
+    $section = Section::includes(['lecture' => 'course'])->where(array('lecture_id' => $lecture_id));
 }
 
     $create_success = false;
@@ -109,13 +116,12 @@ try {
     <input size='50' type='file' name='filename' accept=".csv">
     </br>
 
-    <!-- TO DO change to add info on section name as well -->
     <label for="section">Select Section</label>
     <select Name="section" id="section">
         <option value="" disabled selected>----Select----</option>
         <?php foreach($section as $row) { ?>
-            <option value="<?php echo $row->id; ?>">
-            <?php echo $row->id; ?>
+            <option value="<?php echo $row->id;?>">
+            <?php echo $row->lecture->course->course_name." ".$row->section_code; ?>
             </option>
         <?php } ?>
         </select>
