@@ -25,7 +25,8 @@ if (isset($_GET["id"]) && ($marked_entity = MarkedEntity::find_by_id($_GET["id"]
                 SELECT team_id FROM team_members
                 where user_id = {$_SESSION['current_user_id']}
             )
-        )
+        ) AND discussable_id = {$marked_entity->id}
+        AND discussable_type = 'MarkedEntity'
         ");
     } else {
         $discussions = $marked_entity->discussions;
