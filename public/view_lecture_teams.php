@@ -40,7 +40,7 @@ try {
 }
 
 ?>
-<?php if(!get_current_role() == 'student') { ?>
+<?php if(get_current_role() != 'student') { ?>
 <h2>Teams</h2>
     <p><a href="update_team.php?id=<?php echo $lecture_page_id?>">Update teams</a></p>
     <?php if ($teams && count($teams)) { ?>
