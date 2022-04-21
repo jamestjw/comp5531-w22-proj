@@ -39,7 +39,7 @@ if ($result && count($result)) { ?>
                 <td><?php echo escape($row->first_name); ?></td>
                 <td><?php echo escape($row->last_name); ?></td>
                 <td><?php echo escape($row->email); ?></td>
-                <td><?php echo ( $row->is_instructor == true ? "yes" : "no"); ?></td>
+                <td><?php echo ( $row->is_instructor ? "yes" : "no"); ?></td>
                 <td><?php echo ( $row->is_ta == true ? "yes" : "no"); ?></td>
                 <td><?php echo escape($row->student_id); ?></td>
                 <td><?php echo escape($row->created_at);  ?> </td>
