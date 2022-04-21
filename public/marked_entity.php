@@ -11,7 +11,26 @@ ensure_logged_in();
 <?php
 // TODO: Students can only see this if they are enrolled this course
 if (isset($_GET["id"]) && ($marked_entity = MarkedEntity::find_by_id($_GET["id"]))) {
-    $discussions = $marked_entity->discussions; ?>
+    if (get_current_role() == "student") {
+        // Get discussions started by teammates
+        $discussions = Discussion::from_raw_sql("
+        SELECT * FROM discussions
+        WHERE user_id IN (
+            SELECT
+                user_id FROM
+            team_members JOIN teams
+            ON teams.id = team_members.team_id
+            AND teams.lecture_id = {$marked_entity->lecture_id}
+            AND teams.id IN (
+                SELECT team_id FROM team_members
+                where user_id = {$_SESSION['current_user_id']}
+            )
+        )
+        ");
+    } else {
+        $discussions = $marked_entity->discussions;
+    }
+    ?>
     <div class="container">
         <h4>Marked Entity - <?php echo $marked_entity->title ?></h4>
         <p><?php echo $marked_entity->description ?></p>
