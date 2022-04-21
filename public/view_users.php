@@ -20,7 +20,7 @@ if (isset($_POST['delete_user'])) {
     
     if (!$user_to_delete->is_admin){
         $user_to_delete->delete();
-        
+        $delete_sucess = true;
     }else {
         echo "Admin cannot be deleted";
     }
