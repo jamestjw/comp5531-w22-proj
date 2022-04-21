@@ -50,7 +50,6 @@ if ($marked_entities && count($marked_entities)) { ?>
             <table class="table table-sm">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
                             <th scope="col">Title</th>
                             <th scope="col">Group work</th>
                             <th scope="col">Due at</th>
@@ -60,7 +59,6 @@ if ($marked_entities && count($marked_entities)) { ?>
                     <tbody>
                 <?php foreach ($marked_entities as $row) { ?>
                     <tr>
-                        <td scope="row"><?php echo escape($row->id); ?></td>
                         <td><a href="marked_entity.php?id=<?php echo $row->id; ?>"><?php echo escape($row->title); ?></a></td>
                         <td><?php echo escape($row->is_team_work); ?></td>
                         <td><?php echo escape($row->due_at); ?></td>

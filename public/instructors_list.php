@@ -1,5 +1,6 @@
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
 <?php include "templates/header.php"; ?>
+<link rel="stylesheet" href="css/instructors.css">
 
 <?php if (get_current_role() == "admin") { ?>
 <?php
@@ -76,21 +77,17 @@ if ($instructors && count($instructors)) { ?>
     <table>
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email Address</th>
-                    <th>Created At</th>
                 </tr>
             </thead>
             <tbody>
         <?php foreach ($instructors as $row) { ?>
             <tr>
-                <td><?php echo escape($row->id); ?></td>
                 <td><?php echo escape($row->first_name); ?></td>
                 <td><?php echo escape($row->last_name); ?></td>
                 <td><?php echo escape($row->email); ?></td>
-                <td><?php echo escape($row->created_at);  ?> </td>
             </tr>
         <?php } ?>
         </tbody>
