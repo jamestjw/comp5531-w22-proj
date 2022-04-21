@@ -1,4 +1,5 @@
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
+
 <?php
 
 // OPTIONAL: $discussable_id and $discussable_type should be defined by the scripts that include this one
