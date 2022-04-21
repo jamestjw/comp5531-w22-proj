@@ -12,11 +12,31 @@ try {
 } catch (PDOException $error) {
     echo $sql . "<br>" . $error->getMessage();
 }
+$user_role = get_current_role();
+
+if (isset($_POST['delete_user'])) {
+    $user_to_delete = User::find_by(array('id' => $_POST['user_id']));
+    $delete_sucess = false;
+    
+    if (!$user_to_delete->is_admin){
+        $user_to_delete->delete();
+        $delete_sucess = true;
+    }else {
+        echo "Admin cannot be deleted";
+    }
+
+    if($delete_sucess) {
+        echo "User successfully deleted";
+        header("refresh: 1");
+    }
+}
+
 
 ?>
 
 <?php include "templates/header.php"; ?>
 
+<?php if($user_role == "admin") { ?>
 <?php
 if ($result && count($result)) { ?>
         <h2>Users</h2>
@@ -30,7 +50,7 @@ if ($result && count($result)) { ?>
                     <th>Instructor</th>
                     <th>TA</th>
                     <th>Student ID</th>
-                    <th>Created At</th>
+                    <th>Delete user</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,9 +60,10 @@ if ($result && count($result)) { ?>
                 <td><?php echo escape($row->last_name); ?></td>
                 <td><?php echo escape($row->email); ?></td>
                 <td><?php echo ( $row->is_instructor ? "yes" : "no"); ?></td>
-                <td><?php echo ( $row->is_ta == true ? "yes" : "no"); ?></td>
+                <td><?php echo ( $row->is_ta ? "yes" : "no"); ?></td>
                 <td><?php echo escape($row->student_id); ?></td>
-                <td><?php echo escape($row->created_at);  ?> </td>
+                <td><form method="post"><input type="hidden" name='user_id' value="<?php echo $row->id; ?>"><input type="submit" name="delete_user" value="delete">
+                    </form> </td>
             </tr>
         <?php } ?>
         </tbody>
@@ -51,6 +72,9 @@ if ($result && count($result)) { ?>
         <blockquote>No users found.</blockquote>
     <?php }
 ?> 
+<?php } else { ?>
+    <blockquote>You don't have the credentials to view this page</blockquote>
+<?php } ?>
 
 <a href="index.php">Back to home</a>
 

@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS marked_entity_file_permissions (
 CREATE TABLE IF NOT EXISTS lecture_instructors(
 	lecture_id INT(11) UNSIGNED NOT NULL,
 	user_id INT(11) UNSIGNED NOT NULL,
-	FOREIGN KEY (user_id) REFERENCES users(id),
+	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
 	FOREIGN KEY(lecture_id) REFERENCES lectures(id) ON DELETE CASCADE,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,

@@ -1,4 +1,5 @@
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
+<link rel="stylesheet" href="css/index.css">
 <?php
 require_once "../common.php";
 
@@ -7,30 +8,33 @@ try {
 } catch (PDOException $error) {
     echo  $error->getMessage();
 }
+
+$user_role = get_current_role();
 ?>
 
 
 <?php include "templates/header.php"; ?>
-
+<div class="announcement">
 <?php if (isset($latest_announcement)) {?>
-  <h2>Latest Announcement: </h2>
+  <h3>Latest Announcement from administrator: </h3> <br>
   <h4> <?php echo $latest_announcement->announcement_text ?></h4>
-  <h6> Posted: <?php echo $latest_announcement->created_at ?> </h6>
+  <p> Posted: <?php echo $latest_announcement->created_at ?> </p>
 <?php } else {?>
 <h2>No announcement from admin</h2>
 <?php }?>
+</div>
+<hr>
 
 
-<h2> Landing page </h2>
+<h2> Home </h2>
 
-<ul>
+<?php if($user_role == "admin") { ?>
+  <ul>
   <li>
-    <a href="view_users.php"><strong>View</strong></a> - List all users
-  </li>
-
-  <li>
-    <a href="course_list.php"><strong>View and Create</strong></a> - View and Add Courses
+    <a href="view_users.php"><strong>List all users</strong></a>
   </li>
 </ul>
+<?php }?>
+
 
 <?php include "templates/footer.php"; ?>
