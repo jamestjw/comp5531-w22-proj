@@ -18,13 +18,8 @@ if (is_null($section = Section::find_by_id($_POST["section_id"]))) {
     die("Invalid section");
 }
 
-if (get_current_role() != "instructor") {
-    die("You must be an instructor of this course to modify a marked entity.");
-}
-
-// Check if the user is indeed an instructor of this course
-if (is_null(LectureInstructor::find_by(["lecture_id" => $section->lecture_id, "user_id"=> $_SESSION["current_user_id"]]))) {
-    die("Course instructor does not teach this course.");
+if (get_current_role() != "instructor" || is_null(LectureInstructor::find_by(["lecture_id" => $section->lecture_id, "user_id"=> $_SESSION["current_user_id"]]))) {
+    die("You must be an instructor of this course to assign TAs.");
 }
 
 // Check that the section has no TAs
