@@ -102,3 +102,5 @@ try {
     }
     ?>
 </div>
+
+<?php include "templates/footer.php"; ?>
