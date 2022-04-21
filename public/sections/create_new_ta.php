@@ -10,26 +10,21 @@ $required_attrs = ["section_id", "first_name", "last_name", "password", "email"]
 
 foreach ($required_attrs as $attr) {
     if (!array_key_exists($attr, $_POST)) {
-        die("Invalid $attr");
+        set_error_and_go_back("Invalid $attr");
     }
 }
 
 if (is_null($section = Section::find_by_id($_POST["section_id"]))) {
-    die("Invalid section");
+    set_error_and_go_back("Invalid section");
 }
 
-if (get_current_role() != "instructor") {
-    die("You must be an instructor of this course to modify a marked entity.");
-}
-
-// Check if the user is indeed an instructor of this course
-if (is_null(LectureInstructor::find_by(["lecture_id" => $section->lecture_id, "user_id"=> $_SESSION["current_user_id"]]))) {
-    die("Course instructor does not teach this course.");
+if (get_current_role() != "instructor" || is_null(LectureInstructor::find_by(["lecture_id" => $section->lecture_id, "user_id"=> $_SESSION["current_user_id"]]))) {
+    set_error_and_go_back("You must be an instructor of this course to assign TAs.");
 }
 
 // Check that the section has no TAs
 if (!is_null(SectionTA::find_by(["section_id" => $_POST["section_id"]]))) {
-    die("This section already has a TA.");
+    set_error_and_go_back("This section already has a TA.");
 }
 
 $user = new User();

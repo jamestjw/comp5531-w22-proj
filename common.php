@@ -115,3 +115,9 @@ function isAssoc(array $arr): bool
     }
     return array_keys($arr) !== range(0, count($arr) - 1);
 }
+
+function set_error_and_go_back(string $err) {
+    $_SESSION["alert_message"] = $err;
+    header("Location: " . $_SERVER["HTTP_REFERER"]);
+    die();
+}
