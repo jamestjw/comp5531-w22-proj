@@ -27,6 +27,7 @@ if ($discussions && count($discussions)) { ?>
         <blockquote>No discussions found.</blockquote>
     <?php }
 ?> 
+<br>
 
 <h5>Add a discussion</h5>
 

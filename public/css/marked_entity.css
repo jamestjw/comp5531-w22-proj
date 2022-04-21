@@ -22,3 +22,12 @@ h5 {
     margin: 5px;
     padding-left: 10px;
 }
+
+table, th, td {
+    border: 1px solid;
+    text-align: center;
+}
+
+th {
+    background-color: #ffc0cb;
+}

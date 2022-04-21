@@ -2,7 +2,6 @@
 <?php include "templates/header.php"; ?>
 
 <link rel="stylesheet" href="css/marked_entity.css">
-<link rel="stylesheet" href="css/csrmgr_table_style.css">
 
 <?php
 require_once "../modules/models/marked_entity.php";
@@ -94,7 +93,8 @@ if (isset($_GET["id"]) && ($marked_entity = MarkedEntity::find_by_id($_GET["id"]
     <br>
     <div class="info">
         <h5>Discussion:</h5>
-        <div class="innerBox">
+        <div class="innerBox" >
+            <br>
             <?php
                 $discussable_id =  $marked_entity->id;
                 $discussable_type = "MarkedEntity";
