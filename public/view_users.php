@@ -12,11 +12,12 @@ try {
 } catch (PDOException $error) {
     echo $sql . "<br>" . $error->getMessage();
 }
-
+$user_role = get_current_role();
 ?>
 
 <?php include "templates/header.php"; ?>
 
+<?php if($user_role == "admin") { ?>
 <?php
 if ($result && count($result)) { ?>
         <h2>Users</h2>
@@ -51,6 +52,9 @@ if ($result && count($result)) { ?>
         <blockquote>No users found.</blockquote>
     <?php }
 ?> 
+<?php } else { ?>
+    <blockquote>You don't have the credentials to view this page</blockquote>
+<?php } ?>
 
 <a href="index.php">Back to home</a>
 
