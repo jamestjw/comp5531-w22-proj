@@ -48,8 +48,9 @@ if (isset($_POST['submit'])) {
 
 if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messages" => ["poll"=>"poll_options", "user"=>[], "comments" => "user"]])->find_by_id($_GET["id"]))) {
     $discussion_messages = $discussion->discussion_messages;
-    $current_user_may_comment = ($_SESSION["current_user"]->is_ta && User::joins_raw_sql("JOIN section_tas on section_tas.user_id = users.id JOIN sections on sections.id = section_tas.section_id AND sections.lecture_id = {$marked_entity->lecture_id}")->find_by(["is_ta" => 1, "users.id"=>$_SESSION["current_user_id"]]) != null)
-    || ($_SESSION["current_user"]->is_instructor && User::joins_raw_sql("JOIN lecture_instructors on lecture_instructors.user_id = users.id AND lecture_instructors.lecture_id = {$marked_entity->lecture_id}")->find_by(["is_instructor" => 1, "users.id"=>$_SESSION["current_user_id"]]) != null); ?>
+    $current_user_may_comment = $_SESSION["current_user"]->is_ta || $_SESSION["current_user"]->is_instructor; ?>
+    <!-- $current_user_may_comment = ($_SESSION["current_user"]->is_ta && User::joins_raw_sql("JOIN section_tas on section_tas.user_id = users.id JOIN sections on sections.id = section_tas.section_id AND sections.lecture_id = {$marked_entity->lecture_id}")->find_by(["is_ta" => 1, "users.id"=>$_SESSION["current_user_id"]]) != null)
+    || ($_SESSION["current_user"]->is_instructor && User::joins_raw_sql("JOIN lecture_instructors on lecture_instructors.user_id = users.id AND lecture_instructors.lecture_id = {$marked_entity->lecture_id}")->find_by(["is_instructor" => 1, "users.id"=>$_SESSION["current_user_id"]]) != null); ?> -->
 
     <div>Title: <?php echo $discussion->title; ?> (#<?php echo $discussion->id ?>) </div>
     <div>Number of posts: <?php echo count($discussion_messages); ?> </div>
@@ -79,7 +80,8 @@ if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messa
 
                 <?php
                 if (($poll=$discussion_message->poll)) {
-                    if ($poll->user_has_voted($_SESSION['current_user_id'])) {
+                    // If user has voted or is not a student, show them the results
+                    if ($poll->user_has_voted($_SESSION['current_user_id']) || !$_SESSION['current_user']->is_student()) {
                         $poll_result = PollResult::from_poll($poll); ?>
                         <ul>
                             <?php foreach ($poll->poll_options as $option) { ?>

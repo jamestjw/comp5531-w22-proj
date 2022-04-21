@@ -52,4 +52,8 @@ class User extends Record
     {
         return $this->first_name." ".$this->last_name;
     }
+
+    public function is_student(): bool {
+        return $this->student_id != null;
+    }
 }
