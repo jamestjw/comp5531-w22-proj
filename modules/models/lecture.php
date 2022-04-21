@@ -14,6 +14,10 @@ class Lecture extends Record
         );
 
     protected static $has_many = array(
+        "discussions" => array(
+            "class_name" => "Discussion",
+            "as" => "discussable",
+        ),
         "teams" => array(
             "class_name" => "Team",
             "foreign_key" => "lecture_id"

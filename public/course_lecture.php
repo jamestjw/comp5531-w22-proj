@@ -60,6 +60,7 @@ try {
         <button name="students" class="menu_item">Students</button>
         <button name="team" class="menu_item"><?php if(get_current_role() == 'student') { echo "My Team";} else { echo "Teams";} ?></button>
         <button name="marked_entities" class="menu_item">Marked Entities</button>
+        <button name="discussion" class="menu_item">Lecture Discussion</button>
     </form>
 </div>
 
@@ -83,6 +84,8 @@ try {
         $_SESSION["course_view"] = "team";
     } elseif (isset($_POST["marked_entities"])) {
         $_SESSION["course_view"] = "marked_entities";
+    }elseif (isset($_POST["discussion"])) {
+        $_SESSION["course_view"] = "discussion";
     }
     // Modify contents of page depending on which button was pressed
     if ($_SESSION["course_view"] == "students") {
@@ -91,6 +94,8 @@ try {
         include "view_lecture_teams.php";
     } elseif ($_SESSION["course_view"] == "marked_entities") {
         include "view_lecture_marked_entities.php";
+    } elseif ($_SESSION["course_view"] == "discussion") {
+        include "view_lecture_discussions.php";
     }
     ?>
 </div>
