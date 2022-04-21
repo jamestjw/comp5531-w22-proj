@@ -82,13 +82,10 @@ try {
         $_SESSION["course_view"] = "team";
     } elseif (isset($_POST["marked_entities"])) {
         $_SESSION["course_view"] = "marked_entities";
-<<<<<<< HEAD
-    }elseif (isset($_POST["discussion"])) {
+    } elseif (isset($_POST["discussion"])) {
         $_SESSION["course_view"] = "discussion";
-=======
     } elseif (isset($_POST["tas"])) {
         $_SESSION["course_view"] = "tas";
->>>>>>> 5d8235e (Assign existing TA to a section)
     }
     // Modify contents of page depending on which button was pressed
     if ($_SESSION["course_view"] == "students") {
@@ -97,13 +94,10 @@ try {
         include "view_lecture_teams.php";
     } elseif ($_SESSION["course_view"] == "marked_entities") {
         include "view_lecture_marked_entities.php";
-<<<<<<< HEAD
     } elseif ($_SESSION["course_view"] == "discussion") {
         include "view_lecture_discussions.php";
-=======
     } elseif ($_SESSION["course_view"] == "tas") {
         include "view_lecture_tas.php";
->>>>>>> 5d8235e (Assign existing TA to a section)
     }
     ?>
 </div>
