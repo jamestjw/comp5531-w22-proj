@@ -10,11 +10,11 @@ try {
 }
 
 if (isset($_POST['submit']) && get_current_role() == "admin") {
-    $announcement = new Announcement();
-    $announcement->announcement_text = $_POST['announcement_text'];
+    $new_announcement = new Announcement();
+    $new_announcement->announcement_text = $_POST['announcement_text'];
 
     try {
-        $announcement->save();
+        $new_announcement->save();
         header("refresh: 1");
     } catch (PDOException $error) {
         echo "<br>" . $error->getMessage();
