@@ -46,7 +46,6 @@ verify_logged_in();
           <?php if(get_current_role() == "instructor") {?> 
             <a href="student_list.php">Student List</a> 
           <?php }?>
-          <a href="discussions.php">Discussions</a>
         </div>
       </li>
       <li class="navelem"><a href="teams_selectpage.php">My Teams</a></li>
