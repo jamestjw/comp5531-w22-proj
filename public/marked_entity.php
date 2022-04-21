@@ -22,13 +22,15 @@ if (isset($_GET["id"]) && ($marked_entity = MarkedEntity::find_by_id($_GET["id"]
             foreach ($files as $file) { ?>
                 <p>
                     <a href='<?php echo "download.php?file_id={$file->file_id}" ?>'><?php echo $file->file_filename; ?></a>
-                    <div id="deleteInstructorFileForm">
-                        <form method="post" action="marked_entities/delete_instructor_file.php">
-                            <input type="hidden" id="file_id" name="file_id" value="<?php echo $file->id; ?>">
-                            <input type="hidden" id="marked_entity_id" name="marked_entity_id" value="<?php echo $marked_entity->id; ?>">
-                            <input type="submit" name="submit" value="Delete">
-                        </form>
-                    </div>
+                    <?php if (get_current_role() == "instructor") { ?>
+                        <div id="deleteInstructorFileForm">
+                            <form method="post" action="marked_entities/delete_instructor_file.php">
+                                <input type="hidden" id="file_id" name="file_id" value="<?php echo $file->id; ?>">
+                                <input type="hidden" id="marked_entity_id" name="marked_entity_id" value="<?php echo $marked_entity->id; ?>">
+                                <input type="submit" name="submit" value="Delete">
+                            </form>
+                        </div>
+                    <?php } ?>
                 </p>
             <?php }
         } else {
@@ -48,42 +50,44 @@ if (isset($_GET["id"]) && ($marked_entity = MarkedEntity::find_by_id($_GET["id"]
     include "discussion_list.php"
         ?>
     </div>
+    
+    <?php if (get_current_role() == "instructor") { ?>
+        <button type="button" id="displayUpdateForm">Toggle update</button>
+        <!-- Update form -->
+        <div style="display: none" id="updateForm">
+            <form method="post" style="display:table" action="marked_entities/update.php" enctype="multipart/form-data">
+                <input type="hidden" id="id" name="id" value="<?php echo $marked_entity->id; ?>">
+                <ul>
+                    <li >
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" name="title" value="<?php echo escape($marked_entity->title)?>">
+                    </li>
+                    <li>
+                        <label for="description">Description:</label>
+                        <input type="text" id="description" name="description" value="<?php echo escape($marked_entity->description)?>">
+                    </li>
+                    <li>
+                        <label for="due_at">Due at:</label>
+                        <input type="due_at" id="due_at" name="due_at" value="<?php echo escape($marked_entity->due_at)?>"></input>
+                    </li>
+                    <li class="form-group">
+                        <!-- TODO: Figure out how to support multiple file uploads -->
+                        <label for="marked_entity_file">Add new file</label>
+                        <input type="file" class="form-control-file" id="marked_entity_file" name="marked_entity_file">
+                    </li>
+                </ul>
+                <input type="submit" name="submit" value="Submit">
+            </form>
+        </div>
 
-    <button type="button" id="displayUpdateForm">Toggle update</button>
-    <!-- Update form -->
-    <div style="display: none" id="updateForm">
-        <form method="post" style="display:table" action="marked_entities/update.php" enctype="multipart/form-data">
+        <!-- Delete form -->
+        <div id="deleteForm">
+        <form method="post" style="display:table" action="marked_entities/delete.php">
             <input type="hidden" id="id" name="id" value="<?php echo $marked_entity->id; ?>">
-            <ul>
-                <li >
-                    <label for="title">Title:</label>
-                    <input type="text" id="title" name="title" value="<?php echo escape($marked_entity->title)?>">
-                </li>
-                <li>
-                    <label for="description">Description:</label>
-                    <input type="text" id="description" name="description" value="<?php echo escape($marked_entity->description)?>">
-                </li>
-                <li>
-                    <label for="due_at">Due at:</label>
-                    <input type="due_at" id="due_at" name="due_at" value="<?php echo escape($marked_entity->due_at)?>"></input>
-                </li>
-                <li class="form-group">
-                    <!-- TODO: Figure out how to support multiple file uploads -->
-                    <label for="marked_entity_file">Add new file</label>
-                    <input type="file" class="form-control-file" id="marked_entity_file" name="marked_entity_file">
-                </li>
-            </ul>
-            <input type="submit" name="submit" value="Submit">
+            <input type="submit" name="submit" value="Delete">
         </form>
-    </div>
-
-    <!-- Delete form -->
-    <div id="deleteForm">
-    <form method="post" style="display:table" action="marked_entities/delete.php">
-        <input type="hidden" id="id" name="id" value="<?php echo $marked_entity->id; ?>">
-        <input type="submit" name="submit" value="Delete">
-    </form>
-    </div>
+        </div>
+    <?php } ?>
 <?php
 }
 ?>
