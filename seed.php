@@ -35,7 +35,7 @@ $lecture2_instructor->user_id = 2;
 $lecture2_instructor->save();
 
 $lecture2_instructor2 = new LectureInstructor();
-$lecture2_instructor2->lecture_id = 2;
+$lecture2_instructor2->lecture_id = 3;
 $lecture2_instructor2->user_id = 3;
 $lecture2_instructor2->save();
 
