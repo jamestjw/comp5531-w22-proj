@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS polls (
 	user_id INT(11) UNSIGNED NOT NULL,
 	title VARCHAR(50),
 	duration INT(11) UNSIGNED NOT NULL,
+	FOREIGN KEY (parent_id) REFERENCES discussions(id),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );
@@ -138,7 +139,8 @@ CREATE TABLE IF NOT EXISTS marked_entity_files (
 	description TEXT,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
-	FOREIGN KEY (entity_id) REFERENCES marked_entities(id)
+	FOREIGN KEY (entity_id) REFERENCES marked_entities(id) ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS marked_entity_file_changes (
@@ -149,7 +151,8 @@ CREATE TABLE IF NOT EXISTS marked_entity_file_changes (
 	file_name TEXT,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
-	FOREIGN KEY (entity_id) REFERENCES marked_entities(id)
+	FOREIGN KEY (entity_id) REFERENCES marked_entities(id) ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS marked_entity_file_permissions (
@@ -159,7 +162,8 @@ CREATE TABLE IF NOT EXISTS marked_entity_file_permissions (
 	file_id INT(11) UNSIGNED NOT NULL,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
-	FOREIGN KEY (file_id) REFERENCES marked_entity_files(id) ON DELETE CASCADE
+	FOREIGN KEY (file_id) REFERENCES marked_entity_files(id) ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS lecture_instructors(
@@ -261,7 +265,7 @@ CREATE TABLE IF NOT EXISTS team_members (
 CREATE TABLE IF NOT EXISTS meetings (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	team_id INT(11) UNSIGNED,
-	user_id INT(11),
+	user_id INT(11) UNSIGNED,
 	title VARCHAR(60),
 	agenda VARCHAR(1000),
 	minutes VARCHAR(10000),
@@ -272,5 +276,6 @@ CREATE TABLE IF NOT EXISTS meetings (
 	end_at TIMESTAMP,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
-	FOREIGN KEY (team_id) REFERENCES teams(id) 
+	FOREIGN KEY (team_id) REFERENCES teams(id),
+	FOREIGN KEY (user_id) REFERENCES users(id) ON SET NULL,
 );
