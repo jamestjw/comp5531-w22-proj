@@ -36,7 +36,7 @@ $marked_entity_file_change->entity_id = $marked_entity_file->entity_id;
 $marked_entity_file_change->file_name = $file->file_filename;
 $marked_entity_file_change->set_action("delete");
 
-$file->delete();
+$file->delete("file_id");
 $marked_entity_file->delete();
 $marked_entity_file_change->save();
 
