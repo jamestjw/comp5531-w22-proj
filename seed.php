@@ -90,6 +90,33 @@ $TA->is_ta = 1;
 $TA->password_digest = password_hash('welcome', PASSWORD_DEFAULT);
 $TA->save();
 
+// Associate TA to sections
+$TA_section = new SectionTA();
+$TA_section->user_id = 4;
+$TA_section->section_id = 1;
+$TA_section->save();
+
+$TA_section1 = new SectionTA();
+$TA_section1->user_id = 5;
+$TA_section1->section_id = 2;
+$TA_section1->save();
+
+$TA_section2 = new SectionTA();
+$TA_section2->user_id = 6;
+$TA_section2->section_id = 3;
+$TA_section2->save();
+
+$TA_section3 = new SectionTA();
+$TA_section3->user_id = 7;
+$TA_section3->section_id = 4;
+$TA_section3->save();
+
+$TA_section4 = new SectionTA();
+$TA_section4->user_id = 8;
+$TA_section4->section_id = 5;
+$TA_section4->save();
+
+
 
 // Insert Student (from list in doc)
 
