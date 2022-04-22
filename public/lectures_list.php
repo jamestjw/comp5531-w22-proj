@@ -60,7 +60,7 @@
 <?php if (isset($specific_course)): ?>
 <html>
 <head>
-<link rel="stylesheet" href="css/table_style.css">
+<link rel="stylesheet" href="css/crsmgr_table_style.css">
 </head>
 
         <h2>Lectures for <?php echo($specific_course->course_code), " - ", ($specific_course->course_name);?></h2>

@@ -62,7 +62,7 @@
 <?php if (isset($section_course) && isset($section_lecture)): ?>
 <html>
 <head>
-<link rel="stylesheet" href="css/table_style.css">
+<link rel="stylesheet" href="css/crsmgr_table_style.css">
 </head>
 <h2>Sections for <?php echo($section_course->course_code), " - ", ($section_course->course_name), ", Lecture ", ($section_lecture->lecture_code);?> </h2>
 
