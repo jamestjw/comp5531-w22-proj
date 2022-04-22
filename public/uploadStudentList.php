@@ -15,7 +15,7 @@ try {
 }
 
 try {
-    $all_students = User::where(array('is_instructor' => '0', 'is_admin' => '0'));
+    $all_students = User::where(array('roles' => 0));
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
@@ -46,9 +46,6 @@ if($lecture_id > 0){
                 $user->first_name = $studentData[1];
                 $user->last_name = $studentData[2];
                 $user->email = $studentData[3];
-                $user->is_admin = 0;
-                $user->is_instructor = 0;
-                $user->is_ta = 0;
                 $user->password_digest = password_hash("welcome", PASSWORD_DEFAULT);
 
                 try {

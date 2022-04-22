@@ -32,9 +32,9 @@ $admin = new User();
 $admin->first_name = "admin";
 $admin->last_name = "user";
 $admin->email = "admin";
-$admin->is_admin = 1;
-$admin->is_instructor = 0;
+$admin->set_role("admin");
 $admin->password_digest = password_hash('admin', PASSWORD_DEFAULT);
+$admin->password_digest = password_hash('root', PASSWORD_DEFAULT);
 $admin->save();
 
 

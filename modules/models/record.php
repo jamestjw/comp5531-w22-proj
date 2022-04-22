@@ -76,6 +76,12 @@ class Record
         return $query_builder->where($attrs);
     }
 
+    public static function where_raw_sql(string $sql)
+    {
+        $query_builder = new QueryBuilder(get_called_class());
+        return $query_builder->where_raw_sql($sql);
+    }
+
     /*
         Usage: RecordName::find_by(array("name"=>"James", "student_id"=>12345));
         Returns the first record that matches

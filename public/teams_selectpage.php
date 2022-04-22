@@ -22,19 +22,19 @@ $current_user = $_SESSION["current_user"];
 $role = get_current_role();
 
 // TODO: Once tas are added, handle team selection here
-if ($role == "instructor" && !$current_user->is_admin) {
+if ($role == "instructor" && !$current_user->get_role("admin")) {
     $lectures = Lecture::joins_raw_sql("
         JOIN lecture_instructors li on
         li.lecture_id = lectures.id
     ")->includes(["teams", "course"])->where(array("user_id" => $current_user->id));
-} elseif ($role == "student" && !$current_user->is_admin) {
+} elseif ($role == "student" && !$current_user->get_role("admin")) {
     $lectures = Lecture::joins_raw_sql("
         JOIN sections s on
         s.lecture_id = lectures.id
         JOIN section_students ss on
         ss.section_id = s.id
     ")->includes(["teams" => "team_members", "course" => []])->where(array("user_id" => $current_user->id));
-} elseif ($role == "admin" || $current_user->is_admin) {
+} elseif ($role == "admin" || $current_user->get_role("admin")) {
     $lectures = Lecture::includes(["teams", "course"])->getAll();
 }
 ?>

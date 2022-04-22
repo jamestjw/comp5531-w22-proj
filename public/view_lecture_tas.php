@@ -32,7 +32,7 @@ foreach ($course_sections as $course_section) {
 <h3>Assign existing TA</h3>
 <?php
 $sections_without_tas = array_filter($course_sections, fn ($s) => $s->section_ta == null);
-$existing_tas = User::where(["is_ta" => true]);
+$existing_tas = User::where_raw_sql("roles & 4");
 
 ?>
 

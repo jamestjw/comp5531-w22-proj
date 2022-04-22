@@ -18,7 +18,7 @@ if (isset($_POST['delete_user'])) {
     $user_to_delete = User::find_by(array('id' => $_POST['user_id']));
     $delete_sucess = false;
     
-    if (!$user_to_delete->is_admin){
+    if (!$user_to_delete->get_role("admin")){
         $user_to_delete->delete();
         $delete_sucess = true;
     }else {
@@ -59,8 +59,8 @@ if ($result && count($result)) { ?>
                 <td><?php echo escape($row->first_name); ?></td>
                 <td><?php echo escape($row->last_name); ?></td>
                 <td><?php echo escape($row->email); ?></td>
-                <td><?php echo ( $row->is_instructor ? "yes" : "no"); ?></td>
-                <td><?php echo ( $row->is_ta ? "yes" : "no"); ?></td>
+                <td><?php echo ( $row->get_role("instructor") ? "yes" : "no"); ?></td>
+                <td><?php echo ( $row->get_role("ta") ? "yes" : "no"); ?></td>
                 <td><?php echo escape($row->student_id); ?></td>
                 <td><form method="post"><input type="hidden" name='user_id' value="<?php echo $row->id; ?>"><input type="submit" name="delete_user" value="delete">
                     </form> </td>
