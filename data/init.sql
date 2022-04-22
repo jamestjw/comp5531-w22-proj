@@ -277,5 +277,5 @@ CREATE TABLE IF NOT EXISTS meetings (
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
 	FOREIGN KEY (team_id) REFERENCES teams(id),
-	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
