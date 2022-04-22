@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 
 if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messages" => ["poll"=>"poll_options", "user"=>[], "comments" => "user"]])->find_by_id($_GET["id"]))) {
     $discussion_messages = $discussion->discussion_messages; ?>
-    
+    <h2><?php echo "Discussion: ".$discussion->title; ?></h2>
     <table width=100% class="disctable">
     <colgroup>
        <col span="1" style="width: 30%;">
@@ -63,7 +63,7 @@ if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messa
     </tr>
     <?php foreach ($discussion_messages as $discussion_message) {?>
         <tr>
-            <td>
+            <td class="discheader">
             <?php echo "Post ID:".$discussion_message->id."<br>"; ?>
             <?php echo "Post Author:".$discussion_message->user->get_full_name()."<br>"; ?>
             <?php echo "Parent ID:".$discussion_message->parent_id."<br>"; ?>
@@ -76,23 +76,23 @@ if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messa
                 echo "<Replies to: {$discussion_message->parent_id}> ";
             }
             ?>
-            <?php echo $discussion_message->content."<br><br>"; ?>
-
-            <?php
+            <?php echo $discussion_message->content."<br><br>";
             if (($poll=$discussion_message->poll)) { ?>
-                <?php echo "<u>Poll ID:".$poll->id."</u><br>"; ?>
+                <?php echo "<u>Poll Title:".$poll->title."</u> - Expires: ".date("Y-m-D  h:i:s", strtotime($poll->created_at) + $poll->duration)."<br>"; ?>
                 <?php
-                if ($poll->user_has_voted($_SESSION['current_user_id'])) {
+                if ($poll->user_has_voted($_SESSION['current_user_id']) || get_current_role() != "student" || ((strtotime($poll->created_at) + $poll->duration) <= time())) {
                     $poll_result = PollResult::from_poll($poll); ?>
                     <ul>
-                        <?php foreach ($poll->poll_options as $option) { ?>
-                            <li>
-                            <?php echo sprintf("%s - %d votes - %.2f%%", $option->content, $poll_result->votes[$option->id][0], $poll_result->votes[$option->id][1] * 100) ?></li>
-                            </li>
-                        <?php } ?>
+                    <?php foreach ($poll->poll_options as $option) { ?>
+                    <li>
+                        <?php echo sprintf("%s - %d votes - %.2f%%", $option->content, $poll_result->votes[$option->id][0], $poll_result->votes[$option->id][1] * 100) ?></li>
+                    </li>
+                    <?php } ?>
                     </ul>
                     <?php
-                } else { ?>
+            } else { ?>
+                <?php
+                if (get_current_role() == "student") {?>
                     <form method="post" action="poll.php" id="pollVote">
                         <input type="hidden" id="poll_id" name="poll_id" value="<?php echo $poll->id; ?>">
                         <p>Options:</p>
@@ -102,7 +102,9 @@ if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messa
                         <?php }?>
                         <input type="submit" name="submit" value="Vote">
                     </form>
-                <?php }
+                    <?php
+                } ?>
+            <?php }
             }?>
             <?php
             // TODO: Only display this to TA's of this course!
@@ -115,34 +117,44 @@ if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messa
                 }
             }
             ?>
-            </td>
-        </tr>
-        <!-- Comments -->
-        
-        <?php
-        if (!empty($comments=$discussion_message->comments)) { ?>
-                <?php
-                foreach ($comments as $comment) { ?>
-                    <tr>
-                    <td>
+            <!-- Reply button -->
+            <div class="replybutton">
+            <a href="discussions.php" class="replyMessage">Reply</a>
+            <!-- Reply form -->
+            <form method="post" action="discussion.php" class="replyMessageForm" style="display: none;">
+                <label for="content">Content</label>
+                <input type="text" name="content" id="content">
+                <input type="hidden" id="discussion_id" name="discussion_id" value="<?php echo $discussion->id; ?>">
+                <input type="hidden" id="user_id" name="user_id" value="<?php echo $_SESSION["current_user"]->id; ?>">
+                <!-- Put in actual ID of post to reply to-->
+                <input type="hidden" id="replies_to" name="replies_to" value="<?php echo $discussion_message->id ?>">
+                <input type="submit" name="submit" value="Submit">
+            </form>
+            </div>
 
-                    </td>
+            <!-- Comments -->
+            <?php
+            if (!empty($comments=$discussion_message->comments)) { ?>
+                    <tr class="hideth">
+                        <td class="hideth">
+                        </td>
+                        <td class="discheader">
+                            <?php echo "Comments: ";?>
+                        </td>
+                    </tr>
+                    <?php
+                foreach ($comments as $comment) { ?>
+                    <tr class="hideth">
+                    <td class="hideth"></td>
                     <td>
-                    <?php echo sprintf("%s - %s - %s", $comment->content, $comment->user->first_name, $comment->created_at); ?>
+                        <?php echo sprintf("%s | %s - %s", $comment->content, $comment->user->first_name, $comment->created_at); ?>
                     </td>
                     </tr>
                 <?php }
                 ?>
-
-        <?php } else {
-                    echo "N/A";
-                }
-        ?>
-
-        
-        
-
-
+            <?php } ?>
+            </td>
+        </tr>
     <?php } ?>
     </table>
     <div>Add new post:</div>
@@ -172,7 +184,6 @@ if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messa
 } else {
     echo "Invalid discussion ID.";
 }
-
 ?>
 
 <?php include "templates/footer.php"; ?>

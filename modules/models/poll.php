@@ -70,7 +70,11 @@ class PollResult
         $res->num_votes = $total_count;
 
         foreach ($res->votes as $id=>$vote_count) {
-            $res->votes[$id] = [$vote_count, $vote_count/$total_count];
+            if ($total_count != 0) {
+                $res->votes[$id] = [$vote_count, $vote_count/$total_count];
+            } else {
+                $res->votes[$id] = [$vote_count, 0];
+            }
         }
 
         return $res;

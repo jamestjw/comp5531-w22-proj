@@ -7,3 +7,14 @@ table, th, tr, td {
     border-collapse: collapse;
   }
 
+.hideth {
+    border:0px;
+}
+
+.discheader {
+    background-color: #ffc0cb;
+}
+
+.replybutton {
+    text-align: right;
+}
