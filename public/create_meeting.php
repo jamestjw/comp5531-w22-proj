@@ -34,13 +34,13 @@ if (isset($_POST["submit"])) {
 
 <form method="post">
     <label for="title">Title</label>
-    <input type="text" name="title" id="title">
+    <input type="text" name="title" id="title" required>
     <label for="agenda">Agenda</label>
-    <textarea name="agenda" cols="40" rows="5"></textarea>
+    <textarea name="agenda" cols="40" rows="5" required></textarea>
     <label for="date">Date of meeting</label>
-    <input type="date" name="date" id="date">
+    <input type="date" name="date" id="date" required>
     <label for="time">Time of meeting</label>
-    <input type="time" name="time" id="time">
+    <input type="time" name="time" id="time" required>
     <?php
     
     // Get the team number of the user creating the meeting
@@ -52,7 +52,7 @@ if (isset($_POST["submit"])) {
 
     ?>
     <label for="team">Team #:</label>
-    <select name = "team" id="team">
+    <select name = "team" id="team" required>
         <option disabled value = "">--Select Team--</option>
         <?php foreach ($team_options as $tid):;?>
             <option value = <?php echo($tid);?>><?php echo($tid);?></option>
