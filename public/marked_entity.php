@@ -1,6 +1,8 @@
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
 <?php include "templates/header.php"; ?>
 
+<link rel="stylesheet" href="css/marked_entity.css">
+
 <?php
 require_once "../modules/models/marked_entity.php";
 require_once "../common.php";
@@ -35,44 +37,75 @@ if (isset($_GET["id"]) && ($marked_entity = MarkedEntity::find_by_id($_GET["id"]
     <div class="container">
         <h4>Marked Entity - <?php echo $marked_entity->title ?></h4>
         <p><?php echo $marked_entity->description ?></p>
+        <hr>
 
+    <div class="info" >
         <h5>Instructor Files:</h5>
+        <div class="innerBox">
+                <?php
+                if (!empty($files = $marked_entity->files)) {
+                    foreach ($files as $file) { ?>
+                        <p>
+                            <a href='<?php echo "download.php?file_id={$file->file_id}" ?>'><?php echo $file->file_filename; ?></a>
+                            <?php if (get_current_role() == "instructor") { ?>
+                                <div id="deleteInstructorFileForm">
+                                    <form method="post" action="marked_entities/delete_instructor_file.php">
+                                        <input type="hidden" id="file_id" name="file_id" value="<?php echo $file->id; ?>">
+                                        <input type="hidden" id="marked_entity_id" name="marked_entity_id" value="<?php echo $marked_entity->id; ?>">
+                                        <input type="submit" name="submit" value="Delete">
+                                    </form>
+                                </div>
+                            <?php } ?>
+                        </p>
+                    <?php }
+                } else {
+                 echo "<blockquote>No files.</blockquote>";
+                 } ?>
+            </div>
+    </div>
+    <br>
 
-        <?php
-        if (!empty($files = $marked_entity->files)) {
-            foreach ($files as $file) { ?>
-                <p>
-                    <a href='<?php echo "download.php?file_id={$file->file_id}" ?>'><?php echo $file->file_filename; ?></a>
-                    <?php if (get_current_role() == "instructor") { ?>
-                        <div id="deleteInstructorFileForm">
-                            <form method="post" action="marked_entities/delete_instructor_file.php">
-                                <input type="hidden" id="file_id" name="file_id" value="<?php echo $file->id; ?>">
-                                <input type="hidden" id="marked_entity_id" name="marked_entity_id" value="<?php echo $marked_entity->id; ?>">
-                                <input type="submit" name="submit" value="Delete">
-                            </form>
-                        </div>
-                    <?php } ?>
-                </p>
-            <?php }
-        } else {
-            echo "<blockquote>No files.</blockquote>";
-        } ?>
+    <div class="info">
+        <h5>Created at: </h5>
+        <div class="innerBox">
+            <?php echo $marked_entity->created_at; ?>
+        </div>
+    </div>
 
-        <h5>Created at: <?php echo $marked_entity->created_at; ?> </h5>
-        <h5>Due at: <?php echo $marked_entity->due_at; ?> </h5>
+    <br> 
 
+    <div class="info">
+        <h5>Due at:</h5>
+        <div class="innerBox">
+            <?php echo $marked_entity->due_at; ?> 
+        </div>
+    </div>
+                
+    <br>
+
+    <div class="info">
         <h5>Student Files:</h5>
-        <blockquote><a href="marked_entity_files.php?marked_entity_id=<?php echo $marked_entity->id ?>">View here</a></blockquote>
-        
+        <div class="innerBox">
+            <blockquote><a href="marked_entity_files.php?marked_entity_id=<?php echo $marked_entity->id ?>">View here</a></blockquote>
+        </div>
+    </div>
+
+    <br>
+    <div class="info">
         <h5>Discussion:</h5>
-        <?php
-            $discussable_id =  $marked_entity->id;
-    $discussable_type = "MarkedEntity";
-    include "discussion_list.php"
-        ?>
+        <div class="innerBox" >
+            <br>
+            <?php
+                $discussable_id =  $marked_entity->id;
+                $discussable_type = "MarkedEntity";
+                include "discussion_list.php"
+                ?><br>
+        </div>
+    </div>
     </div>
     
     <?php if (get_current_role() == "instructor") { ?>
+        <br>
         <button type="button" id="displayUpdateForm">Toggle update</button>
         <!-- Update form -->
         <div style="display: none" id="updateForm">
