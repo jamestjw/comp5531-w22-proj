@@ -11,7 +11,7 @@ try {
     echo "<br>" . $error->getMessage();
 }
 
-if(get_current_role() == 'instructor' && get_users_id() == $lecture_instructor->user_id) {
+if(get_current_role() == 'instructor' && !is_null($lecture_instructor) && get_users_id() == $lecture_instructor->user_id) {
 
 require_once "../modules/models/user.php";
 require_once "../modules/models/section.php";
