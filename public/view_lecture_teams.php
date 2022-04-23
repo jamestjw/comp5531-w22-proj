@@ -42,7 +42,9 @@ try {
 ?>
 <?php if(get_current_role() != 'student') { ?>
 <h2>Teams</h2>
-    <p><a href="update_team.php?id=<?php echo $lecture_page_id?>">Update teams</a></p>
+    <?php if (get_current_role() == 'instructor') { ?>
+        <p><a href="update_team.php?id=<?php echo $lecture_page_id?>">Update teams</a></p>
+    <?php } ?>
     <?php if ($teams && count($teams)) { ?>
     
         <?php foreach ($teams as $row) { ?>
@@ -74,7 +76,9 @@ try {
         <blockquote>No teams found for this course.</blockquote>
     <?php }?>
 
-    <br><a href="create_team.php?id=<?php echo $lecture_page_id ?>">Create new teams</a> 
+    <?php if (get_current_role() == 'instructor') { ?>
+        <br><a href="create_team.php?id=<?php echo $lecture_page_id ?>">Create new teams</a>
+    <?php } ?>
 <?php }else {
     
     $student_team = Team::joins(["team_members"])->find_by(["user_id"=>get_users_id(), "lecture_id"=>$lecture_page_id]);
