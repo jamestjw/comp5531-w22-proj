@@ -90,9 +90,10 @@ try {
             <tr>
                 <td class = "tgInvis"></td>
                 <form method="post">
-                <td class="tgNorm"><input type="text" value="Course Code" name="course_code" id="course_code"></td>
-                <td class="tgNorm"><input type="text" value="Course Name" name="course_name" id="course_name"></td>
-                <td class="tgAct"><input type="submit" name="submitCourse" value="Add Course"></td>
+                    <td class="tgNorm"><input type="text" value="Course Code" name="course_code" id="course_code" required></td>
+                    <td class="tgNorm"><input type="text" value="Course Name" name="course_name" id="course_name" required></td>
+                    <td class="tgAct"><input type="submit" name="submitCourse" value="Add Course"></td>
+                </form>
             </tr>
             <?php
                 } ?>
@@ -102,9 +103,10 @@ try {
             <br>
             <b>No courses found, please add a course.</b>
             <form method="post">
-            <input type="text" value="Course Code" name="course_code" id="course_code">
-            <input type="text" value="Course Name" name="course_name" id="course_name">
-            <input type="submit" name="submitCourse" value="Add Course">
+                <input type="text" value="Course Code" name="course_code" id="course_code" required>
+                <input type="text" value="Course Name" name="course_name" id="course_name" required>
+                <input type="submit" name="submitCourse" value="Add Course">
+            </form>
         <?php endif;?>
 
     </body>

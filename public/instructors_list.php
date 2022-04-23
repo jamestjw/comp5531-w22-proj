@@ -105,13 +105,13 @@ if ($instructors && count($instructors)) { ?>
 
 <form method="post">
     <label for="first_name">First Name</label>
-    <input type="text" name="first_name" id="first_name">
+    <input type="text" name="first_name" id="first_name" required>
     <label for="last_name">Last Name</label>
-    <input type="text" name="last_name" id="last_name">
+    <input type="text" name="last_name" id="last_name" required>
     <label for="password">Password</label>
-    <input type="password" name="password" id="password">
+    <input type="password" name="password" id="password" required>
     <label for="email">Email Address</label>
-    <input type="text" name="email" id="email">
+    <input type="text" name="email" id="email" required>
     <input type="submit" name="submit" value="Submit">
 </form>
 
@@ -149,8 +149,8 @@ if ($instructors && count($instructors)) { ?>
 <?php if($lecture && $instructors) { ?>
     <form method="post">
         Instructor: 
-        <select Name="instructor_selection" id="instructor_selection">
-            <option value="">----Select----</option>
+        <select Name="instructor_selection" id="instructor_selection" required>
+            <option value="" disabled>----Select----</option>
         <?php foreach ($instructors as $row) { ?>
             <option value="<?php echo $row->id; ?>">
             <?php echo $row->get_full_name(); ?>
@@ -160,8 +160,8 @@ if ($instructors && count($instructors)) { ?>
         
         <!-- TO DO look into having more significant names for course lectures? or get course name as well? -->
         Course Lecture: 
-        <select Name="lecture_selection" id="lecture_selection">
-            <option value="">----Select----</option>
+        <select Name="lecture_selection" id="lecture_selection" required>
+            <option value="" disabled>----Select----</option>
         <?php foreach($unassigned_lectures as $row) { ?>
             <option value="<?php echo $row->id; ?>">
             <?php echo $row->course->course_name." ".$row->lecture_code; ?>

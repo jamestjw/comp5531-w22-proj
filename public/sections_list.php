@@ -85,8 +85,8 @@
                 if (get_current_role() == "admin") {
                     ?>        
                     <form method="post">
-                    <input type="hidden" id="key" name="key" value="<?=$row->id?>">
-                    <input type="submit" name="deleteSection" value = "Delete Section" style="margin:5px">
+                        <input type="hidden" id="key" name="key" value="<?=$row->id?>">
+                        <input type="submit" name="deleteSection" value = "Delete Section" style="margin:5px">
                     </form>
                     <?php
                 } ?>
@@ -100,8 +100,9 @@
             <tr>
                 <td class="tgNorm"></td>
                 <form method="post">
-                <td class="tgNorm"><input type="text" value="Section Code" name="section_code" id="section_code"></td>
-                <td class="tgNorm"><input type="submit" name="submitSection" value="Add Section"></td>
+                    <td class="tgNorm"><input type="text" value="Section Code" name="section_code" id="section_code" required></td>
+                    <td class="tgNorm"><input type="submit" name="submitSection" value="Add Section"></td>
+                </form>
             </tr>
             <?php
                 } ?>
@@ -110,8 +111,9 @@
             <br>
             <b>No lectures found for this course, please add a lecture.</b>
             <form method="post">
-            <input type="text" value="Section Code" name="section_code" id="section_code">
-            <input type="submit" name="submitSection" value="Add Section">
+                <input type="text" value="Section Code" name="section_code" id="section_code" required>
+                <input type="submit" name="submitSection" value="Add Section">
+            </form>
         <?php endif;?>
 
     </table>
