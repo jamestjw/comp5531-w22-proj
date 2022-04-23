@@ -34,7 +34,7 @@ $admin->last_name = "user";
 $admin->email = "admin";
 $admin->set_role("admin");
 $admin->password_digest = password_hash('admin', PASSWORD_DEFAULT);
-$admin->password_digest = password_hash('root', PASSWORD_DEFAULT);
+$admin->password_digest = password_hash('admin', PASSWORD_DEFAULT);
 $admin->save();
 
 
