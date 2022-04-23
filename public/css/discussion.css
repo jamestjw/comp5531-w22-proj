@@ -1,0 +1,20 @@
+/* .disctable {
+    border: 1px solid black;
+} */
+
+table, th, tr, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+
+.hideth {
+    border:0px;
+}
+
+.discheader {
+    background-color: #ffc0cb;
+}
+
+.replybutton {
+    text-align: right;
+}

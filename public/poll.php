@@ -9,12 +9,12 @@ ensure_logged_in();
 
 if (!isset($_POST["poll_id"]) || !($poll = Poll::find_by_id($_POST["poll_id"]))) {
     http_response_code(404);
-    die("Resource not found.");
+    set_error_and_go_back("Resource not found.");
 }
 
 if ((strtotime($poll->created_at) + $poll->duration) <= time()) {
     http_response_code(422);
-    die("Poll has expired.");
+    set_error_and_go_back("Poll has expired.");
 }
 
 if (
@@ -23,12 +23,12 @@ if (
     ($vote_option->poll_id != $poll->id)
 ) {
     http_response_code(422);
-    die("Invalid option.");
+    set_error_and_go_back("Invalid option.");
 }
 
 if ($poll->user_has_voted($_SESSION['current_user_id'])) {
     http_response_code(422);
-    die("User has already voted.");
+    set_error_and_go_back("User has already voted.");
 }
 
 $obj = new PollOptionUser();
@@ -39,5 +39,5 @@ try {
     $obj->save();
 } catch (PDOException $error) {
     http_response_code(500);
-    die($error->getMessage());
+    set_error_and_go_back($error->getMessage());
 }
