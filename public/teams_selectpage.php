@@ -21,21 +21,32 @@ $current_user = $_SESSION["current_user"];
 // Get current user role
 $role = get_current_role();
 
-// TODO: Once tas are added, handle team selection here
-if ($role == "instructor" && !$current_user->get_role("admin")) {
+if ($role == "admin" || $current_user->get_role("admin")) {
+    $lectures = Lecture::includes(["teams", "course"])->getAll();
+} else if ($role == "instructor") {
     $lectures = Lecture::joins_raw_sql("
         JOIN lecture_instructors li on
         li.lecture_id = lectures.id
     ")->includes(["teams", "course"])->where(array("user_id" => $current_user->id));
-} elseif ($role == "student" && !$current_user->get_role("admin")) {
+} elseif ($role == "student") {
     $lectures = Lecture::joins_raw_sql("
         JOIN sections s on
         s.lecture_id = lectures.id
         JOIN section_students ss on
         ss.section_id = s.id
     ")->includes(["teams" => "team_members", "course" => []])->where(array("user_id" => $current_user->id));
-} elseif ($role == "admin" || $current_user->get_role("admin")) {
-    $lectures = Lecture::includes(["teams", "course"])->getAll();
+} elseif ($role == "ta") {
+    $lectures = Lecture::joins_raw_sql("
+        JOIN sections s on
+        s.lecture_id = lectures.id
+        JOIN section_tas st on
+        st.section_id = s.id
+    ")->includes(["teams" => "team_members", "course" => []])->where(array("user_id" => $current_user->id));
+} else {
+    // This clause should never be reached, however if we add new roles
+    // then we would need to remember to handle it here!
+    // $lectures = [] would just make this fail silently
+    die("This should never happen!");
 }
 ?>
 
