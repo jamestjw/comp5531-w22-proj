@@ -1,6 +1,6 @@
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
 <?php include "templates/header.php"; ?>
-
+<link rel="stylesheet" href="css/crsmgr_table_style.css">
 
 
 <?php
@@ -136,27 +136,43 @@ if($lecture_id > 0){
         global $studentData;
         global $student_section;
 
-        $student_section = $_POST["section"];
+        $student_section = Section::includes(['lecture' => 'course'])->find_by(array('id' => $_POST["section"]));
         $studentData = array();
         $row=0;
 
         echo "<h5>Users to be added </h5>";
 
         $handle = fopen($_FILES['filename']['tmp_name'], "r");
-        $headers = fgetcsv($handle, 1000, ",");
-        while (($data = fgetcsv($handle, 1000, ",")) !== false) {
-            $studentData[$row] = $data;
-            echo join(", ", $data);
-            echo "<br>";
-
-            $row++;
-        }
-        fclose($handle);
+        $headers = fgetcsv($handle, 1000, ","); ?>
+        <table>
+            <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email Address</th>
+            <tr>
+            </thead>
+            <tbody>
+        <?php while (($data = fgetcsv($handle, 1000, ",")) !== false) { ?>
+            <tr>
+            <?php $studentData[$row] = $data;
+            foreach($data as $info){?>
+            
+                <td><?php echo $info ?></td>
+ 
+            <?php } ?>
+            </tr>
+            <?php $row++;
+        } ?>
+        </tbody>
+    </table>
+        <?php fclose($handle);
 
         $fileName = uniqid('studentList').".csv";
         move_uploaded_file($_FILES['filename']['tmp_name'], $fileName);
 
-        echo "<h5> New users will be added to section ".$student_section."</h5>";
+        echo "<h5> New users will be added to section ".$student_section->lecture->course->course_name." ".$student_section->section_code."</h5>";
     }
 ?>
 
@@ -164,7 +180,7 @@ if($lecture_id > 0){
     <form method='post'>
     <input type='submit' name='submit2' value='confirm and upload'>
     <input type="hidden" id="fileID" name="fileID" value="<?php echo $fileName?>">
-    <input type="hidden" id="sectionID" name="sectionID" value="<?php echo $student_section?>">
+    <input type="hidden" id="sectionID" name="sectionID" value="<?php echo $student_section->id?>">
     </form>
 
 <?php endif; ?>

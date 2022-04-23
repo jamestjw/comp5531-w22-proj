@@ -1,6 +1,6 @@
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
 <?php include "templates/header.php"; ?>
-
+<link rel="stylesheet" href="css/crsmgr_table_style.css">
 <?php if(get_current_role() == 'admin' || get_current_role() == 'instructor') { ?>
 <?php
 
@@ -37,7 +37,7 @@ if ($students && count($students)) { ?>
     <table>
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>Student ID</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email Address</th>
@@ -47,7 +47,7 @@ if ($students && count($students)) { ?>
             <tbody>
         <?php foreach ($students as $row) { ?>
             <tr>
-                <td><?php echo escape($row->id); ?></td>
+                <td><?php echo escape($row->student_id); ?></td>
                 <td><?php echo escape($row->first_name); ?></td>
                 <td><?php echo escape($row->last_name); ?></td>
                 <td><?php echo escape($row->email); ?></td>
