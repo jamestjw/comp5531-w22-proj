@@ -59,8 +59,8 @@ if ($result && count($result)) { ?>
                 <td><?php echo escape($row->first_name); ?></td>
                 <td><?php echo escape($row->last_name); ?></td>
                 <td><?php echo escape($row->email); ?></td>
-                <td><?php echo ( $row->get_role("instructor") ? "yes" : "no"); ?></td>
-                <td><?php echo ( $row->get_role("ta") ? "yes" : "no"); ?></td>
+                <td><?php echo html_tick_cross($row->get_role("instructor")); ?></td>
+                <td><?php echo html_tick_cross($row->get_role("ta")); ?></td>
                 <td><?php echo escape($row->student_id); ?></td>
                 <td><form method="post"><input type="hidden" name='user_id' value="<?php echo $row->id; ?>"><input type="submit" name="delete_user" value="delete">
                     </form> </td>
