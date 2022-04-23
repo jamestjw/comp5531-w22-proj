@@ -33,7 +33,6 @@ if (isset($_POST['submit'])) {
 
         $poll->poll_options = $poll_options;
         $msg->poll = $poll;
-        print_r($poll);
     }
 
     try {
