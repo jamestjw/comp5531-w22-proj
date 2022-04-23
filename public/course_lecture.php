@@ -9,7 +9,7 @@ require_once "../common.php";
 $lecture_page_id = $_GET['id'];
 
 try {
-    $course_lecture = Lecture::includes("course")->where(array('id' => $lecture_page_id));
+    $course_lecture = Lecture::includes("course")->find_by_id($lecture_page_id);
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
@@ -49,10 +49,12 @@ try {
 
 <?php include "templates/header.php"; ?>
 
+<?php if (!is_null($course_lecture)) { ?>
+
 <link rel="stylesheet" href="css/course_lecture.css">
 
 <div class="menubar">
-    <label for="menuform" class="menu_form_label"><?php echo $course_lecture[0]->course->course_name." ".$course_lecture[0]->lecture_code?></label>
+    <label for="menuform" class="menu_form_label"><?php echo $course_lecture->course->course_name." ".$course_lecture->lecture_code?></label>
     <form name="menuform" method="post" class="menu_form">
         <button name="students" class="menu_item">Students</button>
         <button name="team" class="menu_item"><?php if(get_current_role() == 'student') { echo "My Team";} else { echo "Teams";} ?></button>
@@ -102,5 +104,7 @@ try {
     }
     ?>
 </div>
-
+<?php } else { ?>
+<h2>Invalid lecture.</h2>
+<?php } ?>
 <?php include "templates/footer.php"; ?>
