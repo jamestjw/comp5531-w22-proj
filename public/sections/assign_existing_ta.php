@@ -28,7 +28,7 @@ if (!is_null(SectionTA::find_by(["section_id" => $_POST["section_id"]]))) {
 }
 
 // Check that the user is a valid TA
-if (is_null(User::find_by(["id" => $_POST["user_id"], "is_ta"=> true]))) {
+if (empty(User::where_raw_sql("id = {$_POST['user_id']} AND roles & 4"))) {
     set_error_and_go_back("This user is not a valid TA.");
 }
 

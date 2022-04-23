@@ -33,10 +33,10 @@ if ($marked_entity->due_date_passed()) {
     die("Unable to update marked entity pass its due date.");
 }
 
-if (is_null($file = Attachment::find_by(["attachable_id"=>$marked_entity->id, "attachable_type"=>"MarkedEntity", "id"=>$_POST["file_id"]]))) {
+if (is_null($file = Attachment::find_by(["attachable_id"=>$marked_entity->id, "attachable_type"=>"MarkedEntity", "file_id"=>$_POST["file_id"]]))) {
     die("Invalid file.");
 }
 
-$file->delete();
+$file->delete("file_id");
 
 header("Location: ../marked_entity.php?id=$id");

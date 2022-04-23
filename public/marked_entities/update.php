@@ -34,7 +34,7 @@ if (isset($_FILES['marked_entity_file']) && $_FILES['marked_entity_file']['size'
     // TODO: Make this more convenient
     $target_dir = "../uploads/";
     // TODO: Improve the file ID
-    $file_id = uniqid().basename($_FILES["marked_entity_file"]["name"]);
+    $file_id = uniqid("", true);
     $target_file = $target_dir . $file_id;
 
     $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));

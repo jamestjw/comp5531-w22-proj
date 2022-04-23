@@ -13,9 +13,11 @@ class User extends Record
     public $first_name;
     public $last_name;
     public $email;
-    public $is_admin;
-    public $is_instructor;
-    public $is_ta;
+    // This is intended to be a bitfield
+    // 0b1 for ADMIN
+    // 0b10 for INSTRUCTOR
+    // 0b100 for TA
+    public $roles;
     public $password_digest;
     public $is_password_changed;
     public $created_at;
@@ -26,14 +28,14 @@ class User extends Record
         $res = array();
 
         // Admins should have access to every role
-        if ($this->is_admin) {
+        if ($this->get_role("admin")) {
             array_push($res, "admin");
             array_push($res, "instructor");
             array_push($res, "student");
             array_push($res, "ta");
         }
 
-        if ($this->is_instructor) {
+        if ($this->get_role("instructor")) {
             array_push($res, "instructor");
         }
 
@@ -41,7 +43,7 @@ class User extends Record
             array_push($res, "student");
         }
 
-        if ($this->is_ta) {
+        if ($this->get_role("ta")) {
             array_push($res, "ta");
         }
 
@@ -51,5 +53,51 @@ class User extends Record
     public function get_full_name()
     {
         return $this->first_name." ".$this->last_name;
+    }
+
+    public function set_role(string $inp)
+    {
+        switch ($inp) {
+            case "admin":
+                $this->roles |= bindec('1');
+                break;
+            case "instructor":
+                $this->roles |= bindec('10');
+                break;
+            case "ta":
+                $this->roles |= bindec('100');
+                break;
+        }
+    }
+
+    public function unset_role(string $inp)
+    {
+        switch ($inp) {
+            case "admin":
+                $this->roles &= !bindec('1');
+                break;
+            case "instructor":
+                $this->roles &= !bindec('10');
+                break;
+            case "ta":
+                $this->roles &= !bindec('100');
+                break;
+        }
+    }
+
+    public function get_role(string $inp): bool
+
+    {
+        switch ($inp) {
+            case "admin":
+                return boolval($this->roles & bindec('1'));
+            case "instructor":
+                return boolval($this->roles & bindec('10'));
+            case "ta":
+                return boolval($this->roles & bindec('100'));
+        }
+
+        return false;
+
     }
 }

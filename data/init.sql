@@ -8,13 +8,10 @@ use %1$s;
 
 CREATE TABLE IF NOT EXISTS users (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-
 	first_name VARCHAR(30) NOT NULL,
 	last_name VARCHAR(30) NOT NULL,
 	email VARCHAR(50) NOT NULL UNIQUE,
-	is_admin BOOLEAN NOT NULL,
-	is_instructor BOOLEAN NOT NULL DEFAULT 0,
-	is_ta BOOLEAN NOT NULL DEFAULT 0,
+	roles INT(8) DEFAULT 0 NOT NULL,
 	password_digest VARCHAR(60) NOT NULL,
 	student_id INT UNSIGNED UNIQUE,
 	is_password_changed BOOLEAN NOT NULL DEFAULT 0,
@@ -52,8 +49,7 @@ CREATE TABLE IF NOT EXISTS discussion_messages (
 );
 
 CREATE TABLE IF NOT EXISTS attachments (
-	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	file_id VARCHAR(60),
+	file_id VARCHAR(60) PRIMARY KEY,
 	file_filename VARCHAR(60),
 	file_size INT(10),
 	attachable_id INT(11),
@@ -68,6 +64,7 @@ CREATE TABLE IF NOT EXISTS polls (
 	user_id INT(11) UNSIGNED NOT NULL,
 	title VARCHAR(50),
 	duration INT(11) UNSIGNED NOT NULL,
+	FOREIGN KEY (parent_id) REFERENCES discussions(id),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );
@@ -133,33 +130,36 @@ CREATE TABLE IF NOT EXISTS marked_entities (
 CREATE TABLE IF NOT EXISTS marked_entity_files (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	entity_id INT(11) UNSIGNED NOT NULL,
-	user_id INT(11) NOT NULL,
+	user_id INT(11) UNSIGNED NOT NULL,
 	title VARCHAR(50),
 	description TEXT,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
-	FOREIGN KEY (entity_id) REFERENCES marked_entities(id)
+	FOREIGN KEY (entity_id) REFERENCES marked_entities(id) ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS marked_entity_file_changes (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	entity_id INT(11) UNSIGNED NOT NULL,
-	user_id INT(11) NOT NULL,
+	user_id INT(11) UNSIGNED NOT NULL,
 	action INT(11) UNSIGNED NOT NULL,
 	file_name TEXT,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
-	FOREIGN KEY (entity_id) REFERENCES marked_entities(id)
+	FOREIGN KEY (entity_id) REFERENCES marked_entities(id) ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS marked_entity_file_permissions (
+CREATE TABLE IF NOT EXISTS marked_entity_file_permissions(
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	permissions INT(11) UNSIGNED NOT NULL DEFAULT 0,
-	user_id INT(11) NOT NULL,
+	user_id INT(11) UNSIGNED NOT NULL,
 	file_id INT(11) UNSIGNED NOT NULL,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
-	FOREIGN KEY (file_id) REFERENCES marked_entity_files(id) ON DELETE CASCADE
+	FOREIGN KEY (file_id) REFERENCES marked_entity_files(id) ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS lecture_instructors(
@@ -261,7 +261,7 @@ CREATE TABLE IF NOT EXISTS team_members (
 CREATE TABLE IF NOT EXISTS meetings (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	team_id INT(11) UNSIGNED,
-	user_id INT(11),
+	user_id INT(11) UNSIGNED,
 	title VARCHAR(60),
 	agenda VARCHAR(1000),
 	minutes VARCHAR(10000),
@@ -272,5 +272,6 @@ CREATE TABLE IF NOT EXISTS meetings (
 	end_at TIMESTAMP,
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
-	FOREIGN KEY (team_id) REFERENCES teams(id) 
+	FOREIGN KEY (team_id) REFERENCES teams(id),
+	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );

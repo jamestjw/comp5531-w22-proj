@@ -98,8 +98,8 @@ if (isset($marked_entity_id)) {
         $files = MarkedEntityFile::includes(["attachment" => [], "comments" => "user", "permissions" => []])->where(array("entity_id"=>$marked_entity_id));
     }
 
-    $user_is_ta_or_instructor = ($_SESSION["current_user"]->is_ta && User::joins_raw_sql("JOIN section_tas on section_tas.user_id = users.id JOIN sections on sections.id = section_tas.section_id AND sections.lecture_id = {$marked_entity->lecture_id}")->find_by(["is_ta" => 1, "users.id"=>$_SESSION["current_user_id"]]) != null)
-    || ($_SESSION["current_user"]->is_instructor && User::joins_raw_sql("JOIN lecture_instructors on lecture_instructors.user_id = users.id AND lecture_instructors.lecture_id = {$marked_entity->lecture_id}")->find_by(["is_instructor" => 1, "users.id"=>$_SESSION["current_user_id"]]) != null); ?>
+    $user_is_ta_or_instructor = ($_SESSION["current_user"]->get_role("ta") && !empty(User::joins_raw_sql("JOIN section_tas on section_tas.user_id = users.id JOIN sections on sections.id = section_tas.section_id AND sections.lecture_id = {$marked_entity->lecture_id}")->where_raw_sql("users.roles & 4 AND users.id = {$_SESSION['current_user_id']}")))
+    || ($_SESSION["current_user"]->get_role("instructor") && !empty(User::joins_raw_sql("JOIN lecture_instructors on lecture_instructors.user_id = users.id AND lecture_instructors.lecture_id = {$marked_entity->lecture_id}")->where_raw_sql("users.roles & 2 AND users.id = {$_SESSION['current_user_id']}"))); ?>
     <div>Files for marked entity ID: <?php echo $marked_entity_id; ?> </div>
     <div>Number of files: <?php echo count($files); ?> </div>
 

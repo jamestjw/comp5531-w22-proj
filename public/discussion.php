@@ -50,8 +50,10 @@ if (isset($_POST['submit'])) {
 <?php
 
 if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messages" => ["poll"=>"poll_options", "user"=>[], "comments" => "user"]])->find_by_id($_GET["id"]))) {
+    $current_user_may_comment = $_SESSION["current_user"]->get_role("ta") || $_SESSION["current_user"]->get_role("instructor"); ?>
     $discussion_messages = $discussion->discussion_messages; ?>
     <h2><?php echo "Discussion: ".$discussion->title; ?></h2>
+    <div>Number of posts: <?php echo count($discussion_messages); ?> </div>
     <table width=100% class="disctable">
     <colgroup>
        <col span="1" style="width: 30%;">

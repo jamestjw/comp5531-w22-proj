@@ -10,18 +10,21 @@ switch ($user_role) {
         break;
 
     case 'instructor':
-        $lecture_instructor = LectureInstructor::includes('lecture')->where(array('user_id' => $user_id));
+        $lecture_instructor = LectureInstructor::includes(['lecture' => 'course'])->where(array('user_id' => $user_id));
         foreach($lecture_instructor as $lecture){
             array_push($lectures, $lecture->lecture);
         }
         break;
 
-    case 'TA':
-        # TO DO WHEN TA ARE IMPLEMENTED
+    case 'ta':
+        $ta_sections = SectionTA::includes(['section' => ['lecture' => 'course']])->where(array('user_id' => $user_id));
+        foreach($ta_sections as $ta_section){
+            array_push($lectures, $ta_section->section->lecture);
+        }
         break;
 
     case 'student':
-        $student_sections = SectionStudent::includes(['section' => 'lecture'])->where(array('user_id' => $user_id));
+        $student_sections = SectionStudent::includes(['section' => ['lecture' => 'course']])->where(array('user_id' => $user_id));
         foreach($student_sections as $student_section){
             array_push($lectures, $student_section->section->lecture);
         }

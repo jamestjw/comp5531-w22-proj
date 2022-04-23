@@ -62,7 +62,7 @@
 <?php if (isset($section_course) && isset($section_lecture)): ?>
 <html>
 <head>
-<link rel="stylesheet" href="css/table_style.css">
+<link rel="stylesheet" href="css/crsmgr_table_style.css">
 </head>
 <h2>Sections for <?php echo($section_course->course_code), " - ", ($section_course->course_name), ", Lecture ", ($section_lecture->lecture_code);?> </h2>
 
@@ -80,11 +80,16 @@
             <tr>
                 <td class="tgNorm"><?php echo($row->id);?></td>
                 <td class="tgNorm"><?php echo($row->section_code);?></td>
-                <td class="tgNorm">                    
+                <td class="tgNorm">
+                <?php
+                if (get_current_role() == "admin") {
+                    ?>        
                     <form method="post">
                     <input type="hidden" id="key" name="key" value="<?=$row->id?>">
                     <input type="submit" name="deleteSection" value = "Delete Section" style="margin:5px">
                     </form>
+                    <?php
+                } ?>
                 </td>
             </tr>
             <?php endforeach;?>

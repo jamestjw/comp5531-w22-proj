@@ -69,6 +69,103 @@ class QueryBuilder
         return $this;
     }
 
+    public function where_raw_sql(string $raw_sql) {
+        $sql = "SELECT {$this->table_name()}.* FROM {$this->table_name()}";
+
+        if (!empty($this->joins)) {
+            foreach ($this->joins as $association) {
+                $association_type = $this->record_class::getAssociationType($association);
+                $association_foreign_key = $this->record_class::getAssociationForeignKey($association);
+                $association_class_name = $this->record_class::getAssociationClassName($association);
+                $association_table_name = $association_class_name::get_table_name();
+                switch ($association_type) {
+                    case "has_one":
+                    case "has_many":
+                        $sql .= " JOIN $association_table_name on {$this->table_name()}.id = $association_table_name.$association_foreign_key";
+                        break;
+                    case "belongs_to":
+                        // TODO: Implement this when necessary
+                        break;
+                }
+            }
+        }
+
+        if (!empty($this->joins_raw_sql)) {
+            foreach ($this->joins_raw_sql as $join_sql) {
+                $sql .= " $join_sql";
+            }
+        }
+
+        $sql .= " WHERE ".$raw_sql;
+
+        foreach ($this->order_by as $key => $val) {
+            $sql .= " ORDER BY $key $val";
+        }
+
+        if (isset($this->limit)) {
+            $sql .= " LIMIT {$this->limit}";
+        }
+
+        $res = execute_sql_query($sql);
+        $res = array_map([$this->record_class, 'loadRecordFromData'], $res);
+
+        if (empty($res)) {
+            return $res;
+        }
+
+        // Preload associations
+        if (!empty($this->includes)) {
+            foreach ($this->includes as $association => $sub_association) {
+                $association_type = $this->record_class::getAssociationType($association);
+                $association_class_name = $this->record_class::getAssociationClassName($association);
+                $association_foreign_key = $this->record_class::getAssociationForeignKey($association);
+                $association_polymorphic_type = $this->record_class::getAssociationPolymorphicTypeColumn($association);
+                switch ($association_type) {
+                    case "has_one":
+                        $ids = array_map(fn ($o) => $o->id, $res);
+                        if (empty($ids)) {
+                            break;
+                        }
+                        $association_where = array($association_foreign_key => $ids);
+                        if ($association_polymorphic_type) {
+                            $association_where[$association_polymorphic_type] = $this->record_class;
+                        }
+                        $association_res = call_user_func($association_class_name."::includes", $sub_association)->where($association_where);
+                        foreach ($res as $r) {
+                            $r->$association = current(array_filter($association_res, fn ($o) => $o->$association_foreign_key==$r->id)) ?? null;
+                        }
+                        break;
+                    case "has_many":
+                        $ids = array_map(fn ($o) => $o->id, $res);
+                        if (empty($ids)) {
+                            break;
+                        }
+                        $association_where = array($association_foreign_key => $ids);
+                        if ($association_polymorphic_type) {
+                            $association_where[$association_polymorphic_type] = $this->record_class;
+                        }
+                        $association_res = call_user_func($association_class_name."::includes", $sub_association)->where($association_where);
+                        foreach ($res as $r) {
+                            $r->$association = array_filter($association_res, fn ($o) => $o->$association_foreign_key==$r->id);
+                        }
+                        break;
+                    case "belongs_to":
+                        $foreign_keys = array_unique(array_map(fn ($o) => $o->$association_foreign_key, $res));
+                        if (empty($foreign_keys)) {
+                            break;
+                        }
+                        $association_res = call_user_func($association_class_name."::includes", $sub_association)->where(array("id" => $foreign_keys));
+                        foreach ($res as $r) {
+                            $r->$association = current(array_filter($association_res, fn ($o) => $o->id==$r->$association_foreign_key)) ?? null;
+                        }
+                        break;
+                }
+            }
+        }
+
+        return $res;
+    }
+
     public function where(array $attrs)
     {
         $sql = "SELECT {$this->table_name()}.* FROM {$this->table_name()}";

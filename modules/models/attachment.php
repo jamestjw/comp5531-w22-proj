@@ -7,7 +7,6 @@ class Attachment extends Record
     protected static $table_name = "attachments";
     // TODO: Implement polymorphic belongs_to
 
-    public $id;
     public $file_id;
     public $file_filename;
     public $file_size;
