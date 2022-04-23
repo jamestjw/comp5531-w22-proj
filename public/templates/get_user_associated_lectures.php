@@ -16,8 +16,11 @@ switch ($user_role) {
         }
         break;
 
-    case 'TA':
-        # TO DO WHEN TA ARE IMPLEMENTED
+    case 'ta':
+        $ta_sections = SectionTA::includes(['section' => ['lecture' => 'course']])->where(array('user_id' => $user_id));
+        foreach($ta_sections as $ta_section){
+            array_push($lectures, $ta_section->section->lecture);
+        }
         break;
 
     case 'student':
