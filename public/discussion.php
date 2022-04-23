@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
 <?php
 
 if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messages" => ["poll"=>"poll_options", "user"=>[], "comments" => "user"]])->find_by_id($_GET["id"]))) {
-    $current_user_may_comment = $_SESSION["current_user"]->get_role("ta") || $_SESSION["current_user"]->get_role("instructor"); ?>
+    $current_user_may_comment = $_SESSION["current_user"]->get_role("ta") || $_SESSION["current_user"]->get_role("instructor"); 
     $discussion_messages = $discussion->discussion_messages; ?>
     <h2><?php echo "Discussion: ".$discussion->title; ?></h2>
     <div>Number of posts: <?php echo count($discussion_messages); ?> </div>
@@ -75,7 +75,7 @@ if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messa
             <!-- Polls -->
             <?php 
             if (!is_null($discussion_message->parent_id)) {
-                echo "<Replies to: {$discussion_message->parent_id}> ";
+                echo "<p>&ltReplies to: {$discussion_message->parent_id}&gt</p> ";
             }
             ?>
             <?php echo $discussion_message->content."<br><br>";
