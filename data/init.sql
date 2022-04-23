@@ -52,8 +52,7 @@ CREATE TABLE IF NOT EXISTS discussion_messages (
 );
 
 CREATE TABLE IF NOT EXISTS attachments (
-	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	file_id VARCHAR(60),
+	file_id VARCHAR(60) PRIMARY KEY,
 	file_filename VARCHAR(60),
 	file_size INT(10),
 	attachable_id INT(11),
