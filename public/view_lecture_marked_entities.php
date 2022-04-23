@@ -60,7 +60,7 @@ if ($marked_entities && count($marked_entities)) { ?>
                 <?php foreach ($marked_entities as $row) { ?>
                     <tr>
                         <td><a href="marked_entity.php?id=<?php echo $row->id; ?>"><?php echo escape($row->title); ?></a></td>
-                        <td><?php echo escape($row->is_team_work); ?></td>
+                        <td><?php echo html_tick_cross($row->is_team_work) ?></td>
                         <td><?php echo escape($row->due_at); ?></td>
                         <td><?php echo escape($row->created_at);  ?> </td>
                     </tr>

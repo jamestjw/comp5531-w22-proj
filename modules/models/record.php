@@ -188,7 +188,11 @@ class Record
 
         foreach (get_called_class()::getAttrs() as $attr) {
             if (isset($this->$attr) && !is_null($this->$attr)) {
-                $new_obj[$attr] = $this->$attr;
+                if (is_bool($this->$attr)) {
+                    $new_obj[$attr] = intval($this->$attr);
+                } else {
+                    $new_obj[$attr] = $this->$attr;
+                }
             }
         }
 

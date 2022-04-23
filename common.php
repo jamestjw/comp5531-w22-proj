@@ -121,3 +121,8 @@ function set_error_and_go_back(string $err) {
     header("Location: " . $_SERVER["HTTP_REFERER"]);
     die();
 }
+
+function html_tick_cross(bool $b)
+{
+    return $b ? "&#10003;" : "&#10008;";
+}
