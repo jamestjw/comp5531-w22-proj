@@ -106,15 +106,16 @@ if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messa
                 } ?>
             <?php }
             }?>
-            <?php
-            $user_id = $_SESSION["current_user"]->id;
-            $commentable_id = $discussion_message->id;
-            $commentable_type = "DiscussionMessage";
-            if (get_current_role() == "instructor" || get_current_role() == "ta") {
-                include "new_comment_form.php";
-            }
-
-            ?>
+                <?php
+                    if ($current_user_may_comment) {
+                        $user_id = $_SESSION["current_user"]->id;
+                        $commentable_id = $discussion_message->id;
+                        $commentable_type = "DiscussionMessage";
+                        if (get_current_role() == "instructor" || get_current_role() == "ta") {
+                            include "new_comment_form.php";
+                        }
+                    }
+                ?>
             <!-- Reply button -->
             <div class="replybutton">
             <a href="discussions.php" class="replyMessage">Reply</a>

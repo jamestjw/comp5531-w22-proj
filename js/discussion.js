@@ -1,8 +1,14 @@
-$(".replyMessage")
-.click(function(e){
-    e.preventDefault();
-    $(e.target).parent().next().find("form").toggle();
-});
+document
+   .querySelector(".replyMessage")
+   .addEventListener("click", function(e) {
+       e.preventDefault();
+       var form = document.querySelector(".replyMessageForm");
+       if (form.style.display === "none") {
+           form.style.display = "block";
+       } else {
+           form.style.display = "none";
+       }
+   });
 
 document
     .querySelector("#addPollOption")
