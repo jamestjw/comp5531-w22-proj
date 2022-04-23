@@ -11,7 +11,7 @@ try {
     echo $sql . "<br>" . $error->getMessage();
 }
 ?>
-
+<link rel="stylesheet" href="css/crsmgr_table_style.css">
 <?php include "templates/header.php"; ?>
 
 <h2>Planned Meetings</h2>
@@ -23,7 +23,6 @@ if ($planned_meetings && count($planned_meetings)) { ?>
         <table style="width:50%">
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>Title</th>
                     <th>Agenda</th>
                     <th>Date of meeting</th>
@@ -34,7 +33,6 @@ if ($planned_meetings && count($planned_meetings)) { ?>
             <tbody>
         <?php foreach ($planned_meetings as $row) { ?>
             <tr>
-                <td><?php echo escape($row->id); ?></td>
                 <td><a href="meeting.php?id=<?php echo $row->id; ?>"><?php echo escape($row->title); ?></a></td>
                 <td><?php echo escape($row->agenda); ?></td>
                 <td><?php echo escape($row->planned_date); ?></td>
@@ -60,7 +58,6 @@ if ($past_meetings && count($past_meetings)) {?>
             <table style="width:50%">
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Title</th>
                         <th>Agenda</th>
                         <th>Date of meeting</th>
@@ -73,8 +70,7 @@ if ($past_meetings && count($past_meetings)) {?>
                 <tbody>
             <?php foreach ($past_meetings as $row) { ?>
                 <tr>
-                    <td><?php echo escape($row->id); ?></td>
-                    <td><?php echo escape($row->title); ?></a></td>
+                    <td><a href="meeting.php?id=<?php echo $row->id; ?>"><?php echo escape($row->title); ?></a></td>
                     <td><?php echo escape($row->agenda); ?></td>
                     <td><?php echo escape($row->planned_date); ?></td>
                     <td><?php echo escape($row->start_at); ?></td>
