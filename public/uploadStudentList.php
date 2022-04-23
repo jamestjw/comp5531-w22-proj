@@ -110,11 +110,11 @@ if($lecture_id > 0){
     </p>
     
     <label for="filename">Select File</label>
-    <input size='50' type='file' name='filename' accept=".csv">
+    <input size='50' type='file' name='filename' accept=".csv" required>
     </br>
 
     <label for="section">Select Section</label>
-    <select Name="section" id="section">
+    <select Name="section" id="section" required>
         <option value="" disabled selected>----Select----</option>
         <?php foreach($section as $row) { ?>
             <option value="<?php echo $row->id;?>">
