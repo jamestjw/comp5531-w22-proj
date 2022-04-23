@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS polls (
 	user_id INT(11) UNSIGNED NOT NULL,
 	title VARCHAR(50),
 	duration INT(11) UNSIGNED NOT NULL,
-	FOREIGN KEY (parent_id) REFERENCES discussions(id),
+	FOREIGN KEY (parent_id) REFERENCES discussion_messages(id),
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );
