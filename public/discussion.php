@@ -64,10 +64,10 @@ if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messa
     <?php foreach ($discussion_messages as $discussion_message) {?>
         <tr>
             <td class="discheader">
-            <?php echo "Post ID:".$discussion_message->id."<br>"; ?>
-            <?php echo "Post Author:".$discussion_message->user->get_full_name()."<br>"; ?>
-            <?php echo "Parent ID:".$discussion_message->parent_id."<br>"; ?>
-            <?php echo "Created at:".$discussion_message->created_at."<br>"; ?>
+            <?php echo "Post ID: ".$discussion_message->id."<br>"; ?>
+            <?php echo "Post Author: ".$discussion_message->user->get_full_name()."<br>"; ?>
+            <?php echo "Parent ID: ".$discussion_message->parent_id."<br>"; ?>
+            <?php echo "Created at: ".$discussion_message->created_at."<br>"; ?>
             </td>
             <td>
             <!-- Polls -->
@@ -107,15 +107,13 @@ if (isset($_GET["id"]) && ($discussion = Discussion::includes(["discussion_messa
             <?php }
             }?>
             <?php
-            // TODO: Only display this to TA's of this course!
-            if (true) {
-                $user_id = $_SESSION["current_user"]->id;
-                $commentable_id = $discussion_message->id;
-                $commentable_type = "DiscussionMessage";
-                if (get_current_role() == "instructor" || get_current_role() == "ta") {
-                    include "new_comment_form.php";
-                }
+            $user_id = $_SESSION["current_user"]->id;
+            $commentable_id = $discussion_message->id;
+            $commentable_type = "DiscussionMessage";
+            if (get_current_role() == "instructor" || get_current_role() == "ta") {
+                include "new_comment_form.php";
             }
+
             ?>
             <!-- Reply button -->
             <div class="replybutton">
