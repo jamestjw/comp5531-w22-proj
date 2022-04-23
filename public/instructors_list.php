@@ -9,7 +9,7 @@ require_once "../modules/models/user.php";
 require_once "../common.php";
 
 try {
-    $instructors = User::where(array('is_instructor' => '1'));
+    $instructors = User::where_raw_sql("roles & 2");
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
@@ -35,8 +35,7 @@ if (isset($_POST['submit'])) {
     $user->first_name = $_POST['first_name'];
     $user->last_name = $_POST['last_name'];
     $user->email = $_POST['email'];
-    $user->is_admin = 0;
-    $user->is_instructor = 1;
+    $user->set_role("instructor");
     $user->password_digest = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     try {

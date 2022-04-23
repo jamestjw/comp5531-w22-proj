@@ -10,7 +10,7 @@ require_once "../modules/models/section_student.php";
 require_once "../common.php";
 
 try {
-    $students = User::where(array('is_instructor' => '0', 'is_admin' => '0'));
+    $students = User::where(array('roles' => '0'));
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
