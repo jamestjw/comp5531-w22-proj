@@ -91,10 +91,15 @@
                     <a href="course_lecture.php?id=<?php echo $row->id ?>">
                     <button type="button"style="margin:5px";>View Lecture Page</button>
                     </a>
+                    <?php
+                if (get_current_role() == "admin") {
+                    ?>
                     <form method="post">
                     <input type="hidden" id="key" name="key" value="<?=$row->id?>">
                     <input type="submit" name="deleteLecture" value = "Delete Lecture" style="margin:5px">
                     </form>
+                    <?php
+                } ?>
                 </td>
             </tr>
             <?php endforeach;?>

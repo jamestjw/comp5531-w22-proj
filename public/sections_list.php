@@ -80,11 +80,16 @@
             <tr>
                 <td class="tgNorm"><?php echo($row->id);?></td>
                 <td class="tgNorm"><?php echo($row->section_code);?></td>
-                <td class="tgNorm">                    
+                <td class="tgNorm">
+                <?php
+                if (get_current_role() == "admin") {
+                    ?>        
                     <form method="post">
                     <input type="hidden" id="key" name="key" value="<?=$row->id?>">
                     <input type="submit" name="deleteSection" value = "Delete Section" style="margin:5px">
                     </form>
+                    <?php
+                } ?>
                 </td>
             </tr>
             <?php endforeach;?>

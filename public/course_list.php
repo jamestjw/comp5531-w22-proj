@@ -60,7 +60,6 @@ try {
                     </tr>
         </thead>
         <tbody>
-
             <?php foreach ($result_courses as $row):;?>
             <tr>
                 <td class="tgNorm"><?php echo($row->id);?></td>
@@ -70,11 +69,16 @@ try {
                     <a href="lectures_list.php?id=<?php echo $row->id;?>">
                     <button type="button"style="margin:5px";>View Lectures</button>
                     </a>
-                    <br>
+                    <br>        
+            <?php
+                if (get_current_role() == "admin") {
+                    ?>
                     <form method="post">
                     <input type="hidden" id="key" name="key" value="<?=$row->id?>">
                     <input type="submit" name="deleteCourse" value = "Delete Course" style="margin:5px">
                     </form>
+                    <?php
+                } ?>
                 </td>
 
             </tr>
