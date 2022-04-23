@@ -95,7 +95,7 @@ foreach ($course_sections as $section) {
                 <input class="single-checkbox" type="checkbox" id="<?php echo $student->id; ?>" name="student[]" value="<?php echo $student->id; ?>"> <?php echo($student->first_name." ".$student->last_name." ".$student->student_id) ?><br>
             <?php } ?>
         <?php } ?>
-        <input type='submit' name='submit' value='submit'>
+        <input type='submit' name='submit' value='submit' id='submitTeamForm'>
     </form>
 </div>
 <?php } else { ?>
@@ -110,6 +110,18 @@ theCheckboxes.click(function()
 {
     if (theCheckboxes.filter(":checked").length > 4)
         $(this).removeAttr("checked");
+});
+
+$(document).ready(function () {
+    $('#submitTeamForm').click(function() {
+      checked = $(".student_choice input[type=checkbox]:checked").length;
+
+      if(!checked) {
+        alert("You must check at least one checkbox.");
+        return false;
+      }
+
+    });
 });
 </script>
 
