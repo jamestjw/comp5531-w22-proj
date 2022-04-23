@@ -95,8 +95,8 @@
                 if (get_current_role() == "admin") {
                     ?>
                     <form method="post">
-                    <input type="hidden" id="key" name="key" value="<?=$row->id?>">
-                    <input type="submit" name="deleteLecture" value = "Delete Lecture" style="margin:5px">
+                        <input type="hidden" id="key" name="key" value="<?=$row->id?>">
+                        <input type="submit" name="deleteLecture" value = "Delete Lecture" style="margin:5px">
                     </form>
                     <?php
                 } ?>
@@ -110,10 +110,11 @@
             <tr>
                 <td class="tgInvis"></td>
                 <form method="post">
-                <td class="tgNorm"><input type="text" value="Lecture Code" name="lecture_code" id="lecture_code"></td>
-                <td class="tgNorm"><input type ="date" name = "starting_date" id="starting_date"></td>
-                <td class="tgNorm"><input type ="date" name = "ending_date" id="ending_date"></td>
-                <td class="tgNorm"><input type="submit" name="submitLecture" value="Add Lecture"></td>
+                    <td class="tgNorm"><input type="text" value="Lecture Code" name="lecture_code" id="lecture_code" required></td>
+                    <td class="tgNorm"><input type ="date" name = "starting_date" id="starting_date" required></td>
+                    <td class="tgNorm"><input type ="date" name = "ending_date" id="ending_date" required></td>
+                    <td class="tgNorm"><input type="submit" name="submitLecture" value="Add Lecture"></td>
+                </form>
             </tr>
             <?php
                 } ?>
@@ -124,10 +125,11 @@
             <br>
             <b>No lectures found for this course, please add a lecture.</b>
             <form method="post">
-            <input type="text" value="Lecture Code" name="lecture_code" id="lecture_code">
-            <input type ="date" name = "starting_date" id="starting_date">
-            <input type ="date" name = "ending_date" id="ending_date">
-            <input type="submit" name="submitLecture" value="Add Lecture">
+                <input type="text" value="Lecture Code" name="lecture_code" id="lecture_code" required>
+                <input type ="date" name = "starting_date" id="starting_date" required>
+                <input type ="date" name = "ending_date" id="ending_date" required>
+                <input type="submit" name="submitLecture" value="Add Lecture">
+            </form>
         <?php endif;?>
 
 
