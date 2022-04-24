@@ -1,4 +1,5 @@
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
+<?php require_once(dirname(__FILE__)."/../common.php"); ?>
 <?php $user_role = get_current_role()?>
 <?php include "templates/header.php"; ?>
 <?php if($user_role == "admin") { ?>
@@ -8,33 +9,33 @@ require_once "../modules/models/user.php";
 
 if (isset($_POST['submit'])) {
     $create_success = false;
-    if($_POST['role'] == "student") {
-        $user = new User();
-        $user->first_name = $_POST['first_name'];
-        $user->last_name = $_POST['last_name'];
-        $user->email = $_POST['email'];
-        $user->set_role($_POST['role']);
-        $user->student_id = $_POST['student_id'];
-        $user->is_password_changed = 0;
-        $user->password_digest = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    
-    } elseif($_POST['role'] == "ta") {
-        $user = new User();
-        $user->first_name = $_POST['first_name'];
-        $user->last_name = $_POST['last_name'];
-        $user->email = $_POST['email'];
-        $user->set_role("ta");
-        $user->is_password_changed = 0;
-        $user->password_digest = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    } elseif($_POST['role'] == "instructor"){
-        $user = new User();
-        $user->first_name = $_POST['first_name'];
-        $user->last_name = $_POST['last_name'];
-        $user->email = $_POST['email'];
-        $user->set_role("instructor");
-        $user->is_password_changed = 0;
-        $user->password_digest = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $required_attrs = ['first_name', 'last_name', 'email', 'password', 'role'];
+
+    foreach ($required_attrs as $attr) {
+        if (!array_key_exists($attr, $_POST)) {
+            set_error_and_go_back("Missing argument $attr.");
+        }
+    }
+
+    $role = $_POST['role'];
+    if (!in_array($role, ['student', 'ta', 'instructor'])) {
+        set_error_and_go_back("$role is not a valid role.");
+    }
+
+    $user = new User();
+    $user->first_name = $_POST['first_name'];
+    $user->last_name = $_POST['last_name'];
+    $user->email = $_POST['email'];
+    $user->set_role($role);
+    $user->is_password_changed = 0;
+    $user->password_digest = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+    if ($role == 'student') {
+        if (!array_key_exists('student_id', $_POST) || empty($_POST['student_id'])) {
+            set_error_and_go_back("Invalid student_id for student role");
+        }
+        $user->student_id = $_POST['student_id'];
     }
     
     try {
