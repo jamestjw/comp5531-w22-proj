@@ -1,47 +1,48 @@
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
 <link rel="stylesheet" href="css/crsmgr_table_style.css">
 <?php
-
+$user_role = get_current_role();
 require_once "../modules/models/user.php";
 require_once "../common.php";
+if ($user_role == "admin") {
+    try {
+        // TODO: Make this get Users that are not soft deleted
+        // TODO: Maybe refactor this page and other pages that display users to reuse the same code.
+        $result = User::getAll();
+    } catch (PDOException $error) {
+        echo $sql . "<br>" . $error->getMessage();
+    }
+    $user_role = get_current_role();
 
-try {
-    // TODO: Make this get Users that are not soft deleted
-    // TODO: Maybe refactor this page and other pages that display users to reuse the same code.
-    $result = User::getAll();
-} catch (PDOException $error) {
-    echo $sql . "<br>" . $error->getMessage();
-}
-$user_role = get_current_role();
-
-if (isset($_POST['delete_user'])) {
-    $user_to_delete = User::find_by(array('id' => $_POST['user_id']));
-    $delete_sucess = false;
+    if (isset($_POST['delete_user'])) {
+        $user_to_delete = User::find_by(array('id' => $_POST['user_id']));
+        $delete_sucess = false;
     
-    if (!$user_to_delete->get_role("admin")){
-        $user_to_delete->delete();
-        $delete_sucess = true;
-    }else {
-        echo "Admin cannot be deleted";
+        if (!$user_to_delete->get_role("admin")) {
+            $user_to_delete->delete();
+            $delete_sucess = true;
+        } else {
+            echo "Admin cannot be deleted";
+        }
+
+        if ($delete_sucess) {
+            echo "User successfully deleted";
+            header("refresh: 1");
+        }
     }
-
-    if($delete_sucess) {
-        echo "User successfully deleted";
-        header("refresh: 1");
-    }
-}
-
-
-?>
+}else { ?>
+    <blockquote>You do not have the credentials to delete users</blockquote>
+<?php } ?>
 
 <?php include "templates/header.php"; ?>
 
 <?php if($user_role == "admin") { ?>
+    
 <?php
 if ($result && count($result)) { ?>
         <h2>Users</h2>
-
-        <table>
+        <a href="create_user.php">Create a new user</a><br>
+        <br><table>
             <thead>
                 <tr>
                     <th>First Name</th>
