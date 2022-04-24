@@ -204,12 +204,12 @@ if (isset($marked_entity_id)) {
     <div>Add new file:</div>
     <form method="post" action="marked_entity_files.php" enctype="multipart/form-data">
         <label for="title">Title</label>
-        <input type="text" name="title" id="title">
+        <input type="text" name="title" id="title" required>
         <label for="description">Description</label>
-        <input type="text" name="description" id="description">
+        <input type="text" name="description" id="description" required>
         <input type="hidden" id="user_id" name="user_id" value="<?php echo $_SESSION["current_user_id"]; ?>">
         <input type="hidden" id="marked_entity_id" name="marked_entity_id" value="<?php echo $marked_entity_id; ?>">
-        <input type="file" name="file" id="file">
+        <input type="file" name="file" id="file" required>
         <div>
         <label for="permissions">Permissions</label>
         <?php foreach ($current_user_team_members as $member) { ?>
