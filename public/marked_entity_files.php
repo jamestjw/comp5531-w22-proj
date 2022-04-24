@@ -97,6 +97,10 @@ if (isset($marked_entity_id)) {
                     where user_id = {$_SESSION['current_user_id']}
                 )", array());
             $team_mate_ids = array_map(fn($e) => $e['user_id'], $team_mate_ids);
+            // If the user is not in a team, then we fallback to just retrieving his files
+            if (empty($team_mate_ids)) {
+                $team_mate_ids = [$_SESSION['current_user_id']];
+            }
             $files = MarkedEntityFile::includes(["attachment" => [], "comments" => "user", "permissions" => []])->where(array("entity_id"=>$marked_entity_id, "user_id"=>$team_mate_ids));
         } else {
             // Otherwise, load files uploaded by yourself
