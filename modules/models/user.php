@@ -86,7 +86,6 @@ class User extends Record
     }
 
     public function get_role(string $inp): bool
-
     {
         switch ($inp) {
             case "admin":
@@ -99,5 +98,10 @@ class User extends Record
 
         return false;
 
+    }
+
+    public function is_student(): bool
+    {
+        return !is_null($this->student_id);
     }
 }
