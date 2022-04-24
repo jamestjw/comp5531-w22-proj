@@ -24,6 +24,7 @@ if (isset($_POST['submit'])) {
         $user->last_name = $_POST['last_name'];
         $user->email = $_POST['email'];
         $user->set_role("ta");
+        $user->is_password_changed = 0;
         $user->password_digest = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     } elseif($_POST['role'] == "instructor"){
@@ -32,6 +33,7 @@ if (isset($_POST['submit'])) {
         $user->last_name = $_POST['last_name'];
         $user->email = $_POST['email'];
         $user->set_role("instructor");
+        $user->is_password_changed = 0;
         $user->password_digest = password_hash($_POST['password'], PASSWORD_DEFAULT);
     }
     
@@ -56,7 +58,7 @@ if (isset($_POST['submit'])) {
     <label for="last_name">Last Name</label>
     <input type="text" name="last_name" id="last_name" required>
     <label for="email" required>Email Address</label>
-    <input type="text" name="email" id="email">
+    <input type="email" name="email" id="email">
     <label for="student_id">Student ID (leave blank if not a student)</label>
     <input type="text" name="student_id" id="student_id">
     <select name="role" id="role" required>
