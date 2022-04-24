@@ -29,19 +29,18 @@ if ($discussions && count($discussions)) { ?>
 ?> 
 <br>
 
-<h5>Add a discussion</h5>
-
-<form method="post" action="create_discussion.php">
-    <label for="title">Title</label>
-    <input type="text" name="title" id="title">
-    <label for="content">Content</label>
-    <input type="text" name="content" id="content">
-
-    <?php
+<?php
     if (isset($discussable_id) && isset($discussable_type)) { ?>
+    <h5>Add a discussion</h5>
+
+    <form method="post" action="create_discussion.php">
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title">
+        <label for="content">Content</label>
+        <input type="text" name="content" id="content">
         <input type="hidden" id="discussable_id" name="discussable_id" value="<?php echo $discussable_id; ?>">
         <input type="hidden" id="discussable_type" name="discussable_type" value="<?php echo $discussable_type; ?>">
-    <?php } ?>
 
-    <input type="submit" name="submit" value="Submit">
-</form>
+        <input type="submit" name="submit" value="Submit">
+    </form>
+<?php } ?>

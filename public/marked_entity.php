@@ -96,8 +96,10 @@ if (isset($_GET["id"]) && ($marked_entity = MarkedEntity::find_by_id($_GET["id"]
         <div class="innerBox" >
             <br>
             <?php
-                $discussable_id =  $marked_entity->id;
-                $discussable_type = "MarkedEntity";
+                if ($_SESSION['current_user']->is_student()) {
+                    $discussable_id = $marked_entity->id;
+                    $discussable_type = "MarkedEntity";
+                }
                 include "discussion_list.php"
                 ?><br>
         </div>
