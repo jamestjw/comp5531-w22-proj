@@ -1,5 +1,6 @@
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
 <?php $user_role = get_current_role()?>
+<?php include "templates/header.php"; ?>
 <?php if($user_role == "admin") { ?>
 <?php
 
@@ -42,8 +43,6 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
-
-<?php include "templates/header.php"; ?>
 
 <?php if (isset($_POST['submit']) && $create_success) { ?>
     <blockquote><?php echo $_POST['first_name']; ?> successfully added.</blockquote>
