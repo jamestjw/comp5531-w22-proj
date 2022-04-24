@@ -1,4 +1,9 @@
 <?php
+// Andréanne Chartrand-Beaudry - 29605991
+// Zachary Jones - 40203969
+// James Juan Whei Tan - 40161156
+?>
+<?php
 require_once "../common.php";
 
 ensure_logged_in();

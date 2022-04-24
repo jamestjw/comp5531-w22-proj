@@ -1,3 +1,6 @@
+<?php
+// James Juan Whei Tan - 40161156
+?>
 <form method="post" action="create_comment.php" class="newCommentForm">
     <input type="text" name="content" id="content">
     <input type="hidden" id="commentable_id" name="commentable_id" value="<?php echo $commentable_id; ?>">

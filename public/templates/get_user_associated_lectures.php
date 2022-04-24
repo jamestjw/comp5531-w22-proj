@@ -1,4 +1,8 @@
 <?php
+// Christopher Almeida Neves - 27521979
+// Andréanne Chartrand-Beaudry - 29605991
+?>
+<?php
 $user_id = get_users_id();
 $user_role = get_current_role();
 

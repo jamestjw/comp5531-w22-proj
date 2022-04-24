@@ -1,4 +1,8 @@
 <?php
+// Andréanne Chartrand-Beaudry - 29605991
+// James Juan Whei Tan - 40161156
+?>
+<?php
 require_once "../modules/models/user.php";
 require_once "../modules/models/section.php";
 require_once "../modules/models/section_student.php";

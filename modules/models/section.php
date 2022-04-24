@@ -1,4 +1,8 @@
 <?php
+// Zachary Jones - 40203969
+// James Juan Whei Tan - 40161156
+?>
+<?php
 
 require_once(dirname(__FILE__)."/record.php");
 

@@ -1,4 +1,8 @@
 <?php
+// James Juan Whei Tan - 40161156
+// Andréanne Chartrand-Beaudry - 29605991
+?>
+<?php
 
 require_once(dirname(__FILE__)."/../common.php");
 

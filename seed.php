@@ -1,4 +1,9 @@
 <?php
+// James Juan Whei Tan - 40161156
+// Andréanne Chartrand-Beaudry - 29605991
+// Christopher Almeida Neves - 27521979
+?>
+<?php
 
 require "modules/models/section_student.php";
 require "modules/models/lecture_instructor.php";

@@ -1,3 +1,8 @@
+<?php
+// Andréanne Chartrand-Beaudry - 29605991
+// Christopher Almeida Neves - 27521979
+// James Juan Whei Tan - 40161156
+?>
 <link rel="stylesheet" href="css/crsmgr_table_style.css">
 
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>

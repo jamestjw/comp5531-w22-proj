@@ -1,4 +1,8 @@
 <?php
+// Zachary Jones - 40203969
+// Christopher Almeida Neves - 27521979
+?>
+<?php
 
 require_once(dirname(__FILE__)."/record.php");
 

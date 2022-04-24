@@ -1,4 +1,7 @@
 <?php
+// James Juan Whei Tan - 40161156
+?>
+<?php
 
 function sql_log(string $raw_query, ?array $data = null)
 {
