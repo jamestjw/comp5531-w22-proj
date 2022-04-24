@@ -1,3 +1,8 @@
+<?php
+// Andréanne Chartrand-Beaudry - 29605991
+// Christopher Almeida Neves - 27521979
+// James Juan Whei Tan - 40161156
+?>
  <?php
 
 require_once "../modules/models/user.php";

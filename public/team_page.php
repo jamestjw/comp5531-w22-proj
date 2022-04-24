@@ -1,3 +1,7 @@
+<?php
+// Christopher Almeida Neves - 27521979
+// Andréanne Chartrand-Beaudry - 29605991
+?>
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
 <?php
 require_once "../modules/models/user.php";

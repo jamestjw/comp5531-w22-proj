@@ -1,3 +1,7 @@
+-- Christopher Almeida Neves - 27521979
+-- James Juan Whei Tan - 40161156
+-- Zachary Jones - 40203969
+-- Andréanne Chartrand-Beaudry - 29605991
 -- Courses --
 INSERT INTO courses (course_code, course_name, created_at, updated_at) VALUES ('COMP5531',  'Databases' ,  now() ,  now() );
 INSERT INTO courses (course_code, course_name, created_at, updated_at) VALUES ('COMP5511',  'Algorithms' ,  now() ,  now() );

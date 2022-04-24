@@ -1,3 +1,9 @@
+<?php
+// James Juan Whei Tan - 40161156
+// Christopher Almeida Neves - 27521979
+// Andréanne Chartrand-Beaudry - 29605991
+// Zachary Jones - 40203969
+?>
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
 <?php include "templates/header.php"; ?>
 <link rel="stylesheet" href="css/crsmgr_table_style.css">

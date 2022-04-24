@@ -1,4 +1,8 @@
 <?php
+// Christopher Almeida Neves - 27521979
+// Andréanne Chartrand-Beaudry - 29605991
+?>
+<?php
 
 $lecture_page_id = $_GET['id'];
 

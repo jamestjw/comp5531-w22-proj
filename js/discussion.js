@@ -1,3 +1,7 @@
+/*
+James Juan Whei Tan - 40161156
+Christopher Almeida Neves - 27521979
+*/
 $(".replyMessage")
 .click(function(e){
     e.preventDefault();

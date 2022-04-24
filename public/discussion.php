@@ -1,3 +1,7 @@
+<?php
+// James Juan Whei Tan - 40161156
+// Christopher Almeida Neves - 27521979
+?>
 <?php require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
 
 <link rel="stylesheet" href="css/discussion.css">

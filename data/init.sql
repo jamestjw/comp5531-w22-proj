@@ -1,3 +1,7 @@
+-- Zachary Jones - 40203969
+-- Andréanne Chartrand-Beaudry - 29605991
+-- James Juan Whei Tan - 40161156
+-- Christopher Almeida Neves - 27521979
 -- %1$s is the database name
 
 DROP DATABASE IF EXISTS %1$s;

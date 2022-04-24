@@ -1,3 +1,6 @@
+/*
+James Juan Whei Tan - 40161156
+*/
 document
     .getElementById("displayUpdateForm")
     .addEventListener("click", function(e) {

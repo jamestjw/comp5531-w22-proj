@@ -1,3 +1,8 @@
+<?php
+// Christopher Almeida Neves - 27521979
+// Andréanne Chartrand-Beaudry - 29605991
+// James Juan Whei Tan - 40161156
+?>
 <?php $in_settings = true; 
 require_once(dirname(__FILE__)."/../modules/ensure_logged_in.php"); ?>
 <?php
