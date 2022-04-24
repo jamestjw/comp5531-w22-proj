@@ -84,18 +84,28 @@ if (isset($_POST['submit'])) {
 // TODO: Ensure that marked entity ID is valid.
 if (isset($marked_entity_id)) {
     if (get_current_role() == "student") {
-        $team_mate_ids = execute_sql_query("
-        SELECT
-                user_id FROM
-            team_members JOIN teams
-            ON teams.id = team_members.team_id
-            AND teams.lecture_id = {$marked_entity->lecture_id}
-            AND teams.id IN (
-                SELECT team_id FROM team_members
-                where user_id = {$_SESSION['current_user_id']}
-            )", array());
-        $team_mate_ids = array_map(fn($e) => $e['user_id'], $team_mate_ids);
-        $files = MarkedEntityFile::includes(["attachment" => [], "comments" => "user", "permissions" => []])->where(array("entity_id"=>$marked_entity_id, "user_id"=>$team_mate_ids));
+        // For group works, load files that were uploaded by team members
+        if ($marked_entity->is_team_work) {
+            $team_mate_ids = execute_sql_query("
+            SELECT
+                    user_id FROM
+                team_members JOIN teams
+                ON teams.id = team_members.team_id
+                AND teams.lecture_id = {$marked_entity->lecture_id}
+                AND teams.id IN (
+                    SELECT team_id FROM team_members
+                    where user_id = {$_SESSION['current_user_id']}
+                )", array());
+            $team_mate_ids = array_map(fn($e) => $e['user_id'], $team_mate_ids);
+            // If the user is not in a team, then we fallback to just retrieving his files
+            if (empty($team_mate_ids)) {
+                $team_mate_ids = [$_SESSION['current_user_id']];
+            }
+            $files = MarkedEntityFile::includes(["attachment" => [], "comments" => "user", "permissions" => []])->where(array("entity_id"=>$marked_entity_id, "user_id"=>$team_mate_ids));
+        } else {
+            // Otherwise, load files uploaded by yourself
+            $files = MarkedEntityFile::includes(["attachment" => [], "comments" => "user", "permissions" => []])->where(array("entity_id"=>$marked_entity_id, "user_id"=>$_SESSION['current_user_id']));
+        }
     } else {
         $files = MarkedEntityFile::includes(["attachment" => [], "comments" => "user", "permissions" => []])->where(array("entity_id"=>$marked_entity_id));
     }
