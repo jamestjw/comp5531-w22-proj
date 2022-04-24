@@ -21,6 +21,8 @@ $instructor2->set_role("instructor");
 $instructor2->password_digest = password_hash('welcome', PASSWORD_DEFAULT);
 $instructor2->save();
 
+echo "Instructors successfully seeded in the database!<br>";
+
 // Associate Instructors to Lectures
 $lecture1_instructor = new LectureInstructor();
 $lecture1_instructor->lecture_id = 1;
@@ -36,6 +38,8 @@ $lecture2_instructor2 = new LectureInstructor();
 $lecture2_instructor2->lecture_id = 3;
 $lecture2_instructor2->user_id = 3;
 $lecture2_instructor2->save();
+
+echo "Instructors successfully assigned to course sections.<br>";
 
 // Insert TAs
 $TA = new User();
@@ -78,6 +82,8 @@ $TA->set_role("ta");
 $TA->password_digest = password_hash('welcome', PASSWORD_DEFAULT);
 $TA->save();
 
+echo "TAs successfully created.<br>";
+
 // Associate TA to sections
 $TA_section = new SectionTA();
 $TA_section->user_id = 4;
@@ -104,7 +110,7 @@ $TA_section4->user_id = 8;
 $TA_section4->section_id = 5;
 $TA_section4->save();
 
-
+echo "TAs associated to lecture lab sections.<br>";
 
 // Insert Student (from list in doc)
 
@@ -170,6 +176,8 @@ for ($id = 9; $id <=49; $id++) {
     }
 }
 
+echo "Students successfully added to lecture sections.<br>";
+
 // Create a new team
 $team = new Team();
 $team->lecture_id = 1;
@@ -183,7 +191,11 @@ for ($id = 26; $id <=29; $id++) {
 $team->team_members = $new_team_members;
 $team->save();
 
+echo "Example team created.<br>";
+
 // Create welcome announcement (first announcement)
 $announcement = new Announcement();
 $announcement->announcement_text = "Welcome to Course Manager group assistant!";
 $announcement->save();
+
+echo "Initial announcement created.<br>";
