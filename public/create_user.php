@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
     <label for="last_name">Last Name</label>
     <input type="text" name="last_name" id="last_name" required>
     <label for="email" required>Email Address</label>
-    <input type="email" name="email" id="email">
+    <input type="email" name="email" id="email" required>
     <label for="student_id">Student ID (leave blank if not a student)</label>
     <input type="text" name="student_id" id="student_id">
     <select name="role" id="role" required>
