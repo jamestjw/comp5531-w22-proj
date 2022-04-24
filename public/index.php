@@ -51,7 +51,7 @@ $user_role = get_current_role();
       Change the Admin account settings
     </li><br>
     <li>
-      <h4>emails</h4>
+      <h4>Emails</h4>
       View your internal emails 
       <br>Send emails internally to other users
     </li><br>
@@ -170,7 +170,7 @@ $user_role = get_current_role();
     Change your account settings
   </li><br>
   <li>
-    <h4>emails</h4>
+    <h4>Emails</h4>
     View your internal emails 
     <br>Send emails internally to other users
   </li><br>
@@ -192,7 +192,7 @@ $user_role = get_current_role();
     <br>Comment on students uploaded files for your lectures' marked entities
     <br>Create Discussions related to marked entities visible only to TAs and instructors  
     <br>Reply to messages on marked entity Discussions
-    <br>Create polls in marked entiy discussion messages
+    <br>Create polls in marked entity discussion messages
     <br>Comment on marked entity discussion messages from students
   </li><br>
   <li>
@@ -227,10 +227,12 @@ $user_role = get_current_role();
   <li>
     <h4>Meetings</h4>
     View all meetings created by students in your teams
+    <br>Start and end meetings
+    <br>Write down meetings minutes while meeting is ongoing 
   </li><br>
   <li>
     <h4> Courses, Lectures and Sections</h4>
-    View the lecture pages for lectures who's section you are enrolled in
+    View the lecture pages for lectures whose section you are enrolled in
   </li><br>
   <li>
     <h4>Students</h4>
@@ -242,7 +244,7 @@ $user_role = get_current_role();
     <br>Upload files to marked entities
     <br>Create Discussions related to marked entities 
     <br>Reply to messages on marked entity Discussions
-    <br>Create polls in marked entiy discussion messages
+    <br>Create polls in marked entity discussion messages
   </li><br>
   <li>
     <h4>Discussions</h4>
