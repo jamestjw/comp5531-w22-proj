@@ -83,7 +83,8 @@ CREATE TABLE IF NOT EXISTS poll_option_users (
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP,
 	FOREIGN KEY (user_id) REFERENCES users(id),
-	FOREIGN KEY (option_id) REFERENCES poll_options(id)
+	FOREIGN KEY (option_id) REFERENCES poll_options(id),
+	PRIMARY KEY (option_id, user_id)
 );
 
 CREATE TABLE IF NOT EXISTS courses (
