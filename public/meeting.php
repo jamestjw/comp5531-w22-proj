@@ -14,10 +14,12 @@ if (isset($_GET["id"]) && ($meeting = Meeting::find_by_id($_GET["id"]))) { ?>
     <div><h5>Agenda</h5> 
     <?php echo nl2br($meeting->agenda); ?> 
     </div>
-        <?php if ($meeting->has_passed == false) {?>
+        <?php if ($meeting->has_passed == false) {
+            if ($_SESSION['current_user_id'] == $meeting->user_id || !is_null(TeamMember::find_by(["user_id"=> $_SESSION['current_user_id'], "team_id" => $meeting->team_id]))) { ?>
             <form method="post">
-            <input type="submit" name="start_meeting" value="Start Meeting">
+                <input type="submit" name="start_meeting" value="Start Meeting">
             </form>
+            <?php } ?>
         <?php } else {?>
             <h5>Started </h5> <?php echo $meeting->start_at;?>
             <h5>Ended </h5> <?php echo $meeting->end_at;?>
@@ -34,6 +36,10 @@ if (isset($_GET["id"]) && ($meeting = Meeting::find_by_id($_GET["id"]))) { ?>
 
 <?php  if (isset($_POST["start_meeting"])) { ?>
     <?php
+
+    if (is_null(TeamMember::find_by(["user_id"=> $_SESSION['current_user_id'], "team_id" => $meeting->team_id]))) {
+        set_error_and_go_back("You do not have permission to start this meeting");
+    }
     $meeting->has_passed = '1';
     $meeting->start_at = date('Y-m-d H:i:s');
 
@@ -44,14 +50,18 @@ if (isset($_GET["id"]) && ($meeting = Meeting::find_by_id($_GET["id"]))) { ?>
     }
     ?>
     <form method="post">
-    <label for="meeting_minutes">Meeting Minutes</label>
-    <textarea name="meeting_minutes" cols="40" rows="5"></textarea>
-    <input type="submit" name="end_meeting" value="End meeting">
+        <label for="meeting_minutes">Meeting Minutes</label>
+        <textarea name="meeting_minutes" cols="40" rows="5" required></textarea>
+        <input type="submit" name="end_meeting" value="End meeting">
     </form>
     
 <?php }?>
 
 <?php if (isset($_POST["end_meeting"])) {
+        if (is_null(TeamMember::find_by(["user_id"=> $_SESSION['current_user_id'], "team_id" => $meeting->team_id]))) {
+            set_error_and_go_back("You do not have permission to add minutes to this meeting.");
+        }
+
         $meeting->minutes = $_POST["meeting_minutes"];
         $meeting->end_at = date('Y-m-d H:i:s');
 
