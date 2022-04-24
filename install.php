@@ -16,13 +16,12 @@ try {
     $sql = sprintf($sql, $dbname);
     $connection->exec($sql);
 
-    echo "Database and table created successfully.\n";
+    echo "Database and table created successfully.<br>";
 
     $sql = file_get_contents("data/seed.sql");
     $sql = sprintf($sql, $dbname);
     $connection->exec($sql);
 
-    echo "Database seeded successfully.\n";
 } catch (PDOException $error) {
     echo "<br>" . $error->getMessage();
 }
@@ -37,9 +36,12 @@ $admin->password_digest = password_hash('admin', PASSWORD_DEFAULT);
 $admin->password_digest = password_hash('admin', PASSWORD_DEFAULT);
 $admin->save();
 
-
 include 'seed.php';
 
 if (!file_exists('public/uploads')) {
     mkdir('public/uploads', 0755, true);
 }
+
+echo "Database seeded successfully. <br><br>Please wait as we redirect you.<br>";
+header("refresh:4;url=public/login.php");
+exit();
